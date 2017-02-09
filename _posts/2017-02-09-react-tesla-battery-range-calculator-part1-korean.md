@@ -1,10 +1,10 @@
-# MacDown
-
-![MacDown logo](http://macdown.uranusjr.com/static/base/img/logo-160.png)
-
-Hello there! I’m **MacDown**, the open source Markdown editor for OS X.
-
-Let me introduce myself.
+---
+layout:     post
+title:      Building Tesla's battery range calculator with React
+date:       2017-02-09 11:37:19
+summary:    React로 Tesla's battery range calculator 구현하기 
+categories: blog development react
+---
 
 
 Building Tesla's battery range calculator with React
@@ -65,6 +65,7 @@ Breaking Down the UI
 ![layout](https://lh3.googleusercontent.com/JS_S82Te-_vx4OhM71m8Qn6qV5d7d6tFeCULfKBsGHTnqZFPx1s39LvTm29X8PoZCH6UGcumSA=s944 "layout.jpg")
 
 UI를 컴포넌트 트리로 나타내보면 다음과 같다.
+
 ```
 <App> -- Top Container
  <Header></Header>
