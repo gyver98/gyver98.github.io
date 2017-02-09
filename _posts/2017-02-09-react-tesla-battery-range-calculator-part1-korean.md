@@ -26,12 +26,15 @@ Building Tesla's battery range calculator with React
 ## Project Setup and Creat-React-App
 
 `Create React App`은 React application 개발을 위한 새로운 툴로서 복잡한 설정없이 바로 React 프로젝트를 시작할 수 있게 도와준다.
-다음의 명령을 통해 쉽게 설치하고 애플리케이션을 바로 시작할 수 있다.
+다음의 명령을 통해 쉽게 우리의 프로젝트 `react-tesla-range-calculator`를 설치하고 애플리케이션을 바로 시작할 수 있다.
 
 >- npm install -g create-react-Application
->- create-react-app my-app
->- cd my-app/
+>- create-react-app react-tesla-range-calculator
+>- cd react-tesla-range-calculator
 >- npm start
+
+![create-react-app](https://lh3.googleusercontent.com/v7jnACqzmtuslHgKZ5DlohPUkxqX6RHOYg8CIE3f0vF-sSMWa0wqjt7dWsZJehCf5k-_gDZNMg=s944 "create-react-application.jpg")
+
 
 `Create React App`을 통해 새로운 Application을 생성한 후 `http://localhost:3000/` 을 오픈하여 생성된 application을 확인해보자.
 아래의 화면이 보인다면 성공적으로 프로젝트가 설정된 것이다.
@@ -50,6 +53,52 @@ src
  - index.js
 ```
 
+## Project entry point
+가장 먼저 우리의 Tesla app을 시작하는 entry point를 설정해야 한다. 고맙게도 create-react-app이 이미 만들어 놓았다.
+
+`src/App.js` 가 바로 우리 앱의 엔트리 포인트이다.
+App.js 를 다음과 같이 수정하도록 하자.
+
+```
+import React, { Component } from 'react';
+import './App.css';
+
+class App extends Component {
+  render() {
+    return (
+      <div>
+        <h2>Let's get started</h2>
+      </div>
+    );
+  }
+}
+
+export default App;
+```
+`npm start` 후 파일을 저장하면 자동으로 컴파일이 진행되어 업데이트된 화면을 볼 수 있다.
+
+## Project images/assets
+
+이 프로젝트에서 필요한 모든 이미지들은 다음에서 다운로드 받을 수 있다.
+
+* 모든 이미지 [Download](https://toddmotto.com/static/assets.zip)  
+* favicon.ico [Download](https://toddmotto.com/static/favicon.ico)
+
+`assets.zip` 압축을 풀고 모든 이미지들을 `src/assets` 디렉토리에 위치시키고 다운 받은 `favicon.ico`를 소스 루트에 있는 `favicon`과 대체한다.
+
+```
+react-tesla-range-calculator/src/asstets
+``` 
+
+> 스텝을 따라하다가 뭔가 놓친거 같거나 확실하지 않다면 언제든지 [소스코드](https://github.com/gyver98/react-tesla-range-calculator)를 참조하도록 하자. 
+
+## Data service
+Tesla 사이트에서 얻을 수 있는 데이타는 하드 코드되 있고 아주 큰 데이타인데, 여기서는 이를 사용하기 쉽도록 Todd가 새롭게 만든 버전의 데이타를 사용하도록 하겠다. [download](https://github.com/toddmotto/angular-tesla-range-calculator/blob/master/src/app/tesla-battery/tesla-battery.service.ts)
+
+우리는 Angular2에서 사용하는 `Injectable` decorator를 사용하지 않기 때문에 그 부분을 제외하고 export 부분만을 카피해서 `src/services/BatteryService.js` 에 저장하고  이를 `TeslaBattery Container`에서 `import` 해서 사용할 것이다.
+
+이 데이타 서비스는 추후에 다시 언급하도록 하겠다.
+
 
 Breaking Down the UI
 -------------
@@ -67,7 +116,7 @@ Breaking Down the UI
 UI를 컴포넌트 트리로 나타내보면 다음과 같다.
 
 ```
-<App> -- Top Container
+<App> -- Application entry point
  <Header></Header>
  	<TeslaBattery> -- Container
  		<TeslaCar />     -- Presentational Component
@@ -79,6 +128,36 @@ UI를 컴포넌트 트리로 나타내보면 다음과 같다.
  	</TeslaBattery>
 </App>
 ```
+
+## Container and presentational components
+위에서 언급한 컴포넌트 트리를 보면 Container와 Presenataional component로 분류한것을 볼 수 있다.
+이는 React로 애플리케이션을 개발할때 사용할 수 있는 유용한 패턴으로 컴포넌트들을 다음의 두 가지 범주로 나누게 되면 더 쉽게 재사용성을 높일 수 있게 된다.
+
+* Container Component (statful component)
+ - 어떻게 동작하는지에 관심이있다.
+ - 일반적으로 일부 랩핑 div를 제외하고는 자체 DOM 마크업이 없으며 스타일을 갖지 않는다.
+ - 프리젠테이션 또는 다른 컨테이너에 데이터와 동작을 제공한다.
+ - 애플리케이션의 상태를 가지며 데이터 소스 역할을 한다.
+* Presentational Component (statless component)
+ - 어떻게 보이는지에 관심이있다.
+ - 일반적으로 자체 DOM 마크업과 스타일을 가지고 있다.
+ - Props를 통해 데이타와 콜백 함수를 받는다.
+ - 상태를 거의 갖지 않으며 있다 하더라도 데이터 대신에 UI 상태를 갖는다.
+
+이러한 패턴을 사용하면 어떤 이득이 있을까?
+* 관심사의 분리 (Better separation of concerns)
+* 재사용성 (Better reusability)
+* 레이아웃 구성요소를 추출하여 중복 사용을 방지 
+
+>  더 자세한 정보는 Dan Abramov(Redux creator) 의 [Presentational and Container Components](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0#.mbwo09sds)를 참조
+
+## TeslaBattery Container
+우리 앱에서 `TeslaBattery` 컴포넌트는 컨테이너로서 데이타와 상태를 생성 관리하고 이를 다른 `presentational components`에게 전달하며 콜백 함수를 수행하고 상태를 변경하는 역할을 한다.
+
+```
+
+```
+
 
 **MacDown** is created as a simple-to-use editor for Markdown documents. I render your Markdown contents real-time into HTML, and display them in a preview panel.
 
