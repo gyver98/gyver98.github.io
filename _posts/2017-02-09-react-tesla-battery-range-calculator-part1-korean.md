@@ -7,9 +7,6 @@ categories: blog development react
 ---
 
 
-Building Tesla's battery range calculator with React
-==================
-
 이 글에서는 React로 Tesla's battery range calculator을 구현하고 빌드한 후 Surge를 통해 호스팅 하는 과정을 공유하고자 한다.
 이 튜토리얼은 Todd Motto의 Building Tesla's battery range calculator with Angular 2 reactive forms를 참조하여 React 버전으로 재구성한것임을 밝혀둔다.
 
