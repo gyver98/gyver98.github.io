@@ -478,6 +478,8 @@ React에서 배열을 리스트의 요소들로 변환하는 것은 거의 이�
 }
 ...    
 ```
+이 컴포넌트가 수행하는 작업은 `props.carstats` 배열을 반복하면서 특정 클래스를 `stat.model`을 기반으로 요소에 바인딩한다. 그러면 테슬라 모델을 표시하기 위해 배경 이미지를 교체 할 수 있게된다.
+
 그 다음에 `TeslaBattery.js`에서 `TeslaStats` 컴포넌트를 사용할 수 있도록 `Import`한다.
 
 ```
@@ -501,8 +503,8 @@ render() {
 
 ## CalculateStats and setState
 먼저 `getModelData`를 `import` 한다. 
-`componentDidMount()` 를 통해 컴폰넌트가 마운트 된후 `statsUpdate()` 함수를 호출하고
-입력값으로 `carModels` 와 현재 상태값을 받는 `calculateStats()` 가 실행되면 `model`과 `miles` 값이 매칭된 오브젝트가 리턴되고, 이 리턴값이 `setState()` 를 통해 애플리케이션의 `source of truth`인 `state`를 업데이트 하게된다.
+`componentDidMount()` 를 통해 컴포넌트가 마운트 된후 `statsUpdate()` 함수를 호출하고
+입력값으로 `carModels` 와 현재 상태값을 받는 `calculateStats()` 가 실행되면 `model`과 `miles` 값이 매칭된 오브젝트가 리턴되고, 이 리턴값이 `setState()` 를 통해 애플리케이션의 `source of truth`인 `state`오브젝트를 업데이트 하게된다.
 
 ```
 ...
@@ -544,8 +546,8 @@ this.statsUpdate = this.statsUpdate.bind(this);
 ...
 ```
 
-여기서 우리의 index.css에 추가적인 스타일링이 필요하다.
-src/index.css 파일을 열고 기존의 모든 코드를 삭제하고 다음을 추가하자
+여기서 보기좋은 레이아웃을 위해 추가적인 스타일링이 필요하다.
+먼저 `src/index.css` 파일을 열고 기존의 모든 코드를 삭제하고 다음을 추가하자.
 
 ```
 @font-face {
@@ -581,8 +583,22 @@ src/index.css 파일을 열고 기존의 모든 코드를 삭제하고 다음을
 
 ``` 
 
+다음으로 `src/App.css` 파일을 열고 기존의 모든 코드를 삭제하고 다음을 추가하자.
+
+```
+.wrapper {
+  margin: 100px 0 150px;
+}
+```
+
+
 지금까지의 작업 결과 화면은 다음과 같다.
 
-![enter image description here](https://lh3.googleusercontent.com/oGPvtPfi8OkSCN3G9YOU1allXUfSgTx9FUS10qzobFK4xC4edzuVRgW_fvw4eym9hW0UjBBZqA=s944 "carstats.png")
+![enter image description here](https://lh3.googleusercontent.com/R6ajaVgTej3zFcUfOn3kb5PsMecYDLMui6C84Leeqy5jt4G-C2qAwtFoxyZW44iMss_HtzA56A=s944 "carstat")
+
+## Reusable TeslaCounter Component
+테슬라의 속도 및 외부 온도 컨트롤은 재사용 가능한 구성 요소 이어야 하므로 단계, 최소값, 최대 값 및 제목 및 단위 (mph / degrees)와 같은 기타 메타 데이터를 허용하는 일반 카운터 컴포넌트를 만들어 보겠다.  
+
+이전에 했던것처럼 `src/components/TeslaCounter` 디렉토리를 생성하고 그 안에 `TeslaCounter.js` 파일을 만들고 다음의 코드를 입력하자.
 
 
