@@ -57,6 +57,8 @@ src
 `src/App.js` 가 바로 우리 앱의 엔트리 포인트이다.
 App.js 를 다음과 같이 수정하도록 하자.
 
+{% highlight js %}
+
 ```
 import React, { Component } from 'react';
 import './App.css';
@@ -73,6 +75,8 @@ class App extends Component {
 
 export default App;
 ```
+{% endhighlight %}
+
 `npm start` 후 파일을 저장하면 자동으로 컴파일이 진행되어 업데이트된 화면을 볼 수 있다.
 
 ## Project images/assets
