@@ -317,6 +317,11 @@ TeslaCar.propTypes = {
 
 export default TeslaCar;
 ```
+여기서 React built-in typechecking 기능을 이용하여 propTypes를 지정하였다. 
+개발모드에서 React는 컴포넌트에 전달되는 props를 체크하게 된다. (성능상의 이유로 오직 개발모드에서만 가능하다)
+각 props 속성에 대해 React는 (1) prop이 예상되는지 (2) prop이 올바른 유형인지 확인하기 위해 컴포넌트의 propType 객체에서 이를 찾으려고 시도한다. 이 경우 TeslaCar 컴포넌트가 wheelsize라는 props 속성을 기대하고 있으며 number라는 것을 지정한다. 잘못된 값이 제공되면 자바스크립트 콘솔에 경고가 표시되어 잠재적인 버그를 바로잡는데 유용하다.
+
+> React.PropTypes에 더 자세한 정보는 [여기](https://facebook.github.io/react/docs/typechecking-with-proptypes.html)를 참조
 
 다음으로 `src/components/TeslaCar ` 디렉토리안에 `TeslaCar.css` 파일을 만들고 다음 스타일을 준다. 코드가 길어 여기서는 생략하였으므로 [소스코드]()를 확인해서 작업하도록 하자.
 
@@ -400,6 +405,8 @@ class TeslaBattery extends React.Component {
   }
   
   render() {
+  	  // ES6 Object destructuring Syntax,
+    // takes out required values and create references to them
     const { config } = this.state;
     return (
       <form className="tesla-battery">
@@ -514,6 +521,8 @@ import { getModelData } from '../services/BatteryService';
 calculateStats = (models, value) => {
   const dataModels = getModelData();
   return models.map(model => {
+    // ES6 Object destructuring Syntax,
+    // takes out required values and create references to them
     const { speed, temperature, climate, wheels } = value;
     const miles = dataModels[model][wheels][climate ? 'on' : 'off'].speed[speed][temperature];
     return {
@@ -597,8 +606,305 @@ this.statsUpdate = this.statsUpdate.bind(this);
 ![enter image description here](https://lh3.googleusercontent.com/R6ajaVgTej3zFcUfOn3kb5PsMecYDLMui6C84Leeqy5jt4G-C2qAwtFoxyZW44iMss_HtzA56A=s944 "carstat")
 
 ## Reusable TeslaCounter Component
-테슬라의 속도 및 외부 온도 컨트롤은 재사용 가능한 구성 요소 이어야 하므로 단계, 최소값, 최대 값 및 제목 및 단위 (mph / degrees)와 같은 기타 메타 데이터를 허용하는 일반 카운터 컴포넌트를 만들어 보겠다.  
+테슬라의 속도 및 외부 온도 컨트롤은 재사용 가능한 컴포넌트이어야 하므로 단계, 최소값, 최대 값 및 제목 및 단위 (mph / degrees)와 같은 기타 메타 데이터를 허용하는 일반 Counter 컴포넌트로 만들어 보겠다. 또한 지금까지 만들어본 컴포넌트와는 달리 사용자 입력(버튼 클릭, 체크박스 선택 등)에 반응하여 상태값을 변경하는 액션이 필요한데, 어떻게 하위 컴포넌트에서 발생하는 이벤트를 핸들링하는지 알아보도록 하겠다. 
 
 이전에 했던것처럼 `src/components/TeslaCounter` 디렉토리를 생성하고 그 안에 `TeslaCounter.js` 파일을 만들고 다음의 코드를 입력하자.
+
+```
+import React from 'react';
+import './TeslaCounter.css';
+
+const TeslaCounter = (props) => (
+  <div className="tesla-counter">
+    <p className="tesla-counter__title">{props.initValues.title}</p>
+    <div className="tesla-counter__container cf">
+      <div className="tesla-counter__item">
+        <p className="tesla-counter__number">
+          { props.currentValue }
+          <span>{ props.initValues.unit }</span>
+        </p>
+        <div className="tesla-counter__controls">
+          <button 
+            onClick={(e) => props.increment(e, props.initValues.title)} 
+            disabled={props.currentValue >= props.initValues.max} 
+          >
+          </button>
+          <button 
+            onClick={(e) => props.decrement(e, props.initValues.title)} 
+            disabled={props.currentValue <= props.initValues.min} 
+          >
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>  
+);
+
+TeslaCounter.propTypes = {
+  currentValue: React.PropTypes.number,
+  increment: React.PropTypes.func,
+  decrement: React.PropTypes.func,
+  initValues: React.PropTypes.object
+}
+
+export default TeslaCounter;
+```
+
+여기서 우리가 원하는 것을 생각해보자. 사용자가 속도와 온도를 클릭하여 변경할 때마다 수치가 최대값과 최소값 사이에서 반영되어 렌더링 되도록 상태를 업데이트해야한다. 컴포넌트는 자체 상태만 업데이트해야하므로 TeslaBattery은 상태를 업데이트해야 할 때마다 실행되는 callback(increment, decrement)을 TeslaCounter에 전달한다. 버튼에 onClick 이벤트를 사용하여 이벤트를 알릴수 있다. TeslaBattery에 의해 전달된 callback은 setState()를 호출하고 앱이 업데이트되는것이다. 조금 있다 TeslaBattery에 의해 전달될 callback을 구현해볼것이다.
+
+먼저 스타일을 구현해보자.
+`src/components/TeslaCounter` 디렉토리안에 `TeslaCounter.css` 파일을 만들고 다음 스타일을 지정한다. 코드가 길어 여기서는 생략하였으므로 [소스코드]()를 확인해서 작업하도록 하자.
+
+```
+.tesla-counter {
+  float: left;
+  width: 230px; 
+}
+.tesla-counter__title {
+  letter-spacing: 2px;
+  font-size: 16px; 
+}
+...  
+```
+
+자, 이제 우리는 `TeslaBattery`에 `callback`을 구현해 `TeslaCar` 컴포넌트로 전달해 보겠다.
+먼저 `TeslaBattery.js`에서 `TeslaCounter` 컴포넌트를 사용할 수 있도록 `import`한다. 그리고 callback 함수인 increment() 와 decrement(), 내부함수인 updateCounterState()를 구현하고 constructor() 내에 바인딩한다. 그 후 `callback` 함수를 `TeslaCounter ` 컴포넌트에 `props`로 전달한다.
+
+
+```
+...
+	constructor(props) {
+    super(props);
+
+    this.calculateStats = this.calculateStats.bind(this);
+    this.statsUpdate = this.statsUpdate.bind(this);
+    this.increment = this.increment.bind(this);
+    this.decrement = this.decrement.bind(this);
+    this.updateCounterState = this.updateCounterState.bind(this);
+
+    this.state = {
+      carstats: [],
+      config: {
+        speed: 55,
+        temperature: 20,
+        climate: true,
+        wheels: 19
+      }
+    }
+  }
+...
+	updateCounterState(title, newValue) {
+    const config = { ...this.state.config };
+    // update config state with new value
+    title === 'Speed' ? config['speed'] = newValue : config['temperature'] = newValue;
+    // update our state
+    //this.setState({ config }, () => {this.statsUpdate()});
+    this.setState({ config });
+  }
+
+  increment(e, title) {
+    e.preventDefault();
+    let currentValue, maxValue, step;
+    const { speed, temperature } = this.props.counterDefaultVal;
+    if (title === 'Speed') {
+      currentValue = this.state.config.speed;
+      maxValue = speed.max;
+      step = speed.step;
+    } else {
+      currentValue = this.state.config.temperature;
+      maxValue = temperature.max;
+      step = temperature.step;
+    }
+
+    if (currentValue < maxValue) {
+      const newValue = currentValue + step;
+      this.updateCounterState(title, newValue);
+    }
+  }
+
+  decrement(e, title) {
+    e.preventDefault();
+    //debugger;
+    let currentValue, minValue, step;
+    const { speed, temperature } = this.props.counterDefaultVal;
+    if (title === 'Speed') {
+      currentValue = this.state.config.speed;
+      minValue = speed.min;
+      step = speed.step;
+    } else {
+      currentValue = this.state.config.temperature;
+      minValue = temperature.min;
+      step = temperature.step;
+    }
+
+    if (currentValue > minValue) {
+      const newValue = currentValue - step;
+      this.updateCounterState(title, newValue);
+    }
+  }  
+...
+render() {	
+	return (
+      <form className="tesla-battery">
+        <h1>Range Per Charge</h1>
+        <TeslaCar wheelsize={config.wheels} />
+        <TeslaStats carstats={carstats} />
+        <div className="tesla-controls cf">
+          <TeslaCounter
+            currentValue={this.state.config.speed}
+            initValues={this.props.counterDefaultVal.speed}
+            increment={this.increment}
+            decrement={this.decrement}
+          />
+          <div className="tesla-climate-container cf">
+            <TeslaCounter
+              currentValue={this.state.config.temperature}
+              initValues={this.props.counterDefaultVal.temperature}
+              increment={this.increment}
+              decrement={this.decrement}
+            />
+          </div>
+        </div>
+        <TeslaNotice />
+    </form>
+  )
+}    
+```
+
+여기서 TeslaCounter에 전달되는  initValues는 상수값으로 TeslaBattery의 상위 컴포넌트인 App으로 부터 전달된다.
+App.js를 열고 다음과 같이 counterDefaultVal 오브젝트를  TeslaBatter 컴포넌트에 전달하도록 한다.
+
+```
+import React, { Component } from 'react';
+import './App.css';
+import Header from './components/Header/Header';
+import TeslaBattery from './containers/TeslaBattery';
+
+const counterDefaultVal = {
+  speed: {
+    title: "Speed",
+    unit: "mph",
+    step: 5,
+    min: 45,
+    max: 70
+  },
+  temperature: {
+    title: "Outside Temperature",
+    unit: "°",
+    step: 10,
+    min: -10,
+    max: 40
+  }
+};
+
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <Header />
+        <TeslaBattery counterDefaultVal={counterDefaultVal}/>
+      </div>
+    );
+  }
+}
+
+export default App;
+```
+
+
+이제 React Developer Tool을 통해 Speed 와 Temperature를 클릭하면 변경된 수치가 상태 오브젝트에 업데이트되고 리렌더링 되는 것을 확인할 수 있다.
+
+![TeslaCounter](http://g.recordit.co/gW8k6jDDdF.gif)
+
+> 아직 속도와 온도 변경에 따라 차 모델 정보가 변경되지 않는다. 이는 나중에 최종적으로 구현 할 것이다.
+
+## Aircon and Heating Controls
+우리는 온도 값을 모니터하면서 20도 이상이 되면 'heating'을 'aircon'으로 변경하고, 20도 이하가 되면 다시 'heating'으로 바꿔줘야 한다.
+
+먼저 `src/components/TeslaClimate` 디렉토리를 생성하고 그 안에 `TeslaClimate.js` 파일을 만들고 다음의 코드를 입력하자.
+
+```
+import React from 'react';
+import './TeslaClimate.css';
+
+const TeslaClimate = (props) => (
+  <div className="tesla-climate">
+    <label
+      className={`tesla-climate__item ${props.value ? 'tesla-climate__item--active' : '' }  ${!props.limit ? 'tesla-heat':''}`}
+    >
+      <p>{props.limit ? 'ac' : 'heat'} {props.value ? 'on' : 'off'}</p>
+      <i className="tesla-climate__icon"></i>
+      <input
+        type="checkbox"
+        name="climate"
+        checked={props.value}
+        onChange={() => {props.handleChangeClimate()}}
+      />
+    </label>
+  </div>
+);
+
+TeslaClimate.propTypes = {
+  value: React.PropTypes.bool,
+  limit: React.PropTypes.bool,
+  handleChangeClimate: React.PropTypes.func
+}
+
+export default TeslaClimate;
+```
+이 컴포넌트에서는 전달받은 props.value 에 따라 스타일 클래스를 바꿔주고, props.limit에 따라 텍스트를 변경해준다.
+TeslaBattery는 상태를 업데이트해야 할 때마다 실행되는 callback(이 경우엔 handleChangeClimate)을 TeslaClimate에 전달한다. `input` onChange 이벤트를 사용하여 이벤트를 알릴수 있다. TeslaBattery에 의해 전달된 callback은 setState()를 호출하여 상태를 업데이트하고 리렌더링된다.
+
+`src/components/TeslaClimate ` 디렉토리안에 `TeslaClimate.css` 파일을 만들고 다음 스타일을 지정한다. 코드가 길어 여기서는 생략하였으므로 [소스코드]()를 확인해서 작업하도록 하자.
+
+```
+  .tesla-climate {
+	  float: left; 
+  }
+  .tesla-climate__item {
+    cursor: pointer;
+    display: block;
+    width: 100px;
+    height: 100px;
+    border: 6px solid #f7f7f7;
+    border-radius: 50%;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+    color: #666;
+    background: #fff; 
+  }
+  ...
+```
+
+이제 우리는 `TeslaBattery`에 `callback`을 구현해 `TeslaClimate` 컴포넌트로 전달해 보겠다.
+먼저 `TeslaBattery.js`에서 `TeslaClimate ` 컴포넌트를 사용할 수 있도록 `import`한다. 그리고 `callback` 함수인 `handleChangeClimate()`를 구현하고 `constructor()`내에 바인딩한다. 그 후 `callback` 함수를 `TeslaClimate` 컴포넌트에 `props`로 전달한다.
+
+```
+...
+import TeslaClimate from '../components/TeslaClimate';
+...
+constructor(props) {
+  super(props);
+  ...
+  this.handleChangeClimate = this.handleChangeClimate.bind(this);
+  ...
+}
+// handle aircon & heating click event handler
+handleChangeClimate() {
+  const config = {...this.state.config};
+  config['climate'] = !this.state.config.climate;
+  this.setState({ config });
+}
+
+...
+<TeslaClimate
+  value={this.state.config.climate}
+  limit={this.state.config.temperature > 10}
+  handleChangeClimate={this.handleChangeClimate}
+/>  
+...
+```
+이제 온도 변화에 따라 상태값이 변하게 되고 이 변경된 값이 TeslaClimate 컴포넌트로 전달되면 그 값에 따라 스타일 클래스와 텍스트가 변경되어진다. 
+
+![](http://g.recordit.co/e2b3G6rlRh.gif)
 
 
