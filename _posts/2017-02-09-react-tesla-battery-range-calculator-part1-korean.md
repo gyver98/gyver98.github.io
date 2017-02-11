@@ -7,11 +7,12 @@ categories: blog development react
 ---
 
 
-이 글에서는 React로 Tesla's battery range calculator을 구현하고 빌드한 후 Surge를 통해 호스팅 하는 과정을 공유하고자 한다.
+이 글에서는 React로 Tesla's battery range calculator을 구현하는 과정을 공유하고자 한다.
 이 튜토리얼은 Todd Motto의 Building Tesla's battery range calculator with Angular 2 reactive forms를 참조하여 React 버전으로 재구성한것임을 밝혀둔다.
 
 이것이 우리가 만들 애플리케이션의 최종 GIF 이미지다.
-![final](https://lh3.googleusercontent.com/5-7c6zipYR-AcmOXkW9n_DntW1JYWJz4P1m6GL0cqMbF48Tl86D7zDzZ1CBlJnDiMOgtaZAtWg=s944 "final.gif")
+![final](https://lh3.googleusercontent.com/ADOBXOthirfSi9f9j-f2giwZc_9Gtlb6qcNAmnR0y1rLVBKvRRyG4Zf5oPkvtlXE2dsKKFy0Bw=s944 "final.gif")
+
 
 > 라이브 버전은 [여기서](http://cute-amusement.surge.sh) 확인할 수 있다.
  
@@ -130,6 +131,7 @@ UI를 컴포넌트 트리로 나타내보면 다음과 같다.
 위에서 언급한 컴포넌트 트리를 보면 Container와 Presenataional component로 분류한것을 볼 수 있다.
 이는 React로 애플리케이션을 개발할때 사용할 수 있는 유용한 패턴으로 컴포넌트들을 다음의 두 가지 범주로 나누게 되면 더 쉽게 재사용성을 높일 수 있게 된다.
 
+```
 * Container Component (statful component)
  - 어떻게 동작하는지에 관심이있다.
  - 일반적으로 일부 랩핑 div를 제외하고는 자체 DOM 마크업이 없으며 스타일을 갖지 않는다.
@@ -141,6 +143,7 @@ UI를 컴포넌트 트리로 나타내보면 다음과 같다.
  - 일반적으로 자체 DOM 마크업과 스타일을 가지고 있다.
  - Props를 통해 데이타와 콜백 함수를 받는다.
  - 상태를 거의 갖지 않으며 있다 하더라도 데이터 대신에 UI 상태를 갖는다.
+```
 
 이러한 패턴을 사용하면 어떤 이득이 있을까?
 
@@ -814,7 +817,8 @@ export default App;
 
 이제 React Developer Tool을 통해 Speed 와 Temperature를 클릭하면 변경된 수치가 상태 오브젝트에 업데이트되고 리렌더링 되는 것을 확인할 수 있다.
 
-![TeslaCounter](http://g.recordit.co/gW8k6jDDdF.gif)
+![TeslaCounter](https://lh3.googleusercontent.com/qe5PfBiZqso7MTGmv2FJX4O1u_PyJwybhpJCeuVsFgV7yfUXB3qxWXrZGrYw-bxxZaR9XfNTmA=s944 "counter.gif")
+
 
 > 아직 속도와 온도 변경에 따라 차 모델 정보가 변경되지 않는다. 이는 나중에 최종적으로 구현 할 것이다.
 
@@ -905,6 +909,296 @@ handleChangeClimate() {
 ```
 이제 온도 변화에 따라 상태값이 변하게 되고 이 변경된 값이 TeslaClimate 컴포넌트로 전달되면 그 값에 따라 스타일 클래스와 텍스트가 변경되어진다. 
 
-![](http://g.recordit.co/e2b3G6rlRh.gif)
+![](https://lh3.googleusercontent.com/Bgbxy2TwAnqqX6itMN0HrWTRt6g93eJWUuCNJWiBBFgSMogW1AumIfBecMQdr9MZ0CMqiG6Gog=s944 "climate.gif")
+
+##TeslaWheels Component
+드디어 마지막 컴포넌트인 TeslaWheels를 만들어 보겠다.
+늘하던데로 `src/components/TeslaWheels` 디렉토리를 생성하고 그 안에 `TeslaWheels ` 파일을 만들고 다음의 코드를 입력하자.
+
+```
+import React from 'react';
+import './TeslaWheels.css';
+
+const LabelLists = (props) => {
+  const value = props.wheels.value;
+  const changeHandler = props.wheels.handleChangeWheels;
+  const sizes = [19, 21];
+  const LabelItems = sizes.map(size => (
+    <label key={size} className={`tesla-wheels__item tesla-wheels__item--${size} ${value === size ? 'tesla-wheels__item--active' : '' }`}>
+      <input
+        type="radio"
+        name="wheelsize"
+        value={size}
+        checked={value === size} 
+        onChange={() => {changeHandler(size)}} />
+      <p>
+        {size}"
+      </p>
+    </label> 
+    )
+  );
+  return (
+    <div>
+      {LabelItems}
+    </div>
+  );
+}
+const TeslaWheels = (props) => (
+  <div className="tesla-wheels__component">
+    <p className="tesla-wheels__title">Wheels</p>
+    <div className="tesla-wheels__container cf">
+      <LabelLists wheels={props}/>
+    </div>
+  </div>
+);
+TeslaWheels.propTypes = {
+  value: React.PropTypes.number,
+  handleChangeWheels: React.PropTypes.func
+}
+export default TeslaWheels;
+```
+여기서 우리가 구현한것은 `TeslaStats`컴포넌트에서 `props` 배열 오브젝트를 리스트로 변환했던 것과 유사하다. 
+`JavaScript map()` 함수를 사용하여 `props.sizes` 배열을 반복한다. 매 반복마다 `size`가 담긴 `<label>` 엘리먼트들을 리턴한다. 최종적으로 `LabelItems` 리스트가  `TeslaWheels` 컴포넌트에 포함되어 렌더링 되는 구조이다. `<label>` 엘리먼트내에서는 전달된 wheel size에 따라 해당 클래스를 변경함으로서 wheel animation 효과를 나타낸다. 
+
+`src/components/TeslaWheels ` 디렉토리안에 `TeslaWheels.css` 파일을 만들고 다음 스타일을 지정한다. 코드가 길어 여기서는 생략하였으므로 [소스코드]()를 확인해서 작업하도록 하자.
+
+```
+.tesla-wheels__component {
+  float: left;
+  width: 355px;
+}
+.tesla-wheels__title {
+  letter-spacing: 2px;
+  font-size: 16px;
+}
+...
+```
+
+마지막으로 `TeslaBattery`에 `callback`을 구현해 `TeslaWheels` 컴포넌트로 전달한다.
+먼저 `TeslaBattery.js`에서 `TeslaWheels` 컴포넌트를 사용할 수 있도록 `import`한다. 그리고 `callback`함수인 `handleChangeWheels()`를 구현하고 `constructor()`내에 바인딩한다. 그 후 `callback`함수를 `TeslaWheels `컴포넌트에 `props`로 전달한다.
+
+
+```
+...
+import TeslaWheels from '../components/TeslaWheels';
+...
+constructor(props) {
+    super(props);
+    this.calculateStats = this.calculateStats.bind(this);
+    this.increment = this.increment.bind(this);
+    this.decrement = this.decrement.bind(this);
+    this.handleChangeClimate = this.handleChangeClimate.bind(this);
+    this.handleChangeWheels = this.handleChangeWheels.bind(this);
+    this.statsUpdate = this.statsUpdate.bind(this);
+...
+handleChangeWheels(size) {
+  const config = {...this.state.config};
+  config['wheels'] = size;
+  this.setState({ config });
+}
+...
+<TeslaWheels
+  value={this.state.config.wheels}
+  handleChangeWheels={this.handleChangeWheels}
+/>
+...
+```
+
+wheels animation이 완성된 결과 화면은 다음과 같다.
+![](http://g.recordit.co/ZEz2AupcIm.gif)
+
+드디어 완성? 
+사용자가 여러 조건값들을 변경해도 아직 차 모델 값이 적절하게 바뀌지 않는다.
+지금까지 우리는 이벤트가 발생할 때마다  우리 앱 상태의 한 부분만을 업데이트해왔다.
+```
+this.setState({ config });
+```
+이제 config 상태 값이 변경될때마다 carstats 상태 값도 변경되도록 해보자.
+```
+statsUpdate() {
+  const carModels = ['60', '60D', '75', '75D', '90D', 'P100D'];
+  // Fetch model info from BatteryService and calculate then update state
+  this.setState({
+  carstats: this.calculateStats(carModels, this.state.config)
+  })
+}
+```
+
+carModels와 현재 변경된 상태값을 입력으로 받아 변경된 carStats을 앱 state에 반영하는 함수를 만들고 이를 callback으로 this.setState()에 전달한다. 이렇게 함으로서 asyncronus 방식으로 동작하는 setState() 에서 cofig 오브젝트를 먼저 업데이트 하고 이를 기반으로 변경된 stats를 화면에 렌더링하는 것이 가능해진다.
+
+```
+this.setState({ config }, () => {this.statsUpdate()});
+``` 
+
+이로써 모든 퍼즐이 완성되었다. TeslaBattery의 전체 코드는 다음과 같다.
+
+```
+import React from 'react';
+import './TeslaBattery.css';
+import TeslaNotice from '../components/TeslaNotice/TeslaNotice';
+import TeslaCar from '../components/TeslaCar/TeslaCar';
+import TeslaStats from '../components/TeslaStats/TeslaStats';
+import TeslaCounter from '../components/TeslaCounter/TeslaCounter';
+import TeslaClimate from '../components/TeslaClimate/TeslaClimate';
+import TeslaWheels from '../components/TeslaWheels/TeslaWheels';
+import { getModelData } from '../services/BatteryService';
+
+class TeslaBattery extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.calculateStats = this.calculateStats.bind(this);
+    this.statsUpdate = this.statsUpdate.bind(this);
+    this.increment = this.increment.bind(this);
+    this.decrement = this.decrement.bind(this);
+    this.updateCounterState = this.updateCounterState.bind(this);
+    this.handleChangeClimate = this.handleChangeClimate.bind(this);
+    this.handleChangeWheels = this.handleChangeWheels.bind(this);
+
+    this.state = {
+      carstats: [],
+      config: {
+        speed: 55,
+        temperature: 20,
+        climate: true,
+        wheels: 19
+      }
+    }
+  }
+
+  calculateStats = (models, value) => {
+    const dataModels = getModelData();
+    return models.map(model => {
+      const { speed, temperature, climate, wheels } = value;
+      const miles = dataModels[model][wheels][climate ? 'on' : 'off'].speed[speed][temperature];
+      return {
+        model,
+        miles
+      };
+    });
+  }
+
+  statsUpdate() {
+    const carModels = ['60', '60D', '75', '75D', '90D', 'P100D'];
+    // Fetch model info from BatteryService and calculate then update state
+    this.setState({
+      carstats: this.calculateStats(carModels, this.state.config)
+    })
+  }
+
+  componentDidMount() {
+    this.statsUpdate();
+  }
+
+  updateCounterState(title, newValue) {
+    const config = { ...this.state.config };
+    // update config state with new value
+    title === 'Speed' ? config['speed'] = newValue : config['temperature'] = newValue;
+    // update our state
+    this.setState({ config }, () => {this.statsUpdate()});
+  }
+
+  increment(e, title) {
+    e.preventDefault();
+    let currentValue, maxValue, step;
+    const { speed, temperature } = this.props.counterDefaultVal;
+    if (title === 'Speed') {
+      currentValue = this.state.config.speed;
+      maxValue = speed.max;
+      step = speed.step;
+    } else {
+      currentValue = this.state.config.temperature;
+      maxValue = temperature.max;
+      step = temperature.step;
+    }
+
+    if (currentValue < maxValue) {
+      const newValue = currentValue + step;
+      this.updateCounterState(title, newValue);
+    }
+  }
+
+  decrement(e, title) {
+    e.preventDefault();
+    let currentValue, minValue, step;
+    const { speed, temperature } = this.props.counterDefaultVal;
+    if (title === 'Speed') {
+      currentValue = this.state.config.speed;
+      minValue = speed.min;
+      step = speed.step;
+    } else {
+      currentValue = this.state.config.temperature;
+      minValue = temperature.min;
+      step = temperature.step;
+    }
+
+    if (currentValue > minValue) {
+      const newValue = currentValue - step;
+      this.updateCounterState(title, newValue);
+    }
+  }
+
+  // handle aircon & heating click event handler
+  handleChangeClimate() {
+    const config = {...this.state.config};
+    config['climate'] = !this.state.config.climate;
+    this.setState({ config }, () => {this.statsUpdate()});
+  }
+
+  // handle Wheels click event handler
+  handleChangeWheels(size) {
+    const config = {...this.state.config};
+    config['wheels'] = size;
+    this.setState({ config }, () => {this.statsUpdate()});
+  }  
+
+  render() {    
+    const { config, carstats } = this.state;
+    return (
+      <form className="tesla-battery">
+        <h1>Range Per Charge</h1>
+        <TeslaCar wheelsize={config.wheels} />
+        <TeslaStats carstats={carstats} />
+        <div className="tesla-controls cf">
+          <TeslaCounter
+            currentValue={this.state.config.speed}
+            initValues={this.props.counterDefaultVal.speed}
+            increment={this.increment}
+            decrement={this.decrement}
+          />
+          <div className="tesla-climate-container cf">
+            <TeslaCounter
+              currentValue={this.state.config.temperature}
+              initValues={this.props.counterDefaultVal.temperature}
+              increment={this.increment}
+              decrement={this.decrement}
+            />
+            <TeslaClimate
+              value={this.state.config.climate}
+              limit={this.state.config.temperature > 10}
+              handleChangeClimate={this.handleChangeClimate}
+            />
+          </div>
+          <TeslaWheels
+            value={this.state.config.wheels}
+            handleChangeWheels={this.handleChangeWheels}
+          />
+        </div>
+        <TeslaNotice />
+      </form>
+    )
+  }
+}
+
+export default TeslaBattery;
+```
+
+
+와우! 완성된 Tesla Batter Range Calculator는 다음과 같다.
+
+
+![finalcar](https://lh3.googleusercontent.com/ADOBXOthirfSi9f9j-f2giwZc_9Gtlb6qcNAmnR0y1rLVBKvRRyG4Zf5oPkvtlXE2dsKKFy0Bw=s944 "final.gif")
+
+
 
 
