@@ -386,18 +386,20 @@ You can easily understand this by checking the component tree using [React Devel
 `props` is a javascript single object, in this case an empty object. This is because we did not pass `props` in the parent component `TeslaBattery`.
 
 ## State of Application
-여기서 우리 애플리케이션에서 관리해야 할 상태가 무엇이 있는지 생각해보자.
-이 글 상단의 최종 앱 GIF 이미지를 보면 상태값은 다음과 같다.
+We need to think about what `state` is required to be managed in our app.
+If you look at the final app GIF image at the top of this article, the state values ​​are:
 
-* carstats (array) : 현재 선택된 조건 수치( speed, temperature, climate, wheel )에 따른 차 모델별 배터리 수치값 배열
-* config (object): 현재 선택된 조건 (speed:55, temperature:20, climate:aricon on, wheel: 19) 
+* carstats (object array) : An array of battery numerical value objects ​​by car model according to the currently selected condition value (speed, temperature, climate, wheel)
+* config (object): Currently selected conditions object (speed: 55, temperature: 20, climate: aricon on, wheel: 19)
 
 ![enter image description here](https://lh3.googleusercontent.com/LZ4rlA_E8f5_Qt-dKNtBICK-R7zcZdtlcuLFM74IiZzT5Zmh_BOJLDTxz1uzsGtgA7i58Nvfaw=s944 "state.jpg")
 
-바로 이 상태가 우리 앱의 <span class="bg-dark-gray white">Single Source of Truth</span>가 된다.
-이제 이 상태값을 관리하고 하위 컴포넌트에 전달할 수 있도록 `TeslaBattery` 컨테이너를 constructor 함수를 추가하고 초기값을 설정한다. TeslaCar 컴포넌트는 `props`를 통해 wheelsize input을 받아들이고 Teslar car 이미지를 렌더링한다.
+That is the <span class="bg-dark-gray white">single source of truth</span> for our app.
+Now we will add the constructor method to the `TeslaBattery` container and set the initial value so that we can manage this state value and pass it to the subcomponent. The `TeslaCar` component accepts the `wheelsize` input through `props` and renders the Teslar car image and spins the wheels.
 
-> 상위(Parent) 컴포넌트나 하위(Child) 컴포넌트 둘다 특정 컴포넌트가 상태가 있는지(stateful) 또는 상태가 없는지(stateless) 여부를 알 수 없으며 함수형 또는 클래스로 정의되었는지 여부도 신경 쓰지 않는다. 이것이 상태가 종종 local 또는 캡슐화되었다고 부르는 이유이다. 상태를 소유하고 설정하고있는 컴포넌트 이외의 컴포넌트에서는 이 상태를 액세스 할 수 없다. 따라서 이 상태값은 하위 컴포넌트에 `props`로 전달되어질 수 있다. 이를 일반적으로 "하향식"또는 "단방향" 데이터 흐름이라고한다. 모든 상태는 항상 특정 컴포넌트가 소유하며 해당 상태에서 파생 된 모든 데이터 또는 UI는 트리의 구성 요소 "아래쪽 방향"에만 영향을 미친다.
+> Both the parent component and the child component do not know whether a particular component is stateful or stateless and do not care whether it is defined as a `function` or a `class`. This is why the state is often called local or encapsulated.
+This state can not be accessed by components other than the component that owns and sets the state. 
+So this state value can be passed to the sub-component as `props`. This is commonly referred to as a "top-down" or "unidirectional" data flow. Every state is always owned by a particular component, and any data or UI derived from that state only affects the "downward" component of the tree.
 
 ```
 ...
@@ -417,7 +419,7 @@ class TeslaBattery extends React.Component {
   }
   
   render() {
-  	  // ES6 Object destructuring Syntax,
+  	// ES6 Object destructuring Syntax,
     // takes out required values and create references to them
     const { config } = this.state;
     return (
@@ -431,17 +433,17 @@ class TeslaBattery extends React.Component {
 }...
 ```
 
-`render()` 내에서 `const { a, b } = c` 의 형식의 코드는 `ES6` `Object Destructuring` (객체 비구조화 할당) 문법이다. 필요한 값을 객체에서 꺼내 그 값으로 레퍼런스를 만들어준다.
+In `render()`, the code in the form `const {a, b} = c` is `ES6 Object Destructuring`. It takes the required value out of the object and makes a reference to it.
 
-> 개념적으로, React 컴포넌트는 JavaScript function과 같아 'props'라 불리우는 임의의 입력을 받아 무엇이 보여져야 하는지를 묘사하는 React 엘리먼트를 리턴한다.
+> Conceptually, the React component is like a JavaScript function and receives an arbitrary input called 'props' and returns a React element that describes what should be shown.
 
-파일을 저장하고 업데이트된 화면에서는 렌더링된 테슬라 차의 모습과 바퀴 애니메이션이 잘 동작하는 것을 볼 수 있다.
-또한 컴포넌트 트리에서도 `props`가 잘 전달되는것을 확인할 수 있다.
+
+If you save files, you can see that the rendered Tesla car and wheel animation work well on the updated screen.
+You can also see that `props` is passed well in the component tree.
 
 ![enter image description here](https://lh3.googleusercontent.com/6PBG4kbLiVk1QfkXo8pYnfYW33_7yH_ULxq_8uBvxYFloDxacD8WPXLYlduOa0AT-cG9_8qTqQ=s944 "teslacar props.jpg")
 
-> 어떠한 함수들은 입력값을 변경하지 않고 언제나 같은 입력값이면 같은 출력값을 리턴한다는 의미에서 순수하다고 불리운다. (`Pure function`) 여기서 한 가지 중요한 React의 엄격한 룰은 모든 React 컴포넌트들은 `props`에 관해서는 순수 함수와 같이 동작해야 한다는 것이다. `props`는 reda-only여야 한다.
-
+> Some functions are called "pure" in the sense that they always return the same output value if they have the same input value without changing the input value. (`Pure function`) One important React strict rule here is that all React components should behave like pure functions with respect to ` props`. `props` must be read-only.
 
 ## TeslaStats Component
 이제 우리는 `TeslaStats` 컴포넌트를 구현하고자 한다.
