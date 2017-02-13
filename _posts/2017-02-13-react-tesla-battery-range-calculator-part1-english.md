@@ -1,8 +1,8 @@
 ---
 layout:     post
 title:      Building Tesla's battery range calculator with React
-date:       2017-02-09 11:37:19
-summary:    React로 Tesla's battery range calculator 구현하기 
+date:       2017-02-13 11:37:19
+summary:    Rebuilding Tesla's Battery Range Calculator with React 
 categories: blog development react
 ---
 
@@ -76,7 +76,7 @@ When you save the file, it will be automatically compiled and you can see the up
 
 All images required for this project can be downloaded from:
 
-* 모든 이미지 [Download](https://toddmotto.com/static/assets.zip)  
+* images [Download](https://toddmotto.com/static/assets.zip)  
 * favicon.ico [Download](https://toddmotto.com/static/favicon.ico)
 
 Unpack `assets.zip` and place all images in the `src/assets` directory and place the downloaded `favicon.ico` in the source root.
@@ -90,7 +90,6 @@ react-tesla-range-calculator/src/asstets
 ## Data service
 The data you can get from Tesla site is hard-coded and very large, so I'll use Todd's new version of the data to make it easier to use. [link](https://github.com/toddmotto/angular-tesla-range-calculator/blob/master/src/app/tesla-battery/tesla-battery.service.ts)
 We do not use the `Injectable` decorator used in Angular2, so we will copy only the `export` part, save it in `src/services/BatteryService.js`, and `import` it in the `TeslaBattery` container.
-이 데이타 서비스는 추후에 다시 언급하도록 하겠다.
 We will revisit this data service later.
 
 Breaking Down the UI
@@ -211,12 +210,11 @@ When you save all the modified files, they will be updated automatically and you
 ![header](https://lh3.googleusercontent.com/gkOjRzStwc0JB9ITpDQL7Mx4R8A2UsIbig5ZRDVLkTHHzo_GSv3KfHdJPBmTNjluXz9ZlbO-QA=s944 "header")
 
 ## TeslaBattery Container
-우리 앱에서 `TeslaBattery` 컴포넌트는 `Container`로서 데이타와 상태를 생성 관리하고 이를 다른 `presentational components`에게 전달하며 콜백 함수를 수행하고 상태를 변경하는 역할을 한다.
+In our app, the `TeslaBattery` component is responsible for creating and managing data and state as `Container Component`, passing it to other `Presentational Components`, performing a callback function and changing its state.
+By inheriting `React.Component`, `TeslaBattery` must have a `render` method, optionally it can initialize its state through the `constructor`, and implement other methods such as [Lifecycle](https://facebook.github.io/react/docs/react-component.html) callbacks.
+`Lifecycle callbacks` are useful when you want to render or update components, or to receive notifications at different stages of `Lifecycle`.
 
-TeslaBattery는 React.Component를 상속함으로서 render 메소드를 가져야하며 선택적으로 constructor를 통해 상태 초기화를 할 수 있고 [Lifecycle](https://facebook.github.io/react/docs/react-component.html) callbacks 같은 다른 메소드를 구현할 수도 있다.
-Lifecycle callback은 컴포넌트를 렌더링하거나 업데이트하려고 할 때 또는 Lifecycle의 다른 단계에서 알림을 받고자 할 때 편리하다.
-
-`src/containers` 디렉토리를 생성하고 그 안에 `TeslaBattery.js` 파일을 만들고 다음의 코드를 입력한다.
+Create the `src/containers` directory, create a `TeslaBattery.js` file in it, and enter the following code:
 
 ```
 import React from 'react';
@@ -235,12 +233,12 @@ class TeslaBattery extends React.Component {
 export default TeslaBattery;
 ```
 
-컨테이너의 관심은 어떻게 동작하는가에 있기 때문에 `TeslaBattery.css` 에는 최소한의 스타일만 준다.
-앞으로 만들어질 컴포넌트들은 `TesalBattery` 컨테이너 안에 순차적으로 구성되어질 것이다.
+`TeslaBattery.css` only holds a minimal style because the container's interest is how it works.
+The components to be created in the future will be configured in the `TesalBattery` container sequentially.
 
 ## TeslaNotice Component
-스태틱 텍스트 부분을 먼저 TeslaNotice 컴포넌트로 만들어보자.
-`src/components/TeslaNotice` 디렉토리를 생성하고 그 안에 `TeslaNotice.js` 파일을 만들고 다음의 코드를 입력하자.
+Let's first create a static text part with a `TeslaNotice` component.
+Create the `src/components/TeslaNotice` directory, create a `TeslaNotice.js` file in it, and enter the following code:
 
 ```
 import React from 'react';
@@ -265,7 +263,7 @@ export default TeslaNotice;
 ```
 
 ### TeslaNotice Component Style
-`src/components/TeslaNotice ` 디렉토리안에 `TeslaNotice.css` 파일을 만들고 다음 스타일을  준다.
+Next up, create `src/components/TeslaNotice` directory, create `TeslaNotice.css` in it and add these styles to your `TeslaNotice.css` file:
 
 ```
 .tesla-battery__notice {
@@ -277,7 +275,7 @@ export default TeslaNotice;
 ```
 
 ### Import TeslaNotice component in TeslaBattery Container
-그 다음에 `TeslaBattery.js`에서 `TeslaNotice` 컴포넌트를 사용할 수 있도록 `import`한다.
+Next, import `TeslaNotice` component in `TeslaBattery.js` :
 
 ```
 ...
@@ -295,11 +293,11 @@ class TeslaBattery extends React.Component {
 }...
 ```
 
-> 앞으로도 이러한 패턴으로 컴포넌트를 생성하고 TeslaBattery 컨테이너에서 Import 하여 사용하는 방식으로 개발이 진행될것이다.
+> We will continue in such a way that components are created in this pattern and imported from the `TeslaBattery` container.
 
 ## TeslaCar Component
-이번엔 멋진 TeslaCar를 렌더링해보자. 
-`src/components/TeslaCar` 디렉토리를 생성하고 그 안에 `TeslaCar.js` 파일을 만들고 다음의 코드를 입력하자.
+Now let's render a nice `TeslaCar`. 
+Create the `src/components/TeslaCar` directory, create a `TeslaCar.js` file in it, and inside your `TeslaCar.js` file :
 
 ```
 import React from 'react';
@@ -320,14 +318,16 @@ TeslaCar.propTypes = {
 
 export default TeslaCar;
 ```
-여기서 React built-in typechecking 기능을 이용하여 `propTypes`를 지정하였다. 
-개발모드에서 React는 컴포넌트에 전달되는 `props`를 체크하게 된다. (성능상의 이유로 오직 개발모드에서만 가능하다)
-각 `props` 속성에 대해 React는 (1) prop이 예상되는지 (2) prop이 올바른 유형인지 확인하기 위해 컴포넌트의 `propType` 객체에서 이를 찾으려고 시도한다. 이 경우 `TeslaCar` 컴포넌트가 wheelsize라는 `props` 속성을 기대하고 있으며 `number` 타입이라는 것을 지정한다. 잘못된 값이 제공되면 자바스크립트 콘솔에 경고가 표시되어 잠재적인 버그를 바로잡는데 유용하다.
 
-> React.PropTypes에 더 자세한 정보는 [여기](https://facebook.github.io/react/docs/typechecking-with-proptypes.html)를 참조
+Here we specify `propTypes` using the React built-in typechecking. 
+In development mode, React checks `props` passed to the component. (Only in development mode for performance reasons)
+For each `props` attribute, React attempts to find it in the component's `propType` object to determine whether (1) prop is expected (2) prop is the correct type. In this case, the `TeslaCar` component expects the `props` attribute `wheelsize` and specifies that it is a `number` type. If the wrong value is provided, a warning appears in the JavaScript console, which is useful for fixing potential bugs in early stage.
+
+> More information on React.PropTypes can be found [here](https://facebook.github.io/react/docs/typechecking-with-proptypes.html)
 
 ### TeslaCar Component Style
-다음으로 `src/components/TeslaCar` 디렉토리안에 `TeslaCar.css` 파일을 만들고 다음 스타일을 준다. 코드가 길어 여기서는 생략하였으므로 [소스코드](https://github.com/gyver98/react-tesla-battery-range-calculator-tutorial/blob/master/src/components/TeslaCar/TeslaCar.css)를 확인하도록 하자.
+Next, create a `TeslaCar.css` file in the `src/components/TeslaCar` directory and give it the following style. 
+Since the code is long and omitted here, let's check the [source code](https://github.com/gyver98/react-tesla-battery-range-calculator-tutorial/blob/master/src/components/TeslaCar/TeslaCar.css).
 
 ```
 .tesla-car {
@@ -343,10 +343,12 @@ export default TeslaCar;
   margin: 0 auto; }
 
 ...
-
 ```
+
+This gives us our animations and the component base for the car, which is displayed as background images.
+
 ### Import TeslaCar component in TeslaBattery Container
-그 다음에 `TeslaBattery.js`에서 `TeslaCar` 컴포넌트를 사용할 수 있도록 `import`한다.
+Next, we need to add these components to our container again. Import `TeslaNotice` component in `TeslaBattery.js` :
 
 ```
 ...
@@ -366,22 +368,22 @@ class TeslaBattery extends React.Component {
 ...
 ```
 
-파일을 저장 후 업데이트 된 화면은 다음과 같다.
+Here’s what you should be seeing:
 
 ![enter image description here](https://lh3.googleusercontent.com/_l3ezUs5AA8V50X8FAFX-_cHDujEddpR0iv5Z1NQvrVeTuvKj-_WHlocKoESg3EMgEJ5hO4xXg=s944 "TeslaCar.png")
 
 ## Props and React Developer Tools 
+Wow! It's nice but something is missing. The wheels are not shown.
+Let's look for the cause. According to the source code, `TeslaCar` should be passed to `props` and class name changed based on `props.wheelsize`.
+In other words, you need to receive some data (in this case, wheelsize) from the parent component and render it properly, and there must be a communication method that can receive the data. 
+React is composed of a component tree, which consists of a container for delivering data and status, and a component for passively receiving data and status from a container.
+The tool that delivers this state to the subcomponents is a single object, `props`.
 
-와우! 멋지긴 한데 뭔가 이상하다. 바퀴가 보이지 않는다.
-원인을 찾아보자. 소스코드에 따르면 `TeslaCar`는 `props`를 넘겨 받고 `props.wheelsize`에 따라 클래스가 달라져야 한다.
-즉 뭔가 필요한 데이타(이 경우엔 wheelsize)를 상위의 컴포넌트로 받아야만 적절하게 렌더링할 수 있다는 것이고 데이타를 전달받을 수 있는 커뮤니케이션 방법이 있어야 한다. 
- 
-React는 컴포넌트 트리로 구성이 되는데 데이타와 상태를 갖고 전달해주는 컨테이너와 데이타와 상태를 컨테이너로부터 수동적으로 전달받는 컴포넌트로 크게 구성된다고 볼 수 있는데, 바로 이 상태를 하위 컴포넌트에게 전달해주는 방법이 `props`인 것이다.  
+You can easily understand this by checking the component tree using [React Developer Tools](https://www.google.com.au/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0ahUKEwi10rn7soTSAhVJp5QKHYPcC5YQFggbMAA&url=https%3A%2F%2Fchrome.google.com%2Fwebstore%2Fdetail%2Freact-developer-tools%2Ffmkadmapgofadopljbjfkapdkoienihi%3Fhl%3Den&usg=AFQjCNEv0udXgBoaukzJa59I_vufhScUbQ&sig2=wTA5bB3JG2ZQ6wbSiDgq8g) in Chrome.
 
-크롬에서 [React Developer Tools](https://www.google.com.au/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0ahUKEwi10rn7soTSAhVJp5QKHYPcC5YQFggbMAA&url=https%3A%2F%2Fchrome.google.com%2Fwebstore%2Fdetail%2Freact-developer-tools%2Ffmkadmapgofadopljbjfkapdkoienihi%3Fhl%3Den&usg=AFQjCNEv0udXgBoaukzJa59I_vufhScUbQ&sig2=wTA5bB3JG2ZQ6wbSiDgq8g)를 이용하여 컴포넌트 트리를 확인해보면 이를 쉽게 이해할 수 있다.
 ![enter image description here](https://lh3.googleusercontent.com/zaaotVwcHReWQP5wl4odZXvW_wPCRHtPAHuK5aESdCMpSn3EaB96LYvPk3pGEb8DvN6UFy_dcA=s944 "props.jpg")
 
-`props`는 자바스크립트 오브젝트 이며 이 경우에 Empty Object이다. 왜냐하면 상위 컴포넌트인 `TeslaBattery`에서 props를 넘기지 않았기 때문이다.
+`props` is a javascript single object, in this case an empty object. This is because we did not pass `props` in the parent component `TeslaBattery`.
 
 ## State of Application
 여기서 우리 애플리케이션에서 관리해야 할 상태가 무엇이 있는지 생각해보자.
