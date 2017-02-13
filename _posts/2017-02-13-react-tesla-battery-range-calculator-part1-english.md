@@ -7,7 +7,7 @@ categories: blog development react
 ---
 
 In this article, I will share the process of rebuilding Tesla's battery range calculator with React.
-Disclaimer: This tutorial is a reconstruction of the React version of Todd Motto's [Building Tesla's battery range calculator with Angular 2 reactive forms](https://toddmotto.com/building-tesla-range-calculator-angular-2-reactive-forms). 
+Disclaimer: This tutorial is a reconstruction of the React version of Todd Motto's [Building Tesla's battery range calculator with Angular 2 reactive forms](https://toddmotto.com/building-tesla-range-calculator-angular-2-reactive-forms).
 So this post will reuse some materials (data,images and css style). We will focus on rebuilding it in React way.
 This is the final GIF image of our application.
 
@@ -123,6 +123,7 @@ The UI is represented by a component tree as follows.
 In the above mentioned component tree, we can see that it is classified as `Container` and` Presenataional Component`.
 This is a useful pattern that can be used when developing an application with React. 
 It is easier to reuse by dividing components into two categories.
+
 ```
 * Container Component (statful component):
  - Are concerned with how things work.
