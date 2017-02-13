@@ -51,6 +51,10 @@ src
  - index.js
 ```
 
+전체 프로젝트 소스 구조는 다음과 같다
+
+![enter image description here](https://lh3.googleusercontent.com/04dwK9GLp4gpImGo6rUJGgebFOvbZ-6_5Br1iX2uvl4Q-Xq9aMpdT65oMi_dWoz75WBPd3QcYQ=s944 "code structure.png")
+
 ## Project Entry Point
 가장 먼저 우리의 Tesla app을 시작하는 entry point를 설정해야 한다. 고맙게도 `create-react-app`이 이미 만들어 놓았다.
 
@@ -93,7 +97,7 @@ react-tesla-range-calculator/src/asstets
 ## Data service
 Tesla 사이트에서 얻을 수 있는 데이타는 하드 코드되 있고 아주 큰 데이타인데, 여기서는 이를 사용하기 쉽도록 Todd가 새롭게 만든 버전의 데이타를 사용하도록 하겠다. [link](https://github.com/toddmotto/angular-tesla-range-calculator/blob/master/src/app/tesla-battery/tesla-battery.service.ts)
 
-우리는 Angular2에서 사용하는 `Injectable` decorator를 사용하지 않기 때문에 그 부분을 제외하고 export 부분만을 카피해서 `src/services/BatteryService.js` 에 저장하고  이를 `TeslaBattery Container`에서 `import` 해서 사용할 것이다.
+우리는 Angular2에서 사용하는 `Injectable` decorator를 사용하지 않기 때문에 그 부분을 제외하고 export 부분만을 카피해서 `src/services/BatteryService.js` 에 저장한다.  나중에  `TeslaBattery Container`에서 `import` 해서 사용할 것이다.
 
 이 데이타 서비스는 추후에 다시 언급하도록 하겠다.
 
@@ -444,7 +448,7 @@ class TeslaBattery extends React.Component {
 
 ![enter image description here](https://lh3.googleusercontent.com/6PBG4kbLiVk1QfkXo8pYnfYW33_7yH_ULxq_8uBvxYFloDxacD8WPXLYlduOa0AT-cG9_8qTqQ=s944 "teslacar props.jpg")
 
-> 어떠한 함수들은 입력값을 변경하지 않고 언제나 같은 입력값이면 같은 출력값을 리턴한다는 의미에서 순수하다고 불리운다. (`Pure function`) 여기서 한 가지 중요한 React의 엄격한 룰은 모든 React 컴포넌트들은 `props`에 관해서는 순수 함수와 같이 동작해야 한다는 것이다. `props`는 read-only여야 한다.
+> 어떠한 함수들은 입력값을 변경하지 않고 언제나 같은 입력값이면 같은 출력값을 리턴한다는 의미에서 순수하다고 불리운다. (`Pure function`) 여기서 한 가지 중요한 React의 엄격한 룰은 모든 React 컴포넌트들은 `props`에 관해서는 순수 함수와 같이 동작해야 한다는 것이다. `props`는 reda-only여야 한다.
 
 
 ## TeslaStats Component

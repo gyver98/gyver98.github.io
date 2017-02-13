@@ -53,6 +53,9 @@ src
  - index.css
  - index.js
 ```
+Here is project source structure :
+
+![enter image description here](https://lh3.googleusercontent.com/04dwK9GLp4gpImGo6rUJGgebFOvbZ-6_5Br1iX2uvl4Q-Xq9aMpdT65oMi_dWoz75WBPd3QcYQ=s944 "code structure.png")
 
 ## Project Entry Point
 First we need to set the entry point to start our Tesla app. Thankfully it's already created by `create-react-app`.
@@ -98,7 +101,7 @@ react-tesla-range-calculator/src/asstets
 ## Data service
 The data you can get from Tesla site is hard-coded and very large, so I'll use Todd's new version of the data to make it easier to use. [link](https://github.com/toddmotto/angular-tesla-range-calculator/blob/master/src/app/tesla-battery/tesla-battery.service.ts)
 
-We do not use the `Injectable decorator` used in Angular2, so we will copy only the `export` part, save it in `src/services/BatteryService.js`, and `import` it in the `TeslaBattery` container.
+We do not use the `Injectable decorator` used in Angular2, so we will copy only the `export` part, just save it in `src/services/BatteryService.js` for now. Later, we will use `import` it in `TeslaBattery` container.
 
 We will revisit this data service later.
 
@@ -130,7 +133,7 @@ The UI is represented by a component tree as follows.
 ```
 
 ## Container and Presentational Components
-In the above mentioned component tree, we can see that it is classified as `Container` and` Presenataional Component`.
+In the above mentioned component tree, we can see that it is classified as `Container` and` Presenatational Component`.
 
 This is a useful pattern that can be used when developing an application with React. 
 It is easier to reuse by dividing components into two categories.
@@ -177,7 +180,7 @@ const Header = () => (
 export default Header;
 ```
 
-> Here, the component is in the form of a function (`ES6 Arrow Function`). A component declared in this form is called a functional component. If there is no `state` and the` lifecycle` method is not needed, it is a good pattern to declare it as a function type. Functional components are suitable for `Presentational Component` because they have no state and they depend only on the `props` that is received from higher components.
+> Here, the component is in the form of a function (`ES6 Arrow Function`). A component declared in this form is called a `functional component`. If there is no `state` and the` lifecycle` method is not needed, it is a good pattern to declare it as a function type. Functional components are suitable for `Presentational Component` because they have no state and they depend only on the `props` that is received from higher components.
 
 ### Header Component Style
 Create a `Header.css` file in the `src/components/Header` directory and type the following style:
@@ -195,7 +198,7 @@ Create a `Header.css` file in the `src/components/Header` directory and type the
 }
 ```
 
-> There are a number of ways to apply styles to components, but here we will create each component directory in the `components` directory and pair `js` and `css` files each time we create a component.
+> There are a number of ways to apply styles to components, but here we will create each component directory in the `src/components` directory and pair `js` and `css` files each time we create a component.
 
 ### Import Header component in App Container
 Now that you've created the `Header` component, let's use `import` in the entry point `App.js`.
@@ -396,7 +399,7 @@ Let's look for the cause. According to the source code, `TeslaCar` should be pas
 
 In other words, you need to receive some data (in this case, wheelsize) from the parent component and render it properly, and there must be a communication method that can receive the data. 
 
-React is composed of a component tree, which consists of a container for delivering data and status, and a component for passively receiving data and state from a container.
+React is composed of a component tree, which consists of a container for delivering data and state, and a component for passively receiving data and state from a container.
 The tool that delivers this state to the subcomponents is a single object, `props`.
 
 You can easily understand this by checking the component tree using [React Developer Tools](https://www.google.com.au/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0ahUKEwi10rn7soTSAhVJp5QKHYPcC5YQFggbMAA&url=https%3A%2F%2Fchrome.google.com%2Fwebstore%2Fdetail%2Freact-developer-tools%2Ffmkadmapgofadopljbjfkapdkoienihi%3Fhl%3Den&usg=AFQjCNEv0udXgBoaukzJa59I_vufhScUbQ&sig2=wTA5bB3JG2ZQ6wbSiDgq8g) in Chrome.
