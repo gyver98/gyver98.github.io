@@ -41,7 +41,9 @@ Tools and versions I used during the implementation of this app:
 node v7.3.0
 npm v3.10.10
 ```
+
 ## 1.2 create-react-app
+
 [creat-react-app](https://github.com/facebookincubator/create-react-app) is a new tool open-sourced by Facebook for fast react application development, which allows you to easily start React applications without complex setups.
 You can easily install our project `react-tesla-range-calculator` and start the application right away with the following command:
 
