@@ -33,15 +33,15 @@ See the following resources.
 
 
 ## 1. Project Setup and creat-react-app
-## 1.1 Requirements
 
+## 1.1 Requirements
 Tools and versions I used during the implementation of this app:
 
 ```
 node v7.3.0
 npm v3.10.10
 ```
-
+## 1.2 create-react-app
 [creat-react-app](https://github.com/facebookincubator/create-react-app) is a new tool open-sourced by Facebook for fast react application development, which allows you to easily start React applications without complex setups.
 You can easily install our project `react-tesla-range-calculator` and start the application right away with the following command:
 
@@ -76,7 +76,7 @@ Here is project source structure :
 <img src="https://lh3.googleusercontent.com/04dwK9GLp4gpImGo6rUJGgebFOvbZ-6_5Br1iX2uvl4Q-Xq9aMpdT65oMi_dWoz75WBPd3QcYQ=s944" /> 
 </div>
 
-## 1.1 Project Entry Point
+## 1.3 Project Entry Point
 First we need to set the entry point to start our Tesla app. Thankfully it's already created by `create-react-app`.
 
 `src/App.js` is the entry point for our app.
@@ -102,7 +102,7 @@ export default App;
 
 When you save the file, it will be automatically compiled and you can see the updated screen.
 
-## 1.2 Project images/assets
+## 1.4 Project images/assets
 
 All images required for this project can be downloaded from:
 
@@ -117,7 +117,7 @@ react-tesla-range-calculator/src/asstets
 
 > Any time you feel like if you've missed something or unsure if you're doing right, you can refer to the [source code](https://github.com/gyver98/react-tesla-battery-range-calculator-tutorial) as a reference.
 
-## 1.3 Data service
+## 1.5 Data service
 The data you can get from Tesla site is hard-coded and very large, so I'll use Todd's new version of the data to make it easier to use. [link](https://github.com/toddmotto/angular-tesla-range-calculator/blob/master/src/app/tesla-battery/tesla-battery.service.ts)
 
 We do not use the `Injectable decorator` used in Angular2, so we will copy only the `export` part, just save it in `src/services/BatteryService.js` for now. Later, we will use `import` it in `TeslaBattery` container.
