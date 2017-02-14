@@ -8,14 +8,14 @@ categories: blog development react
 
 
 이 글에서는 React로 Tesla's battery range calculator을 구현하는 과정을 공유하고자 한다.
-이 튜토리얼은 Todd Motto의 [Building Tesla's battery range calculator with Angular 2 reactive forms](https://toddmotto.com/building-tesla-range-calculator-angular-2-reactive-forms)를 참조하여 React 버전으로 재구성한것임을 밝혀둔다.
+이 튜토리얼은 Todd Motto의 [Building Tesla's battery range calculator with Angular 2 reactive forms](https://toddmotto.com/building-tesla-range-calculator-angular-2-reactive-forms)를 참조하여 React 버전으로 재구성한것임을 밝혀둔다. 따라서 몇가지 재료들 (정적인 데이타나 이미지 그리고 css style)은 재사용하였으며, 여기서 우리는 React 방식으로 이 앱을 다시 빌드해보는데 촛점을 맞출것이다.
 
 이것이 우리가 만들 애플리케이션의 최종 GIF 이미지다.
 
 ![final](https://lh3.googleusercontent.com/ADOBXOthirfSi9f9j-f2giwZc_9Gtlb6qcNAmnR0y1rLVBKvRRyG4Zf5oPkvtlXE2dsKKFy0Bw=s944 "final.gif")
 
 
-> 라이브 버전은 [여기서](http://cute-amusement.surge.sh) 확인할 수 있다.
+> 라이브 버전은 [여기서](http://react-tesla-charge-calculator.surge.sh/) 확인할 수 있다.
  
 > 소스코드는 [여기서](https://github.com/gyver98/react-tesla-battery-range-calculator-tutorial) 확인 할 수 있다. 
  
@@ -1293,11 +1293,46 @@ class TeslaBattery extends React.Component {
 export default TeslaBattery;
 ```
 
-와우! 완성된 Tesla Batter Range Calculator는 다음과 같다.
+## 14. Build
+이제 개발한 우리 앱을 빌드해보자.
 
+```
+npm run build
+```
+
+build 가 성공하면 우리 프로젝트 디렉토리에 build 폴더가 생성되고, 다음과 같은 메시지를 볼 수 있다.
+
+![enter image description here](https://lh3.googleusercontent.com/kBH7x8EdMr_Fk0hPTknOHdnDj7TFLmsqbEuk2obOf8U5y0lclyK2Doxgr_27h7DPrbEriVndow=s944 "build.png")
+
+이제 우리 프로젝트는 deploy 될 준비가 되었다.
+
+## 15. Deploy
+[Surge](http://surge.sh/) 같은 툴을 사용하면 빌드한 우리 앱을 정말 쉽게 배포할 수 있다.
+`Surge`는 간단한 웹 퍼블리싱 도구로서 HTML, CSS, 그리고 JS 파일을 무료로 커맨드 라인에서 쉽게 배포 할 수 있게 해준다.
+
+먼저 툴을 설치한 후 `build` 디렉토리내에서 `surge` 명령어를 실행한다. 
+
+```
+$ npm install -globall surge
+$ cd build
+$ surge
+```
+
+처음 실행하는 경우에는 이메일과 패스워드를 입력하여 새로운 account를 등록해야 한다.
+
+순식간에 디플로이가 끝나 버렸다.
+
+![enter image description here](https://lh3.googleusercontent.com/WzzxlqjZfPd0GLEvaVwtEKIngc7uNkqzjN9JahXj_j3Y4t8Gi01jHQzTznkLQHtfEAHtkDrFyQ=s944 "surge.jpg")
+
+
+디플로이된 우리의 프로젝트에 접속해보자 : [react-tesla-charge-calculator.surge.sh](http://react-tesla-charge-calculator.surge.sh/) 
 
 ![finalcar](https://lh3.googleusercontent.com/ADOBXOthirfSi9f9j-f2giwZc_9Gtlb6qcNAmnR0y1rLVBKvRRyG4Zf5oPkvtlXE2dsKKFy0Bw=s944 "final.gif")
 
+## Conculsion
+이 포스트에서 우리는 React 컴포너트를 생성하고 구성하는 방법을  Tesla's Battery Range Calculator를 다시 빌드하는 과정을 통해 배울 수 있었다. 지금까지 잘 따라했다면, React 앱을 설치하고 실행하게된 것을 축하한다.
 
+다음 포스트에서는 Redux 라이브러리를 사용하여 상태 관리를 개선하는 방법에 대해 살펴볼 생각이다. 그 동안 의견, 제안 또는 수정 사항이 있아면 언제든지 커멘트 남겨주길 바란다.
 
+Thanks for your feedback in advance.
 

@@ -17,7 +17,7 @@ This is the final GIF image of our application.
 
 ![final](https://lh3.googleusercontent.com/ADOBXOthirfSi9f9j-f2giwZc_9Gtlb6qcNAmnR0y1rLVBKvRRyG4Zf5oPkvtlXE2dsKKFy0Bw=s944 "final.gif")
 
-> Check out the [live version](http://cute-amusement.surge.sh) before we get started.
+> Check out the [live version](http://react-tesla-charge-calculator.surge.sh/) before we get started.
  
 > Check out the [source code](https://github.com/gyver98/react-tesla-battery-range-calculator-tutorial). 
  
@@ -1355,8 +1355,51 @@ export default TeslaBattery;
 
 Wow! The completed Tesla Batter Range Calculator is here:
 
+## 14. Build
+이제 개발한 우리 앱을 빌드해보자.
+
+```
+npm run build
+```
+
+build 가 성공하면 우리 프로젝트 디렉토리에 build 폴더가 생성되고, 다음과 같은 메시지를 볼 수 있다.
+
+![enter image description here](https://lh3.googleusercontent.com/kBH7x8EdMr_Fk0hPTknOHdnDj7TFLmsqbEuk2obOf8U5y0lclyK2Doxgr_27h7DPrbEriVndow=s944 "build.png")
+
+이제 우리의 build 는 deploy 될 준비가 되었다.
+
+## 15. Deploy
+[Surge](http://surge.sh/) 같은 툴을 사용하면 빌드한 우리 앱을 정말 쉽게 배포할 수 있다.
+With tools like [Surge](http://surge.sh/), you can really easily deploy our built app.
+
+`Surge` is simple, single-command web publishing. It publishes HTML, CSS, and JS for free, without leaving the command line.
+
+
+First, install the tool with `npm` and run the `surge` command in the `build` directory. 
+
+```
+$ npm install -globall surge
+$ cd build
+$ surge
+```
+
+If this is your first time running, you will need to enter your email and password to register a new account.
+
+The deployment is finished in an instant.
+
+![enter image description here](https://lh3.googleusercontent.com/WzzxlqjZfPd0GLEvaVwtEKIngc7uNkqzjN9JahXj_j3Y4t8Gi01jHQzTznkLQHtfEAHtkDrFyQ=s944 "surge.jpg")
+
+
+Let's connect to our deployed project. [react-tesla-charge-calculator.surge.sh](http://react-tesla-charge-calculator.surge.sh/) 
 
 ![finalcar](https://lh3.googleusercontent.com/ADOBXOthirfSi9f9j-f2giwZc_9Gtlb6qcNAmnR0y1rLVBKvRRyG4Zf5oPkvtlXE2dsKKFy0Bw=s944 "final.gif")
+
+## Conculsion
+In this post, we learned some points of creating React components and composing them to create a front-end app through rebuilding `Tesla's Battery Range Calculator`. If you've followed along until now, then congratulations on getting a React app up and running.
+
+In the next installment, we’ll explore how to improve our state management with the `Redux` library. In the meantime, if you have any comments, suggestions, or corrections, please feel free to post them in the comments section.
+
+Thanks for your feedback in advance.
 
 
 
