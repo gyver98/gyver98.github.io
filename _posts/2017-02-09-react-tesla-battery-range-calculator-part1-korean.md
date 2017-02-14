@@ -42,6 +42,7 @@ node v7.3.0
 npm v3.10.10
 ```
 
+
 ## 1.2 create-react-app
 [creat-react-app](https://github.com/facebookincubator/create-react-app)은 빠른 react application 개발을 위해 페이스북에서 만든 새로운 툴로서 복잡한 설정없이 바로 React 프로젝트를 쉽게 시작할 수 있게 도와준다.
 다음의 명령을 통해 쉽게 우리의 프로젝트 `react-tesla-range-calculator`를 설치하고 애플리케이션을 바로 시작할 수 있다.
