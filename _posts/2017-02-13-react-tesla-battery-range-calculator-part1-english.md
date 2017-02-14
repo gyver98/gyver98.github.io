@@ -23,7 +23,24 @@ This is the final GIF image of our application.
  
 Now let's create an application step by step.
 
+>
+You may need basic React knowledge to follow this tutorial.
+See the following resources.
+>
+[React Official Documentation](https://facebook.github.io/react/docs/hello-world.html)
+>
+[React: Getting Started and Concepts](https://scotch.io/tutorials/learning-react-getting-started-and-concepts)
+
+
 ## 1. Project Setup and creat-react-app
+## 1.1 Requirements
+
+Tools and versions I used during the implementation of this app:
+
+```
+node v7.3.0
+npm v3.10.10
+```
 
 [creat-react-app](https://github.com/facebookincubator/create-react-app) is a new tool open-sourced by Facebook for fast react application development, which allows you to easily start React applications without complex setups.
 You can easily install our project `react-tesla-range-calculator` and start the application right away with the following command:

@@ -21,8 +21,27 @@ categories: blog development react
  
 이제 단계별로 애플리케이션을 만들어보자.
 
+```
+이 튜토리얼을 따라하기 위해 기초적인 React 지식이 필요할 수 있다.
+다음의 리소스들을 참고하자.
+
+[React Official Documentation](https://facebook.github.io/react/docs/hello-world.html)
+[React: Getting Started and Concepts](https://scotch.io/tutorials/learning-react-getting-started-and-concepts)
+
+```
+
 ## 1. Project Setup and creat-react-app
 
+## 1.1 Requirements
+
+이 앱을 위해 사용한 도구는 다음과 같다.
+
+```
+node v7.3.0
+npm v3.10.10
+```
+
+## 1.2 create-react-app
 [creat-react-app](https://github.com/facebookincubator/create-react-app)은 빠른 react application 개발을 위해 페이스북에서 만든 새로운 툴로서 복잡한 설정없이 바로 React 프로젝트를 쉽게 시작할 수 있게 도와준다.
 다음의 명령을 통해 쉽게 우리의 프로젝트 `react-tesla-range-calculator`를 설치하고 애플리케이션을 바로 시작할 수 있다.
 
@@ -57,7 +76,7 @@ src
 <img src="https://lh3.googleusercontent.com/04dwK9GLp4gpImGo6rUJGgebFOvbZ-6_5Br1iX2uvl4Q-Xq9aMpdT65oMi_dWoz75WBPd3QcYQ=s944" /> 
 </div>
 
-## 1.1 Project Entry Point
+## 1.2 Project Entry Point
 가장 먼저 우리의 Tesla app을 시작하는 entry point를 설정해야 한다. 고맙게도 `create-react-app`이 이미 만들어 놓았다.
 
 `src/App.js` 가 바로 우리 앱의 엔트리 포인트이다.
@@ -81,7 +100,7 @@ export default App;
 ```
 파일을 저장하면 자동으로 컴파일이 진행되어 업데이트된 화면을 볼 수 있다.
 
-## 1.2 Project images/assets
+## 1.3 Project images/assets
 
 이 프로젝트에서 필요한 모든 이미지들은 다음에서 다운로드 받을 수 있다.
 
@@ -96,7 +115,7 @@ react-tesla-range-calculator/src/asstets
 
 > 스텝을 따라하다가 뭔가 놓친거 같거나 확실하지 않다면 언제든지 [소스코드](https://github.com/gyver98/react-tesla-battery-range-calculator-tutorial)를 참조하도록 하자. 
 
-## 1.3 Data service
+## 1.4 Data service
 Tesla 사이트에서 얻을 수 있는 데이타는 하드 코드되 있고 아주 큰 데이타인데, 여기서는 이를 사용하기 쉽도록 Todd가 새롭게 만든 버전의 데이타를 사용하도록 하겠다. [link](https://github.com/toddmotto/angular-tesla-range-calculator/blob/master/src/app/tesla-battery/tesla-battery.service.ts)
 
 우리는 Angular2에서 사용하는 `Injectable decorator`를 사용하지 않기 때문에 그 부분을 제외하고 `export` 부분만을 카피해서 `src/services/BatteryService.js` 에 저장한다.  나중에  `TeslaBattery Container`에서 `import` 해서 사용할 것이다.
