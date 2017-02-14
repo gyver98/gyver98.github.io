@@ -4,6 +4,7 @@ title:      Building Tesla's battery range calculator with React
 date:       2017-02-13 11:37:19
 summary:    Rebuilding Tesla's Battery Range Calculator with React 
 categories: blog development react
+comments: true
 ---
 
 In this article, I will share the process of rebuilding Tesla's battery range calculator with React.
@@ -1389,6 +1390,7 @@ The deployment is finished in an instant.
 
 
 Let's connect to our deployed project. 
+
 >[react-tesla-charge-calculator.surge.sh](http://react-tesla-charge-calculator.surge.sh/) 
 
 ![finalcar](https://lh3.googleusercontent.com/ADOBXOthirfSi9f9j-f2giwZc_9Gtlb6qcNAmnR0y1rLVBKvRRyG4Zf5oPkvtlXE2dsKKFy0Bw=s944 "final.gif")
@@ -1399,6 +1401,8 @@ In this post, we learned some points of creating React components and composing 
 In the next installment, we’ll explore how to improve our state management with the `Redux` library. In the meantime, if you have any comments, suggestions, or corrections, please feel free to post them in the comments section.
 
 Thanks for your feedback in advance.
+
+{% include disqus.html %}
 
 
 

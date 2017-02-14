@@ -4,6 +4,7 @@ title:      (한글버전) Building Tesla's battery range calculator with React
 date:       2017-02-09 11:37:19
 summary:    React로 Tesla's battery range calculator 구현하기 
 categories: blog development react
+comments: true
 ---
 
 
@@ -1326,6 +1327,7 @@ $ surge
 
 
 디플로이된 우리의 프로젝트에 접속해보자. 
+
 > [react-tesla-charge-calculator.surge.sh](http://react-tesla-charge-calculator.surge.sh/) 
 
 ![finalcar](https://lh3.googleusercontent.com/ADOBXOthirfSi9f9j-f2giwZc_9Gtlb6qcNAmnR0y1rLVBKvRRyG4Zf5oPkvtlXE2dsKKFy0Bw=s944 "final.gif")
@@ -1336,4 +1338,6 @@ $ surge
 다음 포스트에서는 Redux 라이브러리를 사용하여 상태 관리를 개선하는 방법에 대해 살펴볼 생각이다. 그 동안 의견, 제안 또는 수정 사항이 있아면 언제든지 커멘트 남겨주길 바란다.
 
 Thanks for your feedback in advance.
+
+{% include disqus.html %}
 
