@@ -41,9 +41,7 @@ Tools and versions I used during the implementation of this app:
 node v7.3.0
 npm v3.10.10
 ```
-
 ## 1.2 create-react-app
-
 [creat-react-app](https://github.com/facebookincubator/create-react-app) is a new tool open-sourced by Facebook for fast react application development, which allows you to easily start React applications without complex setups.
 You can easily install our project `react-tesla-range-calculator` and start the application right away with the following command:
 
@@ -273,6 +271,22 @@ export default TeslaBattery;
 
 ### 4.1 TeslaBattery Container Style
 `TeslaBattery.css` only holds a minimal style because the container's interest is how it works.
+
+```
+.tesla-battery {
+  width: 1050px;
+  margin: 0 auto;
+}
+
+.tesla-battery h1 {
+  font-family: 'RobotoNormal';
+  font-weight: 100;
+  font-size: 38px;
+  text-align: center;
+  letter-spacing: 3px;
+}   
+```
+
 The components to be created in the future will be configured in the `TesalBattery` container sequentially.
 
 ## 5. TeslaNotice Component
@@ -493,8 +507,7 @@ You can also see that `props` is passed well in the component tree.
 
 ![enter image description here](https://lh3.googleusercontent.com/6PBG4kbLiVk1QfkXo8pYnfYW33_7yH_ULxq_8uBvxYFloDxacD8WPXLYlduOa0AT-cG9_8qTqQ=s944 "teslacar props.jpg")
 
-> Some functions are called "pure" in the sense that they always return the same output value if they have the same input value without changing the input value. (`Pure function`) One important React strict rule here is that all React components should behave like pure functions with respect to 
-`props`. `props` must be read-only. 
+> Some functions are called "pure" in the sense that they always return the same output value if they have the same input value without changing the input value. (`Pure function`) One important React strict rule here is that all React components should behave like pure functions with respect to ` props`. `props` must be read-only. 
 
 
 ## 9. TeslaStats Component
@@ -759,8 +772,8 @@ Since the code is long and omitted here, let's check the [source code](https://g
 ...  
 ```
 
-### 10.2 Import TeslaStats component in TeslaBattery Container
-Now, we will implement `callback` in `TeslaBattery` and pass it to the `TeslaCar` component.
+### 10.2 Import TeslaCounter Component in TeslaBattery Container
+Now, we will implement `callback` in `TeslaBattery` and pass it to the `TeslaCounter` component.
 
 First, add `import` to use the` TeslaCounter` component in `TeslaBattery.js`.
 
@@ -865,11 +878,31 @@ render() {
 }    
 ```
 
+### 10.3 TeslaBattery Container Style
+An additional style is required for `TeslaBattery` as the` TeslaCounter` component is added.
+Open the `TeslaBattery.css` file and add the following:
 
+```
+.tesla-climate-container {
+  float: left;
+  width: 420px;
+  padding: 0 40px;
+  margin: 0 40px 0 0;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+}
+.tesla-controls {
+  display: block;
+  width: 100%;
+}
+
+```
+
+### 10.4 Default Value Props
 Here, `initValues` passed to `TeslaCounter` is a constant value and is passed from `App` which is a parent component of `TeslaBattery`.
 
 
-Open `App.js` and pass the `counterDefaultVal` object to the `TeslaBatter` component as follows:
+Open `App.js` and pass the `counterDefaultVal` object to the `TeslaBattery` component as follows:
 
 ```
 import React, { Component } from 'react';
@@ -912,7 +945,7 @@ Now, when you click Speed ​​and Temperature, you can see that the changed va
 
 ![TeslaCounter](https://lh3.googleusercontent.com/qe5PfBiZqso7MTGmv2FJX4O1u_PyJwybhpJCeuVsFgV7yfUXB3qxWXrZGrYw-bxxZaR9XfNTmA=s944 "counter.gif")
 
-### 10.3 Virtual DOM
+### 10.5 Virtual DOM
 What a single-page application (SPA) can give us is a seamless user experience and interaction.
 
 In our app, car model values ​​are updated without having to reload the entire page every time the user changes speed or temperature. Even if you need to connect to the server to get the data.
@@ -987,7 +1020,7 @@ Since the code is long and omitted here, let's check the [source code](https://g
   ...
 ```
 
-### 11.2 Import TeslaClimate component in TeslaBattery Container
+### 11.2 Import TeslaClimate Component in TeslaBattery Container
 Now we will implement `callback` in `TeslaBattery` and pass it to the `TeslaClimate` component.
 
 First, add `import` to use the` TeslaClimate` component in `TeslaBattery.js`. We implement `callback` function `handleChangeClimate()` and bind it in `constructor()`. Then pass the `callback` function to the `TeslaClimate` component as `props`.
@@ -1091,7 +1124,7 @@ Since the code is long and omitted here, let's check the [source code](https://g
 ...
 ```
 
-### 12.2 Import TeslaWheels component in TeslaBattery Container
+### 12.2 Import TeslaWheels Component in TeslaBattery Container
 Finally, implement `callback` in `TeslaBattery` and pass it to the `TeslaWheels` component.
 
 Add `import` to use the `TeslaWheels` component in `TeslaBattery.js`. We then implement `callback` function `handleChangeWheels()` and bind it in `constructor`. Then pass the `callback` function to the `TeslaWheels` component as `props`.

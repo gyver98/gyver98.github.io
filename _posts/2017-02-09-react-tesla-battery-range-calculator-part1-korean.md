@@ -269,6 +269,22 @@ export default TeslaBattery;
 
 ### 4.1 TeslaBattery Container Style
 컨테이너의 관심은 어떻게 동작하는가에 있기 때문에 `TeslaBattery.css` 에는 최소한의 스타일만 준다.
+
+```
+.tesla-battery {
+  width: 1050px;
+  margin: 0 auto;
+}
+
+.tesla-battery h1 {
+  font-family: 'RobotoNormal';
+  font-weight: 100;
+  font-size: 38px;
+  text-align: center;
+  letter-spacing: 3px;
+}   
+```
+
 앞으로 만들어질 컴포넌트들은 `TesalBattery` 컨테이너 안에 순차적으로 구성되어질 것이다.
 
 ## 5. TeslaNotice Component
@@ -719,8 +735,8 @@ export default TeslaCounter;
 ...  
 ```
 
-### 10.2 Import TeslaStats component in TeslaBattery Container
-자, 이제 우리는 `TeslaBattery`에 `callback`을 구현해 `TeslaCar` 컴포넌트로 전달해 보겠다.
+### 10.2 Import TeslaCounter Component in TeslaBattery Container
+자, 이제 우리는 `TeslaBattery`에 `callback`을 구현해 `TeslaCounter` 컴포넌트로 전달해 보겠다.
 먼저 `TeslaBattery.js`에서 `TeslaCounter` 컴포넌트를 사용할 수 있도록 `import`한다. 그리고 callback 함수인 `increment()` 와 `decrement()`, 내부함수인 `updateCounterState()`를 구현하고 `constructor()` 내에 바인딩한다. 그 후 `callback` 함수를 `TeslaCounter` 컴포넌트에 `props`로 전달한다.
 
 
@@ -822,8 +838,29 @@ render() {
 }    
 ```
 
+### 10.3 TeslaBattery Container Style
+`TeslaCounter` 컴포넌트가 추가됨으로서  `TeslaBattery`에 추가적인 스타일이 필요하다.
+`TeslaBattery.css` 파일을 열고 다음을 추가한다.
+
+```
+.tesla-climate-container {
+  float: left;
+  width: 420px;
+  padding: 0 40px;
+  margin: 0 40px 0 0;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+}
+.tesla-controls {
+  display: block;
+  width: 100%;
+}
+```
+
+### 10.4 Default Value Props
+
 여기서 `TeslaCounter`에 전달되는 `initValues`는 상수값으로 `TeslaBattery`의 상위 컴포넌트인 `App`으로 부터 전달된다.
-`App.js`를 열고 다음과 같이 `counterDefaultVal` 오브젝트를  `TeslaBatter` 컴포넌트에 전달하도록 한다.
+`App.js`를 열고 다음과 같이 `counterDefaultVal` 오브젝트를  `TeslaBattery` 컴포넌트에 전달하도록 한다.
 
 ```
 import React, { Component } from 'react';
@@ -866,7 +903,7 @@ export default App;
 
 ![TeslaCounter](https://lh3.googleusercontent.com/qe5PfBiZqso7MTGmv2FJX4O1u_PyJwybhpJCeuVsFgV7yfUXB3qxWXrZGrYw-bxxZaR9XfNTmA=s944 "counter.gif")
 
-### 10.3 Virtual DOM
+### 10.5 Virtual DOM
 `Single-Page Application (SPA)`이  우리에게 줄 수 있는 것은 매끄러운 사용자 경험과 상호 작용일것이다.
 사용자가 속도나 온도를 바꿀때마다 전체 페이지를 다시 로드할 필요없이 카모델 수치는 업데이트된다. 데이타를 가져오기위해 서버에 접속할 필요가 있다하더라도 말이다.
 이러한 사용자 경험을 제공하려면 변경 또는 상호 작용이 발생할 때 `DOM`의 어느 부분을 업데이트해야하는지 파악해야할 필요가 있다. 자바스크립트 프레임웍 마다 다른 전략을 사용하는데, `Ember`는 `data-binding`을 사용하고, `Angular 1`은 [`dirty checking`](https://docs.angularjs.org/guide/scope) 그리고 `React`는 [`Virtual DOM`](https://facebook.github.io/react/docs/rendering-elements.html)을 사용한다.
@@ -914,7 +951,7 @@ export default TeslaClimate;
 `TeslaBattery`는 상태를 업데이트해야 할 때마다 실행되는 `callback`(이 경우엔 `handleChangeClimate`)을 `TeslaClimate`에 전달한다. input `onChange` 이벤트를 사용하여 이벤트를 알릴수 있다. `TeslaBattery`에 의해 전달된 `callback`은 `setState()`를 호출하여 상태를 업데이트하고 리렌더링된다.
 
 ### 11.1 TeslaClimate Component Style
-`src/components/TeslaClimate ` 디렉토리안에 `TeslaClimate.css` 파일을 만들고 다음 스타일을 지정한다. 코드가 길어 여기서는 생략하였으므로 [소스코드](https://github.com/gyver98/react-tesla-battery-range-calculator-tutorial/blob/master/src/components/TeslaClimate/TeslaClimate.css)를 확인해서 작업하도록 하자.
+`src/components/TeslaClimate` 디렉토리안에 `TeslaClimate.css` 파일을 만들고 다음 스타일을 지정한다. 코드가 길어 여기서는 생략하였으므로 [소스코드](https://github.com/gyver98/react-tesla-battery-range-calculator-tutorial/blob/master/src/components/TeslaClimate/TeslaClimate.css)를 확인해서 작업하도록 하자.
 
 ```
   .tesla-climate {
@@ -934,7 +971,7 @@ export default TeslaClimate;
   ...
 ```
 
-### 11.2 Import TeslaClimate component in TeslaBattery Container
+### 11.2 Import TeslaClimate Component in TeslaBattery Container
 이제 우리는 `TeslaBattery`에 `callback`을 구현해 `TeslaClimate` 컴포넌트로 전달해 보겠다.
 먼저 `TeslaBattery.js`에서 `TeslaClimate ` 컴포넌트를 사용할 수 있도록 `import`한다. 그리고 `callback` 함수인 `handleChangeClimate()`를 구현하고 `constructor()`내에 바인딩한다. 그 후 `callback` 함수를 `TeslaClimate` 컴포넌트에 `props`로 전달한다.
 
@@ -1031,7 +1068,7 @@ export default TeslaWheels;
 ...
 ```
 
-### 12.2 Import TeslaWheels component in TeslaBattery Container
+### 12.2 Import TeslaWheels Component in TeslaBattery Container
 마지막으로 `TeslaBattery`에 `callback`을 구현해 `TeslaWheels` 컴포넌트로 전달한다.
 먼저 `TeslaBattery.js`에서 `TeslaWheels` 컴포넌트를 사용할 수 있도록 `import`한다. 그리고 `callback`함수인 `handleChangeWheels()`를 구현하고 `constructor()`내에 바인딩한다. 그 후 `callback`함수를 `TeslaWheels `컴포넌트에 `props`로 전달한다.
 
