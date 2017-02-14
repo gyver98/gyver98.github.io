@@ -23,7 +23,7 @@ This is the final GIF image of our application.
  
 Now let's create an application step by step.
 
-## Project Setup and creat-react-app
+## 1. Project Setup and creat-react-app
 
 [creat-react-app](https://github.com/facebookincubator/create-react-app) is a new tool open-sourced by Facebook for fast react application development, which allows you to easily start React applications without complex setups.
 You can easily install our project `react-tesla-range-calculator` and start the application right away with the following command:
@@ -55,9 +55,11 @@ src
 ```
 Here is project source structure :
 
-![enter image description here](https://lh3.googleusercontent.com/04dwK9GLp4gpImGo6rUJGgebFOvbZ-6_5Br1iX2uvl4Q-Xq9aMpdT65oMi_dWoz75WBPd3QcYQ=s944 "code structure.png")
+<div style="text-align: center">
+<img src="https://lh3.googleusercontent.com/04dwK9GLp4gpImGo6rUJGgebFOvbZ-6_5Br1iX2uvl4Q-Xq9aMpdT65oMi_dWoz75WBPd3QcYQ=s944" /> 
+</div>
 
-## Project Entry Point
+## 1.1 Project Entry Point
 First we need to set the entry point to start our Tesla app. Thankfully it's already created by `create-react-app`.
 
 `src/App.js` is the entry point for our app.
@@ -83,7 +85,7 @@ export default App;
 
 When you save the file, it will be automatically compiled and you can see the updated screen.
 
-## Project images/assets
+## 1.2 Project images/assets
 
 All images required for this project can be downloaded from:
 
@@ -98,14 +100,14 @@ react-tesla-range-calculator/src/asstets
 
 > Any time you feel like if you've missed something or unsure if you're doing right, you can refer to the [source code](https://github.com/gyver98/react-tesla-battery-range-calculator-tutorial) as a reference.
 
-## Data service
+## 1.3 Data service
 The data you can get from Tesla site is hard-coded and very large, so I'll use Todd's new version of the data to make it easier to use. [link](https://github.com/toddmotto/angular-tesla-range-calculator/blob/master/src/app/tesla-battery/tesla-battery.service.ts)
 
 We do not use the `Injectable decorator` used in Angular2, so we will copy only the `export` part, just save it in `src/services/BatteryService.js` for now. Later, we will use `import` it in `TeslaBattery` container.
 
 We will revisit this data service later.
 
-Breaking Down the UI
+2. Breaking Down the UI
 -------------
 Almost all React application UIs consist of a <span class="bg-dark-gray white">combination of components</span>.
 For example, a weather app consists of a component that displays a local name, a component that displays the current temperature, and a graph component that represents a five-day forecast.
@@ -132,7 +134,7 @@ The UI is represented by a component tree as follows.
 </App>
 ```
 
-## Container and Presentational Components
+## 2.1 Container and Presentational Components
 In the above mentioned component tree, we can see that it is classified as `Container` and` Presenatational Component`.
 
 This is a useful pattern that can be used when developing an application with React. 
@@ -160,7 +162,7 @@ What are the benefits of using these patterns?
 
 >  For more details, see [Presentational and Container Components](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0#.mbwo09sds)
 
-## Header component
+## 3. Header component
 Let's create our first React component, `Header`.
 The `Header` component is simply a black bar with the Tesla logo and text.
 
@@ -182,7 +184,7 @@ export default Header;
 
 > Here, the component is in the form of a function (`ES6 Arrow Function`). A component declared in this form is called a `functional component`. If there is no `state` and the` lifecycle` method is not needed, it is a good pattern to declare it as a function type. Functional components are suitable for `Presentational Component` because they have no state and they depend only on the `props` that is received from higher components.
 
-### Header Component Style
+### 3.1 Header Component Style
 Create a `Header.css` file in the `src/components/Header` directory and type the following style:
 
 ```
@@ -200,7 +202,7 @@ Create a `Header.css` file in the `src/components/Header` directory and type the
 
 > There are a number of ways to apply styles to components, but here we will create each component directory in the `src/components` directory and pair `js` and `css` files each time we create a component.
 
-### Import Header component in App Container
+### 3.2 Import Header component in App Container
 Now that you've created the `Header` component, let's use `import` in the entry point `App.js`.
 
 ```
@@ -225,7 +227,7 @@ When you save all the modified files, they will be updated automatically and you
 
 ![header](https://lh3.googleusercontent.com/gkOjRzStwc0JB9ITpDQL7Mx4R8A2UsIbig5ZRDVLkTHHzo_GSv3KfHdJPBmTNjluXz9ZlbO-QA=s944 "header")
 
-## TeslaBattery Container
+## 4. TeslaBattery Container
 In our app, the `TeslaBattery` component is responsible for creating and managing data and state as `Container Component`, passing it to other `Presentational Components`, performing a callback function and changing its state.
 
 By inheriting `React.Component`, `TeslaBattery` must have a `render` method, optionally it can initialize its state through the `constructor`, and implement other methods such as [lifecycle](https://facebook.github.io/react/docs/react-component.html) callbacks.
@@ -251,10 +253,11 @@ class TeslaBattery extends React.Component {
 export default TeslaBattery;
 ```
 
+### 4.1 TeslaBattery Container Style
 `TeslaBattery.css` only holds a minimal style because the container's interest is how it works.
 The components to be created in the future will be configured in the `TesalBattery` container sequentially.
 
-## TeslaNotice Component
+## 5. TeslaNotice Component
 Let's create a static text part with a `TeslaNotice` component.
 
 Create the `src/components/TeslaNotice` directory, create a `TeslaNotice.js` file in it, and enter the following code:
@@ -281,7 +284,7 @@ const TeslaNotice = () => (
 export default TeslaNotice;
 ```
 
-### TeslaNotice Component Style
+### 5.1 TeslaNotice Component Style
 Next up, create `src/components/TeslaNotice` directory, create `TeslaNotice.css` in it and add these styles to your `TeslaNotice.css` file:
 
 ```
@@ -293,7 +296,7 @@ Next up, create `src/components/TeslaNotice` directory, create `TeslaNotice.css`
 } 
 ```
 
-### Import TeslaNotice component in TeslaBattery Container
+### 5.2 Import TeslaNotice component in TeslaBattery Container
 Next, import `TeslaNotice` component in `TeslaBattery.js` :
 
 ```
@@ -314,7 +317,7 @@ class TeslaBattery extends React.Component {
 
 > We will continue in such a way that components are created in this pattern and imported from the `TeslaBattery` container.
 
-## TeslaCar Component
+## 6. TeslaCar Component
 Now let's render a nice Tesla car image with wheel animation. 
 
 Create the `src/components/TeslaCar` directory, create a `TeslaCar.js` file in it, and inside your `TeslaCar.js` file :
@@ -346,7 +349,7 @@ For each `props` attribute, React attempts to find it in the component's `propTy
 
 > More information on `React.PropTypes` can be found [here](https://facebook.github.io/react/docs/typechecking-with-proptypes.html)
 
-### TeslaCar Component Style
+### 6.1 TeslaCar Component Style
 Next, create a `TeslaCar.css` file in the `src/components/TeslaCar` directory and give it the following style. 
 Since the code is long and omitted here, let's check the [source code](https://github.com/gyver98/react-tesla-battery-range-calculator-tutorial/blob/master/src/components/TeslaCar/TeslaCar.css).
 
@@ -368,7 +371,7 @@ Since the code is long and omitted here, let's check the [source code](https://g
 
 This gives us our animations and the component base for the car, which is displayed as background images.
 
-### Import TeslaCar component in TeslaBattery Container
+### 6.2 Import TeslaCar component in TeslaBattery Container
 Next, we need to add this component to our container again. Import `TeslaNotice` component in `TeslaBattery.js` :
 
 ```
@@ -393,7 +396,7 @@ Here’s what you should be seeing:
 
 ![enter image description here](https://lh3.googleusercontent.com/_l3ezUs5AA8V50X8FAFX-_cHDujEddpR0iv5Z1NQvrVeTuvKj-_WHlocKoESg3EMgEJ5hO4xXg=s944 "TeslaCar.png")
 
-## Props and React Developer Tools 
+## 7. Props and React Developer Tools 
 Wow! It's nice but something is missing. The wheels are not shown.
 Let's look for the cause. According to the source code, `TeslaCar` should be passed to `props` and class name changed based on `props.wheelsize`.
 
@@ -408,7 +411,7 @@ You can easily understand this by checking the component tree using [React Devel
 
 `props` is a javascript single object, in this case an empty object. This is because we did not pass `props` in the parent component `TeslaBattery`.
 
-## State of Application
+## 8. State of Application
 We need to think about what `state` is required to be managed in our app.
 If you look at the final app GIF image at the top of this article, the state values ​​are:
 
@@ -469,7 +472,7 @@ You can also see that `props` is passed well in the component tree.
 
 > Some functions are called "pure" in the sense that they always return the same output value if they have the same input value without changing the input value. (`Pure function`) One important React strict rule here is that all React components should behave like pure functions with respect to ` props`. `props` must be read-only.
 
-## TeslaStats Component
+## 9. TeslaStats Component
 Now we are going to build the `TeslaStats` component.
 Create the `src/components/TeslaStats` directory, create a `TeslaStats.js` file in it, and enter the following code:
  
@@ -520,7 +523,7 @@ For each iteration, it returns a `<li>` element containing the `model` and a `<l
 
 Finally, it returns the `listItems` array in the `<ul>` element. 
 
-### TeslaStats Component Style
+### 9.1 TeslaStats Component Style
 Next, create a `TeslaStats.css` file in the `src/components/TeslaStats` directory and type the following style. 
 Since the code is long and omitted here, let's check the [source code](https://github.com/gyver98/react-tesla-battery-range-calculator-tutorial/blob/master/src/components/TeslaStats/TeslaStats.css)
 
@@ -537,7 +540,7 @@ Since the code is long and omitted here, let's check the [source code](https://g
 
 The task that this component performs is to iterate through the `props.carstats` array and bind a particular class to an element based on ` stat.model`. You can then replace the background image to display the Tesla model.
 
-### Import TeslaStats component in TeslaBattery Container
+### 9.2 Import TeslaStats component in TeslaBattery Container
 Then add following `import` to use the` TeslaStats` component in `TeslaBattery.js`.
 
 ```
@@ -560,7 +563,7 @@ render() {
 
 We need to pass the `carstats` array to `props`, so let's set the value using `BatteryService` we’ve already implemented.
 
-### CalculateStats and setState
+### 9.3 CalculateStats and setState
 Add import `getModelData` first.
 
 After the component is mounted via `componentDidMount()`, it calls the `statsUpdate()` function.
@@ -608,7 +611,7 @@ this.statsUpdate = this.statsUpdate.bind(this);
 ...
 ```
 
-### Add Additional Style
+### 9.4 Add Additional Style
 Additional styling is required for a nice layout here.
 
 First open the `src/index.css` file and delete all existing code and add the following:
@@ -659,7 +662,7 @@ The work result screen so far is as follows.
 
 ![enter image description here](https://lh3.googleusercontent.com/R6ajaVgTej3zFcUfOn3kb5PsMecYDLMui6C84Leeqy5jt4G-C2qAwtFoxyZW44iMss_HtzA56A=s944 "carstat")
 
-## Reusable TeslaCounter Component
+## 10. Reusable TeslaCounter Component
 Tesla's speed and external temperature controls should be reusable components, so I'll make them a generic Counter component that allows for other metadata such as step, minimum, maximum, and title and units (mph / degrees).
  
 Also, unlike the components we have created so far, we need an action to change the state value in response to user input (button click, checkbox selection, etc.). Let's look at how to handle events that occur in a subcomponent.
@@ -713,7 +716,7 @@ The callback passed by `TeslaBattery` calls `setState()` and the app is updated.
 
 We will implement a callback that will be passed by `TeslaBattery` in a few moments.
 
-### TeslaCounter Component Style
+### 10.1 TeslaCounter Component Style
 Let's implement the style first.
 Create a `TeslaCounter.css` file in the `src/components/TeslaCounter` directory and specify the following styles. 
 Since the code is long and omitted here, let's check the [source code](https://github.com/gyver98/react-tesla-battery-range-calculator-tutorial/blob/master/src/components/TeslaCounter/TeslaCounter.css)
@@ -731,7 +734,7 @@ Since the code is long and omitted here, let's check the [source code](https://g
 ...  
 ```
 
-### Import TeslaStats component in TeslaBattery Container
+### 10.2 Import TeslaStats component in TeslaBattery Container
 Now, we will implement `callback` in `TeslaBattery` and pass it to the `TeslaCar` component.
 
 First, add `import` to use the` TeslaCounter` component in `TeslaBattery.js`.
@@ -884,7 +887,7 @@ Now, when you click Speed ​​and Temperature, you can see that the changed va
 
 ![TeslaCounter](https://lh3.googleusercontent.com/qe5PfBiZqso7MTGmv2FJX4O1u_PyJwybhpJCeuVsFgV7yfUXB3qxWXrZGrYw-bxxZaR9XfNTmA=s944 "counter.gif")
 
-### Virtual DOM
+### 10.3 Virtual DOM
 What a single-page application (SPA) can give us is a seamless user experience and interaction.
 
 In our app, car model values ​​are updated without having to reload the entire page every time the user changes speed or temperature. Even if you need to connect to the server to get the data.
@@ -898,7 +901,7 @@ Then, whenever the component's state changes (eg, `setState` is called), the ren
 
 >  The car model information does not change yet as the speed and temperature change. This will eventually be implemented later.
 
-## Aircon and Heating Controls
+## 11. Aircon and Heating Controls
 We monitor the temperature and change the `heating` to `aircon` when it is more than 20 degrees, and `heating` when it is below 20 degrees.
 
 First create a directory `src/components/TeslaClimate`, create a ` TeslaClimate.js` file in it, and enter the following code:
@@ -937,7 +940,7 @@ This component changes the style class according to the `props.value` passed in,
 
 `TeslaBattery` passes callback(`handleChangeClimate` in this case) to `TeslaClimate`, which is executed whenever the state needs to be updated. `onChange` event can be used to notify the event. The `callback` passed by `TeslaBattery` is called with `setState()` to update its state and re-render.
 
-### TeslaClimate Component Style
+### 11.1 TeslaClimate Component Style
 Create a `TeslaClimate.css` file in the `src/components/TeslaClimate` directory and specify the following styles. 
 Since the code is long and omitted here, let's check the [source code](https://github.com/gyver98/react-tesla-battery-range-calculator-tutorial/blob/master/src/components/TeslaClimate/TeslaClimate.css)
 
@@ -959,7 +962,7 @@ Since the code is long and omitted here, let's check the [source code](https://g
   ...
 ```
 
-### Import TeslaClimate component in TeslaBattery Container
+### 11.2 Import TeslaClimate component in TeslaBattery Container
 Now we will implement `callback` in `TeslaBattery` and pass it to the `TeslaClimate` component.
 
 First, add `import` to use the` TeslaClimate` component in `TeslaBattery.js`. We implement `callback` function `handleChangeClimate()` and bind it in `constructor()`. Then pass the `callback` function to the `TeslaClimate` component as `props`.
@@ -993,7 +996,7 @@ Now the state value changes according to the temperature change, and when the ch
 
 ![](https://lh3.googleusercontent.com/Bgbxy2TwAnqqX6itMN0HrWTRt6g93eJWUuCNJWiBBFgSMogW1AumIfBecMQdr9MZ0CMqiG6Gog=s944 "climate.gif")
 
-##TeslaWheels Component
+## 12. TeslaWheels Component
 Finally, let's make the final component `TeslaWheels`.
 As always, create a directory `src/components/TeslaWheels`, create a `TeslaWheels` file in it, and enter the following code.
 
@@ -1047,7 +1050,7 @@ Finally, the `LabelItems` list is built into the `TeslaWheels` component and ren
 
 In the `<label>` element, the effect of wheel animation is shown by changing the class according to the transmitted wheel size.
 
-### TeslaWheels Component Style
+### 12.1 TeslaWheels Component Style
 Create a `TeslaWheels.css` file in the `src/components/TeslaWheels` directory and specify the following styles. 
 Since the code is long and omitted here, let's check the [source code](https://github.com/gyver98/react-tesla-battery-range-calculator-tutorial/blob/master/src/components/TeslaWheels/TeslaWheels.css)
 
@@ -1063,7 +1066,7 @@ Since the code is long and omitted here, let's check the [source code](https://g
 ...
 ```
 
-### Import TeslaWheels component in TeslaBattery Container
+### 12.2 Import TeslaWheels component in TeslaBattery Container
 Finally, implement `callback` in `TeslaBattery` and pass it to the `TeslaWheels` component.
 
 Add `import` to use the `TeslaWheels` component in `TeslaBattery.js`. We then implement `callback` function `handleChangeWheels()` and bind it in `constructor`. Then pass the `callback` function to the `TeslaWheels` component as `props`.
@@ -1099,7 +1102,7 @@ The result of the completion of the wheels animation is as follows.
 
 ![](http://g.recordit.co/ZEz2AupcIm.gif)
 
-## State Update
+## 13. State Update
 Finally done?
 Even if the user changes several condition values, the difference value of the vehicle model does not change properly. 
 

@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      Building Tesla's battery range calculator with React
+title:      (한글버전) Building Tesla's battery range calculator with React
 date:       2017-02-09 11:37:19
 summary:    React로 Tesla's battery range calculator 구현하기 
 categories: blog development react
@@ -53,7 +53,9 @@ src
 
 전체 프로젝트 소스 구조는 다음과 같다
 
-![enter image description here](https://lh3.googleusercontent.com/04dwK9GLp4gpImGo6rUJGgebFOvbZ-6_5Br1iX2uvl4Q-Xq9aMpdT65oMi_dWoz75WBPd3QcYQ=s944 "code structure.png")
+<div style="text-align: center">
+<img src="https://lh3.googleusercontent.com/04dwK9GLp4gpImGo6rUJGgebFOvbZ-6_5Br1iX2uvl4Q-Xq9aMpdT65oMi_dWoz75WBPd3QcYQ=s944" /> 
+</div>
 
 ## Project Entry Point
 가장 먼저 우리의 Tesla app을 시작하는 entry point를 설정해야 한다. 고맙게도 `create-react-app`이 이미 만들어 놓았다.
