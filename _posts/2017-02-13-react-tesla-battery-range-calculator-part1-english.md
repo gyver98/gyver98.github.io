@@ -107,9 +107,8 @@ We do not use the `Injectable decorator` used in Angular2, so we will copy only 
 
 We will revisit this data service later.
 
-2. Breaking Down the UI
--------------
-Almost all React application UIs consist of a <span class="bg-dark-gray white">combination of components</span>.
+## 2. Breaking Down the UI
+Almost all React application UIs consist of a <span class="bg-dark-gray white">composition of components</span>.
 For example, a weather app consists of a component that displays a local name, a component that displays the current temperature, and a graph component that represents a five-day forecast.
 For this reason, it is a good idea to decompose the UI into component units before developing the React app.
 
@@ -415,8 +414,8 @@ You can easily understand this by checking the component tree using [React Devel
 We need to think about what `state` is required to be managed in our app.
 If you look at the final app GIF image at the top of this article, the state values ​​are:
 
-* carstats (object array) : An array of battery numerical value objects ​​by car model according to the currently selected condition value (speed, temperature, climate, wheel)
-* config (object): Currently selected conditions object (speed: 55, temperature: 20, climate: aricon on, wheel: 19)
+* __carstats (object array)__ : An array of battery numerical value objects ​​by car model according to the currently selected condition value (speed, temperature, climate, wheel)
+* __config (object)__: Currently selected conditions object (speed: 55, temperature: 20, climate: aricon on, wheel: 19)
 
 ![enter image description here](https://lh3.googleusercontent.com/LZ4rlA_E8f5_Qt-dKNtBICK-R7zcZdtlcuLFM74IiZzT5Zmh_BOJLDTxz1uzsGtgA7i58Nvfaw=s944 "state.jpg")
 
@@ -464,13 +463,19 @@ In `render()`, the code in the form `const {a, b} = c` is `ES6 Object Destructur
 
 > Conceptually, the React component is like a JavaScript function and receives an arbitrary input called 'props' and returns a React element that describes what should be shown.
 
+In a word, this concept can be expressed by the following formula.
+
+> fn(d) = V
+
+A function that receives data as input and returns a view. 
 
 If you save files, you can see that the rendered Tesla car and wheel animation work well on the updated screen.
 You can also see that `props` is passed well in the component tree.
 
 ![enter image description here](https://lh3.googleusercontent.com/6PBG4kbLiVk1QfkXo8pYnfYW33_7yH_ULxq_8uBvxYFloDxacD8WPXLYlduOa0AT-cG9_8qTqQ=s944 "teslacar props.jpg")
 
-> Some functions are called "pure" in the sense that they always return the same output value if they have the same input value without changing the input value. (`Pure function`) One important React strict rule here is that all React components should behave like pure functions with respect to ` props`. `props` must be read-only.
+> Some functions are called "pure" in the sense that they always return the same output value if they have the same input value without changing the input value. (`Pure function`) One important React strict rule here is that all React components should behave like pure functions with respect to ` props`. `props` must be read-only. 
+
 
 ## 9. TeslaStats Component
 Now we are going to build the `TeslaStats` component.
