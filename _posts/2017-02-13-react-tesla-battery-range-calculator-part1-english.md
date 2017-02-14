@@ -1358,24 +1358,22 @@ export default TeslaBattery;
 Wow! The completed Tesla Batter Range Calculator is here:
 
 ## 14. Build
-이제 개발한 우리 앱을 빌드해보자.
+It's time to build our app.
 
 ```
 npm run build
 ```
 
-build 가 성공하면 우리 프로젝트 디렉토리에 build 폴더가 생성되고, 다음과 같은 메시지를 볼 수 있다.
+If the build succeeds, the build folder will be created in our project directory and the following message will be displayed.
 
 ![enter image description here](https://lh3.googleusercontent.com/kBH7x8EdMr_Fk0hPTknOHdnDj7TFLmsqbEuk2obOf8U5y0lclyK2Doxgr_27h7DPrbEriVndow=s944 "build.png")
 
-이제 우리의 build 는 deploy 될 준비가 되었다.
+Now our build is ready to be deployed.
 
 ## 15. Deploy
-[Surge](http://surge.sh/) 같은 툴을 사용하면 빌드한 우리 앱을 정말 쉽게 배포할 수 있다.
-With tools like [Surge](http://surge.sh/), you can really easily deploy our built app.
+With tools like [Surge](http://surge.sh/), we can really easily deploy our built app.
 
 `Surge` is simple, single-command web publishing. It publishes HTML, CSS, and JS for free, without leaving the command line.
-
 
 First, install the tool with `npm` and run the `surge` command in the `build` directory. 
 
