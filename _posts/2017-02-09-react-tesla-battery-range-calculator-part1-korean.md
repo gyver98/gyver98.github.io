@@ -21,14 +21,15 @@ categories: blog development react
  
 이제 단계별로 애플리케이션을 만들어보자.
 
-```
+>
 이 튜토리얼을 따라하기 위해 기초적인 React 지식이 필요할 수 있다.
 다음의 리소스들을 참고하자.
-
+>
 [React Official Documentation](https://facebook.github.io/react/docs/hello-world.html)
+>
 [React: Getting Started and Concepts](https://scotch.io/tutorials/learning-react-getting-started-and-concepts)
 
-```
+
 
 ## 1. Project Setup and creat-react-app
 
