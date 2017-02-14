@@ -1388,7 +1388,8 @@ The deployment is finished in an instant.
 ![enter image description here](https://lh3.googleusercontent.com/WzzxlqjZfPd0GLEvaVwtEKIngc7uNkqzjN9JahXj_j3Y4t8Gi01jHQzTznkLQHtfEAHtkDrFyQ=s944 "surge.jpg")
 
 
-Let's connect to our deployed project. [react-tesla-charge-calculator.surge.sh](http://react-tesla-charge-calculator.surge.sh/) 
+Let's connect to our deployed project. 
+>[react-tesla-charge-calculator.surge.sh](http://react-tesla-charge-calculator.surge.sh/) 
 
 ![finalcar](https://lh3.googleusercontent.com/ADOBXOthirfSi9f9j-f2giwZc_9Gtlb6qcNAmnR0y1rLVBKvRRyG4Zf5oPkvtlXE2dsKKFy0Bw=s944 "final.gif")
 

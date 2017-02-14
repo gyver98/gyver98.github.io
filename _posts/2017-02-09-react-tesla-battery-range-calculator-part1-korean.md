@@ -1325,7 +1325,8 @@ $ surge
 ![enter image description here](https://lh3.googleusercontent.com/WzzxlqjZfPd0GLEvaVwtEKIngc7uNkqzjN9JahXj_j3Y4t8Gi01jHQzTznkLQHtfEAHtkDrFyQ=s944 "surge.jpg")
 
 
-디플로이된 우리의 프로젝트에 접속해보자 : [react-tesla-charge-calculator.surge.sh](http://react-tesla-charge-calculator.surge.sh/) 
+디플로이된 우리의 프로젝트에 접속해보자. 
+> [react-tesla-charge-calculator.surge.sh](http://react-tesla-charge-calculator.surge.sh/) 
 
 ![finalcar](https://lh3.googleusercontent.com/ADOBXOthirfSi9f9j-f2giwZc_9Gtlb6qcNAmnR0y1rLVBKvRRyG4Zf5oPkvtlXE2dsKKFy0Bw=s944 "final.gif")
 
