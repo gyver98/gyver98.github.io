@@ -708,7 +708,7 @@ Tesla's speed and external temperature controls should be reusable components, s
  
 Also, unlike the components we have created so far, we need an action to change the state value in response to user input (button click, checkbox selection, etc.). Let's look at how to handle events that occur in a subcomponent.
 
-Create the `src/components/TeslaCounter` directory as before, create a ` TeslaCounter.js` file in it, and enter the following code:
+Create the `src/components/TeslaCounter` directory as before, create a `TeslaCounter.js` file in it, and enter the following code:
 
 ```
 import React from 'react';
@@ -785,7 +785,7 @@ We also implement the callback functions `increment()` and `decrement()`, and th
 
 ```
 ...
-	constructor(props) {
+constructor(props) {
     super(props);
 
     this.calculateStats = this.calculateStats.bind(this);
@@ -805,7 +805,7 @@ We also implement the callback functions `increment()` and `decrement()`, and th
     }
   }
 ...
-	updateCounterState(title, newValue) {
+updateCounterState(title, newValue) {
     const config = { ...this.state.config };
     // update config state with new value
     title === 'Speed' ? config['speed'] = newValue : config['temperature'] = newValue;
@@ -958,14 +958,14 @@ Each JavaScript framework uses a different strategy: `Ember` uses `data-binding`
 
 In React, the first time the component's rendering method is called, it prints  a `virtual DOM` model, rather than the actual `DOM` element itself. The `virtual DOM` is a JavaScript data structure that represents the appearance of `DOM`. React then takes this model and creates the actual `DOM` element.
 
-Then, whenever the component's state changes (eg, `setState` is called), the rendering method of the component is called and a new `virtual DOM` is created, and this new `virtual DOM` is replaced with the previous virtual DOM. The result of this comparison is to show the actual `DOM` changes and the ` DOM` will be 'patched' with the changes and the screen will change.
+Then, whenever the component's state changes (eg, `setState` is called), the rendering method of the component is called and a new `virtual DOM` is created, and this new `virtual DOM` is replaced with the previous `virtual DOM`. The result of this comparison is to show the actual `DOM` changes and the `DOM` will be 'patched' with the changes and the screen will change.
 
 >  The car model information does not change yet as the speed and temperature change. This will eventually be implemented later.
 
 ## 11. Aircon and Heating Controls
 We monitor the temperature and change the `heating` to `aircon` when it is more than 20 degrees, and `heating` when it is below 20 degrees.
 
-First create a directory `src/components/TeslaClimate`, create a ` TeslaClimate.js` file in it, and enter the following code:
+First create a directory `src/components/TeslaClimate`, create a `TeslaClimate.js` file in it, and enter the following code:
 
 ```
 import React from 'react';
@@ -1026,7 +1026,7 @@ Since the code is long and omitted here, let's check the [source code](https://g
 ### 11.2 Import TeslaClimate Component in TeslaBattery Container
 Now we will implement `callback` in `TeslaBattery` and pass it to the `TeslaClimate` component.
 
-First, add `import` to use the` TeslaClimate` component in `TeslaBattery.js`. We implement `callback` function `handleChangeClimate()` and bind it in `constructor()`. Then pass the `callback` function to the `TeslaClimate` component as `props`.
+First, add `import` to use the` TeslaClimate` component in `TeslaBattery.js`. We implement callback function `handleChangeClimate()` and bind it in `constructor()`. Then pass the callback function to the `TeslaClimate` component as `props`.
 
 ```
 ...
@@ -1130,7 +1130,7 @@ Since the code is long and omitted here, let's check the [source code](https://g
 ### 12.2 Import TeslaWheels Component in TeslaBattery Container
 Finally, implement `callback` in `TeslaBattery` and pass it to the `TeslaWheels` component.
 
-Add `import` to use the `TeslaWheels` component in `TeslaBattery.js`. We then implement `callback` function `handleChangeWheels()` and bind it in `constructor`. Then pass the `callback` function to the `TeslaWheels` component as `props`.
+Add `import` to use the `TeslaWheels` component in `TeslaBattery.js`. We then implement callback function `handleChangeWheels()` and bind it in `constructor`. Then pass the callback function to the `TeslaWheels` component as `props`.
 
 
 ```
@@ -1185,7 +1185,7 @@ statsUpdate() {
 }
 ```
 
-Now we create a function that take the carModels and the current state value as inputs and reflects the changed `carStats` in the app state and pass it to `this.setState` as a callback.
+Now we create a function that take the `carModels` and the current state value as inputs and reflects the changed `carStats` in the app state and pass it to `this.setState` as a callback.
 
 By doing this, it is possible to update the cofig object first in `setState()`, which operates asyncronus method, and to render the changed `stats` on the screen based on this.
 
