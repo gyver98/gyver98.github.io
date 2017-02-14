@@ -1355,8 +1355,6 @@ class TeslaBattery extends React.Component {
 export default TeslaBattery;
 ```
 
-Wow! The completed Tesla Batter Range Calculator is here:
-
 ## 14. Build
 It's time to build our app.
 
