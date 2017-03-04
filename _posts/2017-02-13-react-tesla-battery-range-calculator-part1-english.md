@@ -16,7 +16,6 @@ We will focus on rebuilding it in React way.
 This is the final GIF image of our application.
 
 ![final](https://lh3.googleusercontent.com/ADOBXOthirfSi9f9j-f2giwZc_9Gtlb6qcNAmnR0y1rLVBKvRRyG4Zf5oPkvtlXE2dsKKFy0Bw=s944 "final.gif")
-_![](https://lh3.googleusercontent.com/3jxH0vQaeB_TpFL4zmt5kslkEB7b12OIzNZ8_SwKRADBtVlNeqaFOO_Z0MrxxsRY3MMDA6HYQA=s1100 "Screen Shot 2017-03-04 at 9.20.01 pm.png")_
 
 > Check out the [live version](http://react-tesla-charge-calculator.surge.sh/) before we get started.
  
