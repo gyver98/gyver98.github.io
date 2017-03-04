@@ -4,7 +4,6 @@ title:      Building Tesla's battery range calculator with React
 date:       2017-02-13 11:37:19
 summary:    Rebuilding Tesla's Battery Range Calculator with React 
 categories: blog development react
-comments: true
 ---
 
 In this article, I will share the process of rebuilding Tesla's battery range calculator with React.
@@ -17,6 +16,7 @@ We will focus on rebuilding it in React way.
 This is the final GIF image of our application.
 
 ![final](https://lh3.googleusercontent.com/ADOBXOthirfSi9f9j-f2giwZc_9Gtlb6qcNAmnR0y1rLVBKvRRyG4Zf5oPkvtlXE2dsKKFy0Bw=s944 "final.gif")
+_![](https://lh3.googleusercontent.com/3jxH0vQaeB_TpFL4zmt5kslkEB7b12OIzNZ8_SwKRADBtVlNeqaFOO_Z0MrxxsRY3MMDA6HYQA=s1100 "Screen Shot 2017-03-04 at 9.20.01 pm.png")_
 
 > Check out the [live version](http://react-tesla-charge-calculator.surge.sh/) before we get started.
  
@@ -510,7 +510,7 @@ You can also see that `props` is passed well in the component tree.
 
 ![enter image description here](https://lh3.googleusercontent.com/6PBG4kbLiVk1QfkXo8pYnfYW33_7yH_ULxq_8uBvxYFloDxacD8WPXLYlduOa0AT-cG9_8qTqQ=s944 "teslacar props.jpg")
 
-> Some functions are called "pure" in the sense that they always return the same output value if they have the same input value without changing the input value. (`Pure function`) One important React strict rule here is that all React components should behave like pure functions with respect to ` props`. `props` must be read-only. 
+> Some functions are called "pure" in the sense that they always return the same output value if they have the same input value without changing the input value. (`Pure function`) One important React strict rule here is that all React components should behave like pure functions with respect to props. `props` must be read-only. 
 
 
 ## 9. TeslaStats Component
@@ -1390,7 +1390,6 @@ The deployment is finished in an instant.
 
 
 Let's connect to our deployed project. 
-
 >[react-tesla-charge-calculator.surge.sh](http://react-tesla-charge-calculator.surge.sh/) 
 
 ![finalcar](https://lh3.googleusercontent.com/ADOBXOthirfSi9f9j-f2giwZc_9Gtlb6qcNAmnR0y1rLVBKvRRyG4Zf5oPkvtlXE2dsKKFy0Bw=s944 "final.gif")
