@@ -127,6 +127,427 @@ reducers는 이전 `state`와 `action`을 받고 새로운 `state`을 리턴하�
 동일한 입력 변수를 갖는 순수 함수를 호출하면 항상 동일한 값이 리턴된다.
 ```
 
+## 5. Divide The App Into Containers and Components
+
+이제 파트 1 에서 만들었던 우리의 Tesla calculator앱을 Redux 버전으로 만들어보도록 하겠다. 먼저 앱의 전체적인 컴포넌트 구성을 살펴보자.
+
+_![enter image description here](https://lh3.googleusercontent.com/YlCnB9gS8_KJgCfW1d8Qb8Ws01zOzj-huYRxu35Vqx6wnH9UJm_LCa85suCubWlYlDC8keXUMw=s1100 "compoent layout.png")_
+ 
+ 
+React와 Redux 로직을 하나의 컴포넌트 내부에 같이 두는 것은 지저분해 보일 수 있기 때문에  프리젠테이션 전용 목적의 `Presentational` 컴포넌트와  Redux를 처리하고 `Actions`를 발송하는 상위 Wrapper 컴포넌트인  `Container` 컴포넌트를 만드는 것이 권장된다.
+
+상위 Container 컴포넌트의 역할은 Presentational 컴포넌트에게  state 값을 전달하고 이벤트를 관리하며 Presentational 컴포넌트를 대신하여 Redux와 커뮤니케이션 하는 것이라 할 수 있다.
+
+## 6. List State and Actions For Each Component
+전체 컴포넌트 레이아웃을 참조 하여 각 컴포넌트의 state와 action 리스트를 만들도록 한다.
+
+```
+TeslaCar Container :
+	state : wheels
+	action : N/A
+
+TeslaStats Container :
+	state : carstats(array)
+	action : N/A
+	
+TeslaSpeedCounter Container : 
+	state : config.spped
+	action : SPEED_UP, SPEED_DOWN
+
+TeslaTempCounter Container : 
+	state : config.temperature
+	action : TEMPERATURE_UP, TEMPERATURE_DOWN
+	
+TeslaClimate Container : 
+	state : config.climate
+	action : CHANGE_CLIMATE
+
+TeslaWheel Container : 
+	state : config.wheel
+	action : CHANGE_WHEEL
+
+	
+```
+
+## 7. Create Action Creators For Each Action
+
+>
+코딩을 시작하기에 앞서 part1에서 완성했던 코드베이스가 필요하므로 part1을 보지 않고 바로 part2를 진행하기를 원한다면 [여기서](https://github.com/gyver98/react-tesla-battery-range-calculator-tutorial) 코드를 클론하여 먼저 코드 베이스를 구축하도록 한다.
+
+`npm start` 후 애플리케이션이 제대로 동작하는지 확인하자.
+
+이제 `action` 리스트를 만들었으니 `action creators`를 만들 차례이다. `action creators`는 말 그대로 `action`을 만들어주는 함수이다. `Redux`에서 `action crators`는 단지 `action` 오브젝트를 리턴하고 필요하면 인자값을 전달해준다.
+
+```
+const changeWheel = (value) => {
+  return {
+    type: 'CHANGE_WHEEL',
+    value
+  }
+}
+```
+이러한 `action creators`는 `dispatch` 함수에 결과값으로 전달되어 `dispatch`가 동작하게 된다.
+
+```
+dispatch(changeWheel(size))
+```
+
+`dispatch` 함수는 `store.dispatch`로 직접 액세스 할 수도 있지만 대개의 경우 `react-redux`의 `connect`와 같은 helper를 사용하여 액세스 하게된다. `connect`에 대해서는 조금 뒤에 살펴보도록 하겠다. 
+
+### 7.1 Create Action.js
+
+`src/actions` 디렉토리안에 `index` 파일을 만들고 다음과 같이 `action creators`를 정의한다.
+
+src/actions/index.js
+
+```
+import { counterDefaultVal } from '../constants/counterDefaultVal';
+
+export const speedUp = (value) => {
+  return {
+    type: 'SPEED_UP',
+    value,
+    step: counterDefaultVal.speed.step,
+    maxValue: counterDefaultVal.speed.max
+  }
+}
+
+export const speedDown = (value) => {
+  return {
+    type: 'SPEED_DOWN',
+    value,
+    step: counterDefaultVal.speed.step,
+    minValue: counterDefaultVal.speed.min
+  }
+}
+
+export const temperatureUp = (value) => {
+  return {
+    type: 'TEMPERATURE_UP',
+    value,
+    step: counterDefaultVal.temperature.step,
+    maxValue: counterDefaultVal.temperature.max
+  }
+}
+
+export const temperatureDown = (value) => {
+  return {
+    type: 'TEMPERATURE_DOWN',
+    value,
+    step: counterDefaultVal.temperature.step,
+    minValue: counterDefaultVal.temperature.min
+  }
+}
+
+export const changeClimate = () => {
+  return {
+    type: 'CHANGE_CLIMATE'
+  }
+}
+
+export const changeWheel = (value) => {
+  return {
+    type: 'CHANGE_WHEEL',
+    value
+  }
+}
+
+export const updateStats = () => {
+  return {
+    type: 'UPDATE_STATS'
+  }
+}
+```
+
+`action creator`에 따라  defalut values가 필요하므로 우리는 이를 src 디렉토리 아래 constants/counterDefaultVal에 이 상수값을 정의한 후 `import` 하여 사용하도록 한다.
+
+/src/constants/counterDefaultVal.js
+
+```
+export const counterDefaultVal = {
+  speed: {
+    title: "Speed",
+    unit: "mph",
+    step: 5,
+    min: 45,
+    max: 70
+  },
+  temperature: {
+    title: "Outside Temperature",
+    unit: "°",
+    step: 10,
+    min: -10,
+    max: 40
+  }
+}
+```
+
+## 8. Create Reducers For Each Action
+Reducers는 Redux store에서 받아온 `state`와 `action`오브젝트를 받아서 Redux에 다시 저장될 새로운 `state`를 반환하는 함수이다. 여기서 주어진 `state`를 직접 수정하지 않는 것이 중요하다. Reducers는 순수 함수이어야만 하고 그래서 새로운 `state	`을 리턴해야만 한다.
+
+1. Reducer functions는 사용자 action이 발생할 때 앞으로 만들게 될 `Container`에서 호출되어진다. 
+2. Reducer가 state를 변경하게 되면, Redux는 새로운 state를 각 컴포넌트에 전달하고 React는 각 컴포넌트를 다시 렌더링하게 된다.
+
+### 8.1 Immutable Data Structures
+
+* 자바스크립트 primitive 데이타 타입(number, string, boolean, undefined, and null) => immutable
+* Object, array and function => mutable
+
+데이터 구조의 변경은 버그가 발생하기 쉬운 것으로 알려져 있다.
+우리 `store`는 state 오브젝트와 배열로 이루어지기 때문에 state를 변경하지 못하게하는 전략을 구현해야만한다.
+
+여기 state를 변경하는 세 가지 방법이 있다:
+
+ES5
+
+```
+// Example One
+state.foo = '123';
+
+// Example Two
+Object.assign(state, { foo: 123 });
+
+// Example Three
+var newState = Object.assign({}, state, { foo: 123 });
+```
+
+위의 예제에서 첫번째, 두번째는 state 오브젝트를 변경한다. 두번째 예제에서는 Object.assign()이 모든 인자값을 첫번째 인자와 병합함으로서 변경이 이루어진다. 
+세번째 예제에서는 state와 { foo: 123 }이 첫번째 인자인 새로운 오브젝트에 병합이 되므로 원래의 'state'를 변경하지 않고 새로운 값으로 오브젝트의 복사본을 만들게된다.
+
+ES6에서 도입된 'spread operator`는 'state'를 변경하지 않는 보다 간결한 방법을 제공한다.
+
+ES6 (ES2015)
+
+```
+const newState = { ...state, foo: 123 };
+```
+
+> 
+spread operator에 대한 자세한 내용은 [여기](http://redux.js.org/docs/recipes/UsingObjectSpreadOperator.html)를 참조
+
+### 8.2 Create Reducer for speed up counter
+
+먼저 우리가 만들어 볼 예제는 speed counter로 테스트 주도 개발 방식으로 만들어보겠다.
+Part1에서 우리의 앱은 `create react app`을 통해 만들어졌기 때문에 기본적으로 test runner로 `Jest`를 사용하게 된다. 
+
+Jest는 다음의 명명 규칙중 하나를 사용하여 테스트 파일을 찾는다.
+
+```
+Files with .js suffix in __tests__ folders.
+Files with .test.js suffix.
+Files with .spec.js suffix.
+```
+
+src/reducers 디렉토리리를 만들고 teslaRangeApp.spec.js 생성한뒤 테스트를 작성한다.
+
+```
+describe('test reducer', () => {
+  it('should handle initial stat', () => {
+    expect(
+      appReducer(undefined, {})
+    ).toEqual(initialState)
+  })
+})
+```
+
+테스트를 작성한 후 `npm test` 명령어를 실행하자. 아래와 같은 테스트 실패 메시지를 볼 수 있어야 한다. 왜냐하면 아직 appReducer를 작성해서 넘기지 않았기 때문이다.
+ 
+![enter image description here](https://lh3.googleusercontent.com/gxuCGjMSqDK92QZeBN1Pfg0tS4ErO49MISJwasZFoKq3pAHSTrrox1uQfyfUL9gT-Amz_1i0KA=s1100 "npm-test.jpg")
+
+첫번째 테스트를 성공시키기 위해 같은 reducers 디렉토리 안에 teslaRangeApp.js를 생성하고 inital state와 reducer 함수를 작성해야 한다.
+
+```
+const initialState = {
+  carstats:[
+    {miles:246, model:"60"},
+    {miles:250, model:"60D"},
+    {miles:297, model:"75"},
+    {miles:306, model:"75D"},
+    {miles:336, model:"90D"},
+    {miles:376, model:"P100D"}
+  ],
+  config: {
+    speed: 55,
+    temperature: 20,
+    climate: true,
+    wheels: 19
+  }
+}
+
+function appReducer(state = initialState, action) {
+  switch (action.type) {
+    
+    default:
+      return state 
+  }
+}
+
+export default appReducer;
+```
+그 다음에  teslaRangeApp.spec.js에서 teslaRangeApp을 import 하고 initialState를 설정하자.
+
+```
+import appReducer from './teslaRangeApp';
+
+const initialState =  {
+  carstats:[
+    {miles:246, model:"60"},
+    {miles:250, model:"60D"},
+    {miles:297, model:"75"},
+    {miles:306, model:"75D"},
+    {miles:336, model:"90D"},
+    {miles:376, model:"P100D"}
+  ],
+  config: {
+    speed: 55,
+    temperature: 20,
+    climate: true,
+    wheels: 19
+  }
+}
+
+describe('test reducer', () => {
+  it('should handle initial stat', () => {
+    expect(
+      appReducer(undefined, {})
+    ).toEqual(initialState)
+  })
+})
+```
+
+다시 npm test를 실행하면 테스트가 성공 할 것이다.
+
+![enter image description here](https://lh3.googleusercontent.com/KIVhW-zKx7br3A801T6AcsPuCUu2YuJiqHAYDLvT4nfQZMwjiGM3LVKFyQeQNuMK1PqOxkGncA=s1100 "npm test2.png")
+
+```
+import { getModelData } from '../services/BatteryService';
+
+const initialState = {
+  carstats:[
+    {miles:246, model:"60"},
+    {miles:250, model:"60D"},
+    {miles:297, model:"75"},
+    {miles:306, model:"75D"},
+    {miles:336, model:"90D"},
+    {miles:376, model:"P100D"}
+  ],
+  config: {
+    speed: 55,
+    temperature: 20,
+    climate: true,
+    wheels: 19
+  }
+}
+
+function updateStats(state, newState) {
+
+    return {
+      ...state,
+      config:newState.config,
+      carstats:calculateStats(newState)
+    }  
+}
+
+
+function appReducer(state = initialState, action) {
+  switch (action.type) {
+    case 'SPEED_UP': {
+      console.log('SPEED_UP');
+      const newState = {
+          ...state,
+          config: {
+            climate:state.config.climate,
+            speed:action.value + action.step,
+            temperature:state.config.temperature,
+            wheels:state.config.wheels
+          }
+      };
+      return updateStats(state, newState);
+    }    
+    case 'SPEED_DOWN': {
+      console.log('SPEED_DOWN');
+      const newState = {
+          ...state,
+          config: {
+            climate:state.config.climate,
+            speed:action.value - action.step,
+            temperature:state.config.temperature,
+            wheels:state.config.wheels
+          }
+      };
+      return updateStats(state, newState);
+    }        
+    case 'TEMPERATURE_UP': {
+      console.log('TEMPERATURE_UP');
+      const newState = {
+          ...state,
+          config: {
+            climate:state.config.climate,
+            speed:state.config.speed,
+            temperature:action.value + action.step,
+            wheels:state.config.wheels
+          }
+      };
+      return updateStats(state, newState);
+    }
+    case 'TEMPERATURE_DOWN': {
+      console.log('TEMPERATURE_DOWN');
+      const newState = {
+          ...state,
+          config: {
+            climate:state.config.climate,
+            speed:state.config.speed,
+            temperature:action.value - action.step,
+            wheels:state.config.wheels
+          }
+      };
+      return updateStats(state, newState);
+    }        
+    case 'CHANGE_CLIMATE': {
+      console.log('CHANGE_CLIMATE');
+      const newState = {
+          ...state,
+          config: {
+            ...state.config,
+            climate:!state.config.climate,
+          }
+      };
+      return updateStats(state, newState);
+    }
+    case 'CHANGE_WHEEL': {
+      console.log('CHANGE_WHEEL');
+      const newState = {
+          ...state,
+          config: {
+            climate:state.config.climate,
+            speed:state.config.speed,
+            temperature:state.config.temperature,
+            wheels:action.value
+          }
+      };
+      return updateStats(state, newState);
+    }
+    default:
+      return state 
+  }
+}
+
+function calculateStats(state) {
+    const models = ['60', '60D', '75', '75D', '90D', 'P100D'];
+    const dataModels = getModelData();
+    return models.map(model => {
+      const { speed, temperature, climate, wheels } = state.config;
+      const miles = dataModels[model][wheels][climate ? 'on' : 'off'].speed[speed][temperature];
+      return {
+        model,
+        miles
+      };
+    });
+}
+
+export default appReducer;
+```
+
 
 
 {% include disqus.html %}
