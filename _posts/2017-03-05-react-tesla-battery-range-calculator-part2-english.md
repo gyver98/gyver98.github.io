@@ -129,17 +129,17 @@ reducers는 이전 `state`와 `action`을 받고 새로운 `state`을 리턴하�
 
 ## 5. Divide The App Into Containers and Components
 
-이제 파트 1 에서 만들었던 우리의 Tesla calculator앱을 Redux 버전으로 만들어보도록 하겠다. 먼저 앱의 전체적인 컴포넌트 구성을 살펴보자.
+이제 파트 1 에서 만들었던 우리의 Tesla calculator앱을 Redux 버전으로 만들어보도록 하겠다. 먼저 앞으로 구현하게될 앱의 전체적인 컴포넌트 구성을 살펴보자.
 
 _![enter image description here](https://lh3.googleusercontent.com/YlCnB9gS8_KJgCfW1d8Qb8Ws01zOzj-huYRxu35Vqx6wnH9UJm_LCa85suCubWlYlDC8keXUMw=s1100 "compoent layout.png")_
  
  
-React와 Redux 로직을 하나의 컴포넌트 내부에 같이 두는 것은 지저분해 보일 수 있기 때문에  프리젠테이션 전용 목적의 `Presentational` 컴포넌트와  Redux를 처리하고 `Actions`를 발송하는 상위 Wrapper 컴포넌트인  `Container` 컴포넌트를 만드는 것이 권장된다.
+React와 Redux 로직을 하나의 컴포넌트 내부에 같이 두는 것은 지저분해 보일 수 있기 때문에  프리젠테이션 전용 목적의 `Presentational` 컴포넌트와  `Redux`를 처리하고 `Actions`를 발송하는 상위 Wrapper 컴포넌트인 `Container` 컴포넌트를 만드는 것이 권장된다.
 
-상위 Container 컴포넌트의 역할은 Presentational 컴포넌트에게  state 값을 전달하고 이벤트를 관리하며 Presentational 컴포넌트를 대신하여 Redux와 커뮤니케이션 하는 것이라 할 수 있다.
+상위 `Container` 컴포넌트의 역할은 `Presentational` 컴포넌트에게  `state` 값을 전달하고 이벤트를 관리하며 `Presentational` 컴포넌트를 대신하여 `Redux`와 커뮤니케이션 하는 것이라 할 수 있다.
 
 ## 6. List State and Actions For Each Component
-전체 컴포넌트 레이아웃을 참조 하여 각 컴포넌트의 state와 action 리스트를 만들도록 한다.
+전체 컴포넌트 레이아웃을 참조 하여 각 컴포넌트의 `state`와 `action`리스트를 만들도록 한다.
 
 ```
 TeslaCar Container :
@@ -259,7 +259,7 @@ export const updateStats = () => {
 }
 ```
 
-`action creator`에 따라  defalut values가 필요하므로 우리는 이를 src 디렉토리 아래 constants/counterDefaultVal에 이 상수값을 정의한 후 `import` 하여 사용하도록 한다.
+`action creator`에 따라 defalut values가 필요하므로 우리는 이를 src 디렉토리 아래 constants/counterDefaultVal에 이 상수값을 정의한 후 `import` 하여 사용하도록 한다.
 
 /src/constants/counterDefaultVal.js
 
@@ -283,10 +283,10 @@ export const counterDefaultVal = {
 ```
 
 ## 8. Create Reducers For Each Action
-Reducers는 Redux store에서 받아온 `state`와 `action`오브젝트를 받아서 Redux에 다시 저장될 새로운 `state`를 반환하는 함수이다. 여기서 주어진 `state`를 직접 수정하지 않는 것이 중요하다. Reducers는 순수 함수이어야만 하고 그래서 새로운 `state	`을 리턴해야만 한다.
+`Reducers`는 `Redux store`에서 받아온 `state`와 `action`오브젝트를 받아서 `Redux`에 다시 저장될 새로운 `state`를 반환하는 함수이다. 여기서 주어진 `state`를 직접 수정하지 않는 것이 중요하다. `Reducers`는 순수 함수이어야만 하고 그래서 새로운 `state`를 리턴해야만 한다.
 
-1. Reducer functions는 사용자 action이 발생할 때 앞으로 만들게 될 `Container`에서 호출되어진다. 
-2. Reducer가 state를 변경하게 되면, Redux는 새로운 state를 각 컴포넌트에 전달하고 React는 각 컴포넌트를 다시 렌더링하게 된다.
+* Reducer functions는 사용자 action이 발생할 때 앞으로 만들게 될 `Container`에서 호출되어진다. 
+* Reducer가 state를 변경하게 되면, Redux는 새로운 state를 각 컴포넌트에 전달하고 React는 각 컴포넌트를 다시 렌더링하게 된다.
 
 ### 8.1 Immutable Data Structures
 
@@ -312,9 +312,9 @@ var newState = Object.assign({}, state, { foo: 123 });
 ```
 
 위의 예제에서 첫번째, 두번째는 state 오브젝트를 변경한다. 두번째 예제에서는 Object.assign()이 모든 인자값을 첫번째 인자와 병합함으로서 변경이 이루어진다. 
-세번째 예제에서는 state와 { foo: 123 }이 첫번째 인자인 새로운 오브젝트에 병합이 되므로 원래의 'state'를 변경하지 않고 새로운 값으로 오브젝트의 복사본을 만들게된다.
+세번째 예제에서는 state와 { foo: 123 }이 첫번째 인자인 새로운 오브젝트에 병합이 되므로 원래의 state를 변경하지 않고 새로운 값으로 오브젝트의 복사본을 만들게된다.
 
-ES6에서 도입된 'spread operator`는 'state'를 변경하지 않는 보다 간결한 방법을 제공한다.
+ES6에서 도입된 `spread operator`는 'state'를 변경하지 않는 보다 간결한 방법을 제공한다.
 
 ES6 (ES2015)
 
@@ -323,11 +323,11 @@ const newState = { ...state, foo: 123 };
 ```
 
 > 
-spread operator에 대한 자세한 내용은 [여기](http://redux.js.org/docs/recipes/UsingObjectSpreadOperator.html)를 참조
+`spread operator`에 대한 자세한 내용은 [여기](http://redux.js.org/docs/recipes/UsingObjectSpreadOperator.html)를 참조
 
-### 8.2 Create Reducer for speed up counter
+### 8.2 Create Reducer for change climate
 
-먼저 우리가 만들어 볼 예제는 speed counter로 테스트 주도 개발 방식으로 만들어보겠다.
+먼저 우리가 만들어 볼 예제는 `ChangeClimate`로 테스트 주도 개발 방식으로 만들어보겠다.
 Part1에서 우리의 앱은 `create react app`을 통해 만들어졌기 때문에 기본적으로 test runner로 `Jest`를 사용하게 된다. 
 
 Jest는 다음의 명명 규칙중 하나를 사용하여 테스트 파일을 찾는다.
@@ -338,7 +338,7 @@ Files with .test.js suffix.
 Files with .spec.js suffix.
 ```
 
-src/reducers 디렉토리리를 만들고 teslaRangeApp.spec.js 생성한뒤 테스트를 작성한다.
+`src/reducers` 디렉토리리를 만들고 `teslaRangeApp.spec.js` 생성한뒤 테스트를 작성한다.
 
 ```
 describe('test reducer', () => {
@@ -350,11 +350,11 @@ describe('test reducer', () => {
 })
 ```
 
-테스트를 작성한 후 `npm test` 명령어를 실행하자. 아래와 같은 테스트 실패 메시지를 볼 수 있어야 한다. 왜냐하면 아직 appReducer를 작성해서 넘기지 않았기 때문이다.
+테스트를 작성한 후 `npm test` 명령어를 실행하자. 아래와 같은 테스트 실패 메시지를 볼 수 있어야 한다. 왜냐하면 아직 `appReducer`를 작성해서 넘기지 않았기 때문이다.
  
 ![enter image description here](https://lh3.googleusercontent.com/gxuCGjMSqDK92QZeBN1Pfg0tS4ErO49MISJwasZFoKq3pAHSTrrox1uQfyfUL9gT-Amz_1i0KA=s1100 "npm-test.jpg")
 
-첫번째 테스트를 성공시키기 위해 같은 reducers 디렉토리 안에 teslaRangeApp.js를 생성하고 inital state와 reducer 함수를 작성해야 한다.
+첫번째 테스트를 성공시키기 위해 같은 `reducers` 디렉토리 안에 `teslaRangeApp.js`를 생성하고 inital state와 reducer 함수를 작성해야 한다.
 
 ```
 const initialState = {
@@ -384,7 +384,7 @@ function appReducer(state = initialState, action) {
 
 export default appReducer;
 ```
-그 다음에  teslaRangeApp.spec.js에서 teslaRangeApp을 import 하고 initialState를 설정하자.
+그 다음에  `teslaRangeApp.spec.js`에서 `teslaRangeApp`을 `import` 하고 initialState를 설정하자.
 
 ```
 import appReducer from './teslaRangeApp';
@@ -415,140 +415,172 @@ describe('test reducer', () => {
 })
 ```
 
-다시 npm test를 실행하면 테스트가 성공 할 것이다.
+다시 npm test를 실행하면 테스트가 성공 할 것이다. 현재의 테스트 케이스에서는 action type이 {} 이기 때문에 initialState 가 리턴되었다.
 
 ![enter image description here](https://lh3.googleusercontent.com/KIVhW-zKx7br3A801T6AcsPuCUu2YuJiqHAYDLvT4nfQZMwjiGM3LVKFyQeQNuMK1PqOxkGncA=s1100 "npm test2.png")
 
-```
-import { getModelData } from '../services/BatteryService';
+이제 `CHANGE_CLIMATE` action을 테스트 해보자.
+`teslaRangeApp.spec.js`에 아래의 `climateChangeState`와 `CHANGE_CLIMATE` 테스트 케이스를 추가한다.
 
-const initialState = {
+
+```
+const climateChangeState = {
   carstats:[
-    {miles:246, model:"60"},
-    {miles:250, model:"60D"},
-    {miles:297, model:"75"},
-    {miles:306, model:"75D"},
-    {miles:336, model:"90D"},
-    {miles:376, model:"P100D"}
+    {miles:267, model:"60"},
+    {miles:273, model:"60D"},
+    {miles:323, model:"75"},
+    {miles:334, model:"75D"},
+    {miles:366, model:"90D"},
+    {miles:409, model:"P100D"}
   ],
   config: {
     speed: 55,
     temperature: 20,
-    climate: true,
+    climate: false,
     wheels: 19
   }
 }
 
-function updateStats(state, newState) {
+it('should handle CHANGE_CLIMATE', () => {
+    expect(
+      appReducer(initialState,{
+        type: 'CHANGE_CLIMATE'
+      })
+    ).toEqual(climateChangeState)
+  })
+```
 
-    return {
-      ...state,
-      config:newState.config,
-      carstats:calculateStats(newState)
-    }  
+그 다음에 `teslaRangeApp.js`에 `CHANGE_CLIMATE` 케이스와 `updateStats`, `calculateStats` 함수를 추가한다. 그리고 part1에서 사용했던 `BatteryService.js`를 `import`한다.
+
+
+```
+import { getModelData } from '../services/BatteryService';
+
+function updateStats(state, newState) {
+  return {
+    ...state,
+    config:newState.config,
+    carstats:calculateStats(newState)
+  }  
 }
 
+function calculateStats(state) {
+  const models = ['60', '60D', '75', '75D', '90D', 'P100D'];
+  const dataModels = getModelData();
+  return models.map(model => {
+    const { speed, temperature, climate, wheels } = state.config;
+    const miles = dataModels[model][wheels][climate ? 'on' : 'off'].speed[speed][temperature];
+    return {
+      model,
+      miles
+    };
+  });
+}
 
 function appReducer(state = initialState, action) {
   switch (action.type) {
-    case 'SPEED_UP': {
-      console.log('SPEED_UP');
-      const newState = {
-          ...state,
-          config: {
-            climate:state.config.climate,
-            speed:action.value + action.step,
-            temperature:state.config.temperature,
-            wheels:state.config.wheels
-          }
-      };
-      return updateStats(state, newState);
-    }    
-    case 'SPEED_DOWN': {
-      console.log('SPEED_DOWN');
-      const newState = {
-          ...state,
-          config: {
-            climate:state.config.climate,
-            speed:action.value - action.step,
-            temperature:state.config.temperature,
-            wheels:state.config.wheels
-          }
-      };
-      return updateStats(state, newState);
-    }        
-    case 'TEMPERATURE_UP': {
-      console.log('TEMPERATURE_UP');
-      const newState = {
-          ...state,
-          config: {
-            climate:state.config.climate,
-            speed:state.config.speed,
-            temperature:action.value + action.step,
-            wheels:state.config.wheels
-          }
-      };
-      return updateStats(state, newState);
-    }
-    case 'TEMPERATURE_DOWN': {
-      console.log('TEMPERATURE_DOWN');
-      const newState = {
-          ...state,
-          config: {
-            climate:state.config.climate,
-            speed:state.config.speed,
-            temperature:action.value - action.step,
-            wheels:state.config.wheels
-          }
-      };
-      return updateStats(state, newState);
-    }        
     case 'CHANGE_CLIMATE': {
-      console.log('CHANGE_CLIMATE');
       const newState = {
-          ...state,
-          config: {
-            ...state.config,
-            climate:!state.config.climate,
-          }
-      };
-      return updateStats(state, newState);
-    }
-    case 'CHANGE_WHEEL': {
-      console.log('CHANGE_WHEEL');
-      const newState = {
-          ...state,
-          config: {
-            climate:state.config.climate,
-            speed:state.config.speed,
-            temperature:state.config.temperature,
-            wheels:action.value
-          }
+        ...state,
+        config: {
+          climate: !state.config.climate,
+          speed: state.config.speed,
+          temperature: state.config.temperature,
+          wheels: state.config.wheels
+        }
       };
       return updateStats(state, newState);
     }
     default:
-      return state 
+      return state
   }
-}
-
-function calculateStats(state) {
-    const models = ['60', '60D', '75', '75D', '90D', 'P100D'];
-    const dataModels = getModelData();
-    return models.map(model => {
-      const { speed, temperature, climate, wheels } = state.config;
-      const miles = dataModels[model][wheels][climate ? 'on' : 'off'].speed[speed][temperature];
-      return {
-        model,
-        miles
-      };
-    });
-}
-
-export default appReducer;
+}    
 ```
 
+테스트 결과를 확인해보면 두 개의 테스트 케이스가 성공한것을 볼 수 있다.
 
+![enter image description here](https://lh3.googleusercontent.com/dIjLLo1-FWnI3QjYtcsw6ULllFxqAr_FDepujQe39wFNCA7ISlpHAGziqVKBdMgaWCrueVKElg=s944 "npm test.png")
+
+지금까지 우리가 구현한 것은 전체 애플리케이션에서 사용자가 에어콘을 on/off 했을때 발생할 상태의 변화를 Redux Store나 View 없이 Action과 Redeucer 관점에서만 test runner를 통해 구현해본것이다.
+
+_![enter image description here](https://lh3.googleusercontent.com/TokzyESk55lNISeM0nS5IjNN2Xk6Tjv3KWGOVv-Zt5Z79hkMDXBOusHPMHzhFoWRQvDIFwyP1A=s1050 "reducer1.png")_
+
+
+_![enter image description here](https://lh3.googleusercontent.com/2OtGE5flaL5zZGKXnoQpmJHHMsSw2yasxfshu1a5cKMU-ErslBc2RbYpWy6cV3njtmsgiuhy9w=s1050 "reducer.png")_
+
+> 
+지금까지 작성한 teslaRangeApp.js는 [여기](https://gist.github.com/gyver98/d0749fe0280f3d471f87305993167b97#file-teslarangeapp-js)에서 테스트 코드는 [여기](https://gist.github.com/gyver98/f482176b8c904a9ef1c64becb87b8023#file-teslarangeapp-spec-js)에서 확인할 수 있다.
+
+
+### 8.3 Create Reducer for others
+
+위에서 한 방식을 참고해서 나머지 테스트 케이스들을 만들게되면 최종적으로 우리 전체앱의 reducers가 정의된 teslaRangeApp.js 파일과 이를 테스트하는 teslaRangeApp.spec.js를 정의하게 된다.
+
+>
+최종코드는 다음에서 확인 할 수 있다.
+[teslaRangeApp.js](https://gist.github.com/gyver98/2f8c3a8e7652de29c090818f6b7999ea#file-final-teslarangeapp-js)
+[teslaRangeApp.spec.js](https://gist.github.com/gyver98/f18ce2f9d04cf2b762f5ec4c2d0f9418#file-final-teslarangeapp-spec-js)
+
+코드를 완성 후 테스트를 했을때 7개의 테스트 케이스가 성공해야 한다.
+
+![enter image description here](https://lh3.googleusercontent.com/HHs8ASsrwlD7_4m2EUSAe5OdL-P5G1jmUufJjiqNzCdpkhJWkj4B4w2hzwv4WlTYtbHln5Y-1Q=s944 "test case.png")
+
+## 9. The views: smart and dumb components
+이미  ## 5. Divide The App Into Containers and Components 에서 언급했듯이 우리의 애플리케이션은 프리젠테이션 전용 목적의 `Presentational` 컴포넌트 (dumb component) 와 `Redux`와 커뮤니케이션 하면서 `Actions`를 담당하는 상위 Wrapper 컴포넌트인 `Container` 컴포넌트 (smart component)를 만들것이다.
+
+smart component는 action을 담당하는데, 만일 하위에 있는 dumb component에서 어떤 action이 필요한 경우
+smart component에서는 props를 통해 함수를 전달하게되고, dumb component는 이를 콜백으로 처리하게 된다.
+
+이미 part 1 에서 프리젠테이션 목적의 dumb 컴포넌트들은 만들어 놓았으므로 이를 재사용할것이다.
+여기서는 각각의 dumb 컴포넌트들을 감싸는 상위 wrapper로서 container 컴포넌트를 생성하도록 한다.
+
+### 9.1 The view layer binding
+store를 view에 연결하기위해서 Redux는 약간의 도움이 필요하다. 두 가지를 하나로 묶을 뭔가가 필요한데 react를 사용하는 앱에서는 이것이 바로 `react-redux`이다. 기술적으로, 컨테이너 컴포넌트는 store.subscribe()를 사용하여 Redux state 트리의 일부를 읽고 프리젠테이션 컴포넌트에 그 상태를 렌더링 할 수 있도록 props로 제공하는 React 컴포넌트일뿐이다. 따라서 우리는 직접 수작업으로 container 컴포넌트를 작성할 수도 있지만 이것은 Redux 공식 문서에 의하자면 권장되지 않는다. 왜냐하면 `react-redux`는 수작업으로 수행하기 어려운 많은 성능 최적화를 수행하기 때문이다. 이러한 이유로 우리는 직접 container 컴포넌트를 작성하는 대신에 react-redux에서 제공되는 connect() 함수를 이용하여 작성하도록 한다.
+
+> 먼저 필요한 패키지들을 설치하자.
+npm install --save redux
+npm install --save react-redux
+
+
+### 9.2 TeslarCar Container
+`connect()`를 사용하려면 `mapStateToProps`라는 특별한 함수를 정의해야한다. 이 함수는 현재의 Redux store 상태를 프리젠테이션 컴포넌트에 전달할 prop으로 변환하는 방법을 알려준다. TeslarCar 컨테이너는 현재 store에 저장된 wheelsize를 가져와 TeslarCar 컴포넌트에서 이를 렌더링 할 수 있도록 props로 전달한다. 이 props는 state가 갱신될때마다 업데이트 되어질것이다.
+
+
+ ![enter image description here](https://lh3.googleusercontent.com/F8H8wq4y-i-sOv3EaR2_Mdlh1vh9aiMs1UeEJ_fjm9LtaEziv8Wdp57F0uN3G8hHM8fzG2LOAQ=s944 "teslacar_cont.png")
+
+mapStateToProps 함수를 정의한 후, 아래와 같이 connect() 함수를 정의했다.
+
+```
+const TeslaCarContainer = connect(mapStateToProps, null)(TeslaCar)
+```
+
+connect()는 두번째 인자로 store의 dispatch 메소드를 첫번째 인자로 받는 mapDispatchToProps를 넘길 수 있는데 TeslaCar 컴포넌트에서는 액션이 필요하지 않으므로 null을 넘기도록 했다.
+
+connect()()에서 보여지는 또 하나의 괄호는 이상하게 보일 수도 있다. 이러한 형태는 사실 두 개의 함수 호출을 의미하는데, 첫번째 connect()는 또 다른 함수를 리턴하고 두 번째 함수에서는 React 컴포넌트를 전달해주어야 한다.
+여기서는 TeslaCar 컴포넌트가 전달되고 있다. 이러한 패턴은 currying 또는  partial application이라 불리우며 functional programing의 한 형태이다.
+
+/src/containers/TeslaCarContainer.js를 생성하고 코드를 작성하자.
+
+> 
+TeslaCarContainer 의 코드는 [여기서](https://gist.github.com/gyver98/7fa2b19d0bf023200a196ff1ec26f5d5#file-teslarcarcontainer-js) 확인 할 수 있다.
+
+### 9.3 TeslaStats Container
+
+TeslaStats 컨테이너도 TeslaCar 컨테이너와 마찬가지로 mapStatToProps함수만 정의하여 connect()에 전달하도록 한다. 
+
+![enter image description here](https://lh3.googleusercontent.com/5ITlHwJtUuFpbOJDWV31Xj47t6ozVEln2Ac5yQ6OWJcx4ICcFw1iaN1RaWDAJJEDnxxIX98Uhw=s944 "tesla-carstats-cont.png")
+
+/src/containers/TeslaStatsContainer.js를 생성하고 코드를 작성하자.
+
+>
+TeslaStatsContainer의 코드는 [여기서](https://gist.github.com/gyver98/065b988b03b0c823f7d8373f2235ec1e#file-teslastatscontainer-js) 확인 할 수 있다.
+
+### 9.4 TeslaSpeedCounter Container
+
+TeslaSpeedCounter 컨테이너에서는 TeslarSpeedCounter 컴포넌트에서 발생하는 사용자 액션을 처리할 수 있도록 mapDispatchToProps 함수를 정의하도록 한다.
+
+ 
+![enter image description here](https://lh3.googleusercontent.com/y6yxY-K0hrjYHzPvmGS8esNBFVjPyPl4DUG-JIAbVL9wb60NUDZ1g_K8hMEAaj243ptIC0kPUg=s1050 "tesla-counter-cont.png")
 
 {% include disqus.html %}
 
