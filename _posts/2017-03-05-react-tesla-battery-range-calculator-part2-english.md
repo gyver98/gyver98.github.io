@@ -561,8 +561,7 @@ connect()()에서 보여지는 또 하나의 괄호는 이상하게 보일 수�
 
 /src/containers/TeslaCarContainer.js를 생성하고 코드를 작성하자.
 
-> 
-TeslaCarContainer 의 코드는 [여기서](https://gist.github.com/gyver98/7fa2b19d0bf023200a196ff1ec26f5d5#file-teslarcarcontainer-js) 확인 할 수 있다.
+* TeslaCarContainer 의 코드는 [여기서](https://gist.github.com/gyver98/7fa2b19d0bf023200a196ff1ec26f5d5#file-teslarcarcontainer-js) 확인 할 수 있다.
 
 ### 9.3 TeslaStats Container
 
@@ -572,15 +571,52 @@ TeslaStats 컨테이너도 TeslaCar 컨테이너와 마찬가지로 mapStatToPro
 
 /src/containers/TeslaStatsContainer.js를 생성하고 코드를 작성하자.
 
->
-TeslaStatsContainer의 코드는 [여기서](https://gist.github.com/gyver98/065b988b03b0c823f7d8373f2235ec1e#file-teslastatscontainer-js) 확인 할 수 있다.
+* TeslaStatsContainer의 코드는 [여기서](https://gist.github.com/gyver98/065b988b03b0c823f7d8373f2235ec1e#file-teslastatscontainer-js) 확인 할 수 있다.
 
 ### 9.4 TeslaSpeedCounter Container
 
-TeslaSpeedCounter 컨테이너에서는 TeslarSpeedCounter 컴포넌트에서 발생하는 사용자 액션을 처리할 수 있도록 mapDispatchToProps 함수를 정의하도록 한다.
+TeslaSpeedCounter 컨테이너에서는 TeslarSpeedCounter 컴포넌트에서 발생하는 사용자 액션을 처리할 수 있도록 mapDispatchToProps 함수를 추가적으로 정의하도록 한다.
 
+/src/containers/TeslaSpeedCounterContainer.js를 생성하고 코드를 작성하자.
  
 _![enter image description here](https://lh3.googleusercontent.com/y6yxY-K0hrjYHzPvmGS8esNBFVjPyPl4DUG-JIAbVL9wb60NUDZ1g_K8hMEAaj243ptIC0kPUg=s1050 "tesla-counter-cont.png")_
+
+* TeslaSpeedCounterContainer의 코드는 [여기서](https://gist.github.com/gyver98/f1758643b7a9f3a5bcae546abda5861d#file-teslaspeedcountercontainer-js) 확인 할 수 있다.
+
+### 9.4 TeslaTempCounter Container
+TeslaTempCounter 컨테이너는 전달되는 state와 action creators를 제외하고 TeslaSpeedCounter 와 거의 동일하다.
+
+/src/containers/TeslaTempCounterContainer.js를 생성하고 코드를 작성하자.
+
+* TeslaTempCounterContainer의 코드는 [여기서](https://gist.github.com/gyver98/0986225c521d3213875a9849bf1e9d80#file-teslatempcountercontainer-js) 확인 할 수 있다.
+
+### 9.5 TeslaClimateContainer and TeslaWheelsContainer
+나머지 두 개의 컨테이너도 각각 대응되는 state와 dispatch되는 action creators만 다를뿐 전체적인 구조는 이미 작성한 컨테이너들과 동일하다.
+
+다음의 파일을 생성하고 코드를 완성하자.
+
+/src/containers/TeslaClimateContainer.js
+/src/containers/TeslaWheelsContainer.js
+
+* TeslaClimateContainer의 코드는 [여기서](https://gist.github.com/gyver98/bd677915a8b4ea68589497311c77eaee#file-teslaclimatecontainer-js) 확인 할 수 있다.
+
+* TeslaWheelsContainer의 코드는 [여기서](https://gist.github.com/gyver98/2bc410b7c7aa07ac4def49702ba21738#file-teslawheelscontainer-js) 확인 할 수 있다.
+
+이로서 part 1 에서 생성했던 각각의 프리젠테이션 컴포넌트들에 대응하는 컨테이너 컴포넌트들을 react-redux의 connect()를 통해 만들어보았다.
+
+## 10. Provider
+
+마지막으로 지금까지 만들었던 모든 것들을 한데 모아 우리의 앱이 작동하도록 만들어보자.
+지금까지 우리는 Action 오브젝트를 정의했고, Action 오브젝트를 만들어주는 action creators를 생성했다. 그리고 action이 발생하면 실제 처리하고 새로운 state를 리턴하는 reducers를 만들었다. 그 다음에 각각의 프리젠테이션 컴포넌트를 Redux store에 연결해주는 컨테이너 컴포넌트를 작성하였다.
+
+이제 모든 컨테이너 컴포넌트에서 store에 접근 할 수 있는 방법이 필요한데, Provider가 바로 그 역할을 수행한다.
+Provider 컴포넌트는 전체 애플리케이션을  감싸면서 하위 컴포넌트들이 connect()를 통해서 store와 커뮤니케이션 할 수 있도록 한다.
+
+우리 앱의 최상위 컴포넌트인 App.js는 다음과 같다.
+
+_![enter image description here](https://lh3.googleusercontent.com/w8PrZXcrCET9D4YAS74DOmF1I0nyCuwYqrfGSQCY0PmYOe56n8P1sq_U4QvVhr85Z6Pm1YW-fg=s1150 "provider.png")_
+
+ 
 
 {% include disqus.html %}
 
