@@ -617,6 +617,9 @@ Provider 컴포넌트는 전체 애플리케이션을  감싸면서 하위 컴�
 _![enter image description here](https://lh3.googleusercontent.com/w8PrZXcrCET9D4YAS74DOmF1I0nyCuwYqrfGSQCY0PmYOe56n8P1sq_U4QvVhr85Z6Pm1YW-fg=s1150 "provider.png")_
 
  
+ 
+ 
+_![enter image description here](https://lh3.googleusercontent.com/beUr8-FlmI4IcxZ6XPcLVMtaq3nz_cRxOEhYnvWEBLJGP82N-HHjzHw-wcw3HovVx8ExiBq5Bw=s1100 "redux flow.gif")_
 
 {% include disqus.html %}
 
