@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      Building Tesla's battery range calculator with React
+title:      Building Tesla's battery range calculator with React Part 1
 date:       2017-02-13 11:37:19
 summary:    Rebuilding Tesla's Battery Range Calculator with React 
 categories: blog development react

@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      (한글버전) Building Tesla's battery range calculator with React
+title:      (한글버전) Building Tesla's battery range calculator with React Part 1
 date:       2017-02-09 11:37:19
 summary:    React로 Tesla's battery range calculator 구현하기 
 categories: blog development react

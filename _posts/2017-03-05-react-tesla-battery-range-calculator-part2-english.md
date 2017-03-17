@@ -1,17 +1,17 @@
 ---
 layout:     post
-title:      Building Tesla's battery range calculator with React Part 2
+title:      Building Tesla's battery range calculator with React Part 2 (Redux version)
 date:       2017-03-05 11:20:19
-summary:    Rebuilding Tesla's Battery Range Calculator with React 
+summary:    Rebuilding Tesla's Battery Range Calculator with React/Redux 
 categories: blog development react
 ---
 
-이번 튜토리얼은  React로 Tesla's battery range calculator 만들기의 두번째 파트이다.
-첫번째 파트에서는 create-react-app 을 통해 프로젝트를 구성한 후 UI를 세분화하여 각각의 컴포넌트를 구현하고 state와 props를 이용하여 상태와 이벤트를 관리하여 전체 앱을 완성하였다.
+이번 튜토리얼은  `React`로 Tesla's battery range calculator 만들기의 두번째 파트이다.
+첫번째 파트에서는 `create-react-app`을 통해 프로젝트를 구성한 후 UI를 세분화하여 각각의 컴포넌트를 구현하고 `state`와 `props`를 이용하여 상태와 이벤트를 관리하여 전체 앱을 완성하였다.
 
 > 파트 1은 [여기서](https://gyver98.github.io/blog/development/react/2017/02/09/react-tesla-battery-range-calculator-part1-korean/) 확인할 수 있다.
 
-이번 파트에서는 상태관리 솔루션인 Redux를 도입하여 어떻게 앱의 상태를 관리하는 애플리케이션을 만들 수 있는지 살펴보겠다.
+이번 파트에서는 상태관리 솔루션인 `Redux`를 도입하여 어떻게 앱의 상태를 관리하는 애플리케이션을 만들 수 있는지 살펴보겠다.
 
 `Redux`가 무었인지 알아보기전에 왜 `Redux`를 사용해야 하는지 어떤 문제를 해결하기 위해 필요한건지 먼저 알아보자.
 
@@ -26,17 +26,20 @@ categories: blog development react
  - 컴포넌트는 다른 컴포넌트의 상태를 변경할 필요가 있다
 ```
 
-Redux는 상태관리 라이브러리로서 우리앱의 상태를 어딘가에 저장할 수 있게 하고, 상태를 변경하게 해주며 변경된 상태를 사용할 수 있도록 도와주는 훌륭한 도구이다. 즉 Redux를 통해 우리는 상태를 찾고, 상태를 변경하며, 업데이트된 상태를 얻을 수 있는 단 하나의 장소를 갖게되는 것이다.
+`Redux`는 상태관리 라이브러리로서 우리 앱의 상태를 어딘가에 저장할 수 있게 하고, 상태를 변경하게 해주며 변경된 상태를 사용할 수 있도록 도와주는 훌륭한 도구이다. 즉 `Redux`를 통해 우리는 상태를 찾고, 상태를 변경하며, 업데이트된 상태를 얻을 수 있는 단 하나의 장소를 갖게되는 것이다.
 
-또한 Redux는 React와 궁합이 잘 맞지만 프레임웍과 무관하기때문에 Angular 또는 jQuery 애플리케이션에서도 사용할 수 있다.
+또한 `Redux`는 `React`와 궁합이 잘 맞지만 프레임웍과 무관하기때문에 Angular 또는 jQuery 애플리케이션에서도 사용할 수 있다.
+
+>
+Redux를 선택하기에 앞서 Dan Abramov의 [You Might Not Need Redux](https://medium.com/@dan_abramov/you-might-not-need-redux-be46360cf367#.uz11a0vkc)를 읽어볼것을 추천한다.
 
 ## 2. Data flow in Redux
 
-지난번 포스트에서 본 것 처럼, React에서는 컴포넌트를 통해 데이타가 전달된다. 즉, 부모에서 자식으로 흐르는 단방향 데이타 흐름인것이다. 이런 특성상 부모-자식 관계가 아닌 컴포넌트끼리의 커뮤니케이션은 명확하지가 않다.
+지난번 포스트에서 본 것 처럼, `React`에서는 컴포넌트를 통해 데이타가 전달된다. 즉, 부모에서 자식으로 흐르는 단방향 데이타 흐름인것이다. 이런 특성상 부모-자식 관계가 아닌 컴포넌트끼리의 커뮤니케이션은 명확하지가 않다.
 
 ![enter image description here](https://lh3.googleusercontent.com/42IhN3FAY3DSZ866Z1klFF2zK7OPQ-Ufqd-k1YqS_Kdklem4O1nwSYIYm-u-UUgkZUpw4hSNTA=s944 "data flow1.png")
 
-React에서는 위의 그림처럼 직접적인 component-to-component 커뮤니케이션을 권장하지 않는다. React에서 이를 위해 제안하는 방법이 있으나 직접 구현해야만 한다. React docs에 따르면 :
+`React`에서는 위의 그림처럼 직접적인 `component-to-component` 커뮤니케이션을 권장하지 않는다. `React`에서 이를 위해 제안하는 방법이 있으나 직접 구현해야만 한다. React docs에 따르면 :
 
 >
 For communication between two components that don't have a parent-child relationship, you can set up your own global event system. ... Flux pattern is one of the possible ways to arrange this.
@@ -44,18 +47,19 @@ For communication between two components that don't have a parent-child relation
 
 ![enter image description here](https://lh3.googleusercontent.com/_QVuP6ZcvHsh2eeUoy_uHZorb2Ay3R9tB3CPqt7sAkSH8W548aTH57Petf8ppahrN7puOy7YKg=s944 "redux flow.png")	
 
-이 부분이 바로 Redux가 유용한 지점이다. 
-Redux는 "store"라 불리우는 한 곳에서 모든 애플리케이션 상태를 저장하는 솔루션을 제공한다. 그런 다음 컴포넌트는 상태 변경을 다른 컴포넌트에 직접 전달하지 않고 스토어로 "dispatch"한다. 상태 변경을 인식해야하는 컴포넌트는 스토어를 "subscribe" 하여 업데이트를 할 수 있다.
+이 부분이 바로 `Redux`가 유용한 지점이다. 
+`Redux`는 `store`라 불리우는 한 곳에서 모든 애플리케이션 상태를 관리하는 솔루션을 제공한다. 그런 다음 컴포넌트는 상태 변경을 다른 컴포넌트에 직접 전달하지 않고 `store`로 `dispatch`한다. 상태 변경을 인식해야하는 컴포넌트는 `store`를 `subscribe` 하여 업데이트 할 수 있다.
 
 >
 Redux는 한 마디로 자바스크립트 기반의 앱에서 싱글 오브젝트로 앱의 상태를 표현하고 관리하는 상태 컨테이너라 할 수 있다.
 
-##3. Redux Core Concept
-Redux 자체는 아주 심플하다. 우리가 지난 포스팅에서 만들었던 앱의 상태는 다음과 같이 일반 오브젝트로 표현될 수 있다. 
+## 3. Redux Core Concept
+`Redux` 자체는 아주 심플하다. 우리가 지난 포스팅에서 만들었던 앱의 상태는 다음과 같이 일반 오브젝트로 표현될 수 있다. 
 
 ![enter image description here](https://lh3.googleusercontent.com/kF94wMUWGh2Xv7LxamrX-JlwBYdCCq0pKjZvzfKzUvt4Dpc58u_gX0C9zIAnuTyP52lSxXK0iA=s944 "state object.png")
+
 이 오브젝트는 `setters`가 없는 `model`과 같다.
-Redux에서 이 상태를 변경하기 위해서는 `action`을 `dispatch`해야 한다. `action`은 무슨 일이 일어나는지를 묘사하는 일반 자바스크립트 오브젝트이다. 여기 앞으로 우리 앱에서 구현할 몇 가지 예가 있다.
+`Redux`에서 이 상태를 변경하기 위해서는 `action`을 `dispatch`해야 한다. `action`은 무슨 일이 일어나는지를 묘사하는 일반 JavaScript 오브젝트이다. 여기 앞으로 우리 앱에서 구현할 몇 가지 예가 있다.
 
 
 ![enter image description here](https://lh3.googleusercontent.com/1zQwJBmCRp4X9YPAu4Mu0TlTNuSxUepDXMp8jIz2cA74xbRs7dTjJwmF4jEzbzeQTBl09YDzfQ=s944 "actions.png")
@@ -63,21 +67,15 @@ Redux에서 이 상태를 변경하기 위해서는 `action`을 `dispatch`해야
 이처럼 모든 상태 변화를 액션으로 강제하는 것은 앱에서 무슨 일이 일어나는지에 대한 명료한 이해를 갖게 만들어준다. 무슨 일이 생기면 왜 그런 변화가 일어났는지 알 수 있게 되는 것이다.
 
 이제 이러한 `state`와 `action`을 한데 묶기 위해 `reducer`라 불리우는 함수가 필요하다. 
-reducer는 단지 `state`와 `action`을 인자로 받아 새로운 `state`을 리턴하는 함수에 지나지 않는다. 이를 한 마디로 표현하면 :
+reducer는 단지 `state`와 `action`을 인자로 받아 새로운 `state`를 리턴하는 함수에 지나지 않는다. 이를 한 마디로 표현하면 :
 
 > 
 (state, action) => state 
 
-`action`은 어떤 일이 일어나는지에 대해서만 설명하지 어떻게 애플리케이션의 상태를 변경하는지에 대해서는 관여하지 않는다. 그건 바로 `reducer`가 할 일이다. 여기 우리앱에서 구현할 reducer의 한 가지 예가 있다.
+`action`은 어떤 일이 일어나는지에 대해서만 설명하지 어떻게 애플리케이션의 상태를 변경하는지에 대해서는 관여하지 않는다. 그건 바로 `reducer`가 할 일이다. 여기 우리 앱에서 구현할 `reducer`의 한 가지 예가 있다.
 
 
 ![enter image description here](https://lh3.googleusercontent.com/RVYAdVRC71UVO2mQLcGm7_3tkC1O1zZ7ougM45iZt9X8Rzxnd0Cktu4q0gW8zEoNNDt5Oc2XAQ=s944 "reducer.png")
-
-
-여기 한 눈에 redux가 어떻게 동작하는 보여주는 애니메이션이 있어 퍼왔다. (출처 : http://slides.com/jenyaterpil/redux-from-twitter-hype-to-production#/9)
-
-![redux store](https://lh3.googleusercontent.com/2kZ0VzZOaiAzLYeHnnSeam-1yAUZt55PTP2mdKaU1giRHW6o1BucRNk5BE9Q7Du9DYam1aMcFg=s944 "redux store1.gif")
-
 
 
 ## 4. Redux Three Principles
@@ -86,12 +84,12 @@ reducer는 단지 `state`와 `action`을 인자로 받아 새로운 `state`을 �
 ### 4.1 Single source of truth
 
 >
-전체 애플리케이션의 `state`는 단 하나의 `store`내에 오브젝트 트리 형태로 저장된다.
+전체 애플리케이션의 state는 단 하나의 store 내에 오브젝트 트리 형태로 저장된다.
 
 ![state tree](https://lh3.googleusercontent.com/BKBEU-IaqTlTxZ3VkAGHen5-bGTQpcKhknNdt2TRfD5FIW4n-YO2BpsUHsC-QA3CYtNxYm6GMw=s944 "state tree.png")  
 
-모든 `state`가 한 곳에 존재하기 때문에 이를 `single source of truth'라 한다.
-이러한 Redux의 `one-store` 접근 방식은 Flux의 `multiple-store` 접근 방식과 차별된다. 
+모든 `state`가 한 곳에 존재하기 때문에 이를 `single source of truth`라 한다.
+이러한 `Redux`의 `one-store` 접근 방식은 `Flux`의 `multiple-store` 접근 방식과 차별된다. 
 싱글 `state` 트리는 어떠한 장점이 있을까? 이것은 더쉽게 애플리케이션을 디버깅하거나 내부 검사를 할 수 있게 하고, 기존에는 구현하기 어려웠던 일부 기능 (예 : undo/redo)을 쉽게 구현하는것이  가능해진다.
 
 ### 4.2 State is read-only
@@ -109,14 +107,14 @@ store.getState()
 replaceReducer(nextReducer)
 ```
 
-보다시피, setState() 메소드가 없다. 따라서 `action`을 전달하는 것만이 애플리케이션의 상태를 변경할 수 있는 유일한 채널이 되는 것이다.
+보다시피, `setState()` 메소드가 없다. 따라서 `action`을 전달하는 것만이 애플리케이션의 상태를 변경할 수 있는 유일한 채널이 되는 것이다.
 
 ### 4.3 Changes are made with pure functions
 
 >
-state 트리가  action에 의해 변환되는 구체적인 방법을 지정하기위해 순수 함수로서의 reducers를 써야 한다.
+`state` 트리가 `action`에 의해 변환되는 구체적인 방법을 지정하기위해 순수 함수로서의 `reducers`를 써야 한다.
 
-reducers는 이전 `state`와 `action`을 받고 새로운 `state`을 리턴하는 순수 함수에 다름 아니다. 명심해야 할 것은 이전 `state`을 변경하는 것이 아니라 새로운 `state` 오브젝트를 리턴해야 한다는 점이다.
+`reducers`는 이전 `state`와 `action`을 받고 새로운 `state`을 리턴하는 순수 함수에 다름 아니다. 명심해야 할 것은 이전 `state`를 변경하는 것이 아니라 새로운 `state` 오브젝트를 리턴해야 한다는 점이다.
 
 순수 함수는 다음과 같은 특징을 갖는다.
 
@@ -129,12 +127,12 @@ reducers는 이전 `state`와 `action`을 받고 새로운 `state`을 리턴하�
 
 ## 5. Divide The App Into Containers and Components
 
-이제 파트 1 에서 만들었던 우리의 Tesla calculator앱을 Redux 버전으로 만들어보도록 하겠다. 먼저 앞으로 구현하게될 앱의 전체적인 컴포넌트 구성을 살펴보자.
+이제 파트 1 에서 만들었던 우리의 Tesla calculator 앱을 `Redux` 버전으로 만들어보도록 하겠다. 먼저 앞으로 구현하게될 앱의 전체적인 컴포넌트 구성을 살펴보자.
 
 _![enter image description here](https://lh3.googleusercontent.com/YlCnB9gS8_KJgCfW1d8Qb8Ws01zOzj-huYRxu35Vqx6wnH9UJm_LCa85suCubWlYlDC8keXUMw=s1100 "compoent layout.png")_
  
  
-React와 Redux 로직을 하나의 컴포넌트 내부에 같이 두는 것은 지저분해 보일 수 있기 때문에  프리젠테이션 전용 목적의 `Presentational` 컴포넌트와  `Redux`를 처리하고 `Actions`를 발송하는 상위 Wrapper 컴포넌트인 `Container` 컴포넌트를 만드는 것이 권장된다.
+`React`와 `Redux` 로직을 하나의 컴포넌트 내부에 같이 두는 것은 지저분해 보일 수 있기 때문에  프리젠테이션 전용 목적의 `Presentational` 컴포넌트와  `Redux`를 처리하고 `Actions`를 발송하는 상위 Wrapper 컴포넌트인 `Container` 컴포넌트를 만드는 것이 권장된다.
 
 상위 `Container` 컴포넌트의 역할은 `Presentational` 컴포넌트에게  `state` 값을 전달하고 이벤트를 관리하며 `Presentational` 컴포넌트를 대신하여 `Redux`와 커뮤니케이션 하는 것이라 할 수 있다.
 
@@ -294,9 +292,9 @@ export const counterDefaultVal = {
 * Object, array and function => mutable
 
 데이터 구조의 변경은 버그가 발생하기 쉬운 것으로 알려져 있다.
-우리 `store`는 state 오브젝트와 배열로 이루어지기 때문에 state를 변경하지 못하게하는 전략을 구현해야만한다.
+우리 `store`는 `state` 오브젝트와 배열로 이루어지기 때문에 state를 변경하지 못하게하는 전략을 구현해야만한다.
 
-여기 state를 변경하는 세 가지 방법이 있다:
+여기 `state`를 변경하는 세 가지 방법이 있다:
 
 ES5
 
@@ -311,10 +309,11 @@ Object.assign(state, { foo: 123 });
 var newState = Object.assign({}, state, { foo: 123 });
 ```
 
-위의 예제에서 첫번째, 두번째는 state 오브젝트를 변경한다. 두번째 예제에서는 Object.assign()이 모든 인자값을 첫번째 인자와 병합함으로서 변경이 이루어진다. 
+위의 예제에서 첫번째, 두번째는 `state` 오브젝트를 변경한다. 두번째 예제에서는 `Object.assign()`이 모든 인자값을 첫번째 인자인 원래 state와 병합함으로서 변경이 이루어진다.
+
 세번째 예제에서는 state와 { foo: 123 }이 첫번째 인자인 새로운 오브젝트에 병합이 되므로 원래의 state를 변경하지 않고 새로운 값으로 오브젝트의 복사본을 만들게된다.
 
-ES6에서 도입된 `spread operator`는 'state'를 변경하지 않는 보다 간결한 방법을 제공한다.
+ES6에서 도입된 `spread operator`는 `state`를 변경하지 않는 보다 간결한 방법을 제공한다.
 
 ES6 (ES2015)
 
@@ -333,9 +332,9 @@ Part1에서 우리의 앱은 `create react app`을 통해 만들어졌기 때문
 Jest는 다음의 명명 규칙중 하나를 사용하여 테스트 파일을 찾는다.
 
 ```
-Files with .js suffix in __tests__ folders.
-Files with .test.js suffix.
-Files with .spec.js suffix.
+Files with .js suffix in __tests__ folders
+Files with .test.js suffix
+Files with .spec.js suffix
 ```
 
 `src/reducers` 디렉토리리를 만들고 `teslaRangeApp.spec.js` 생성한뒤 테스트를 작성한다.
@@ -501,32 +500,32 @@ function appReducer(state = initialState, action) {
 
 ![enter image description here](https://lh3.googleusercontent.com/dIjLLo1-FWnI3QjYtcsw6ULllFxqAr_FDepujQe39wFNCA7ISlpHAGziqVKBdMgaWCrueVKElg=s944 "npm test.png")
 
-지금까지 우리가 구현한 것은 전체 애플리케이션에서 사용자가 에어콘을 on/off 했을때 발생할 상태의 변화를 Redux Store나 View 없이 Action과 Redeucer 관점에서만 test runner를 통해 구현해본것이다.
+지금까지 우리가 구현한 것은 전체 애플리케이션에서 사용자가 에어콘을 on/off 했을때 발생할 상태의 변화를 `Redux Store`나 `View` 없이 `Action`과 `Reducer` 관점에서만 test runner를 통해 구현해본것이다.
 
 _![enter image description here](https://lh3.googleusercontent.com/TokzyESk55lNISeM0nS5IjNN2Xk6Tjv3KWGOVv-Zt5Z79hkMDXBOusHPMHzhFoWRQvDIFwyP1A=s1050 "reducer1.png")_
 
 
 _![enter image description here](https://lh3.googleusercontent.com/2OtGE5flaL5zZGKXnoQpmJHHMsSw2yasxfshu1a5cKMU-ErslBc2RbYpWy6cV3njtmsgiuhy9w=s1050 "reducer.png")_
 
-> 
-지금까지 작성한 teslaRangeApp.js는 [여기](https://gist.github.com/gyver98/d0749fe0280f3d471f87305993167b97#file-teslarangeapp-js)에서 테스트 코드는 [여기](https://gist.github.com/gyver98/f482176b8c904a9ef1c64becb87b8023#file-teslarangeapp-spec-js)에서 확인할 수 있다.
+
+지금까지 작성한 teslaRangeApp.js는 [여기](https://gist.github.com/gyver98/d0749fe0280f3d471f87305993167b97#file-teslarangeapp-js)에서 
+테스트 코드는 [여기](https://gist.github.com/gyver98/f482176b8c904a9ef1c64becb87b8023#file-teslarangeapp-spec-js)에서 확인할 수 있다.
 
 
 ### 8.3 Create Reducer for others
 
-위에서 한 방식을 참고해서 나머지 테스트 케이스들을 만들게되면 최종적으로 우리 전체앱의 reducers가 정의된 teslaRangeApp.js 파일과 이를 테스트하는 teslaRangeApp.spec.js를 정의하게 된다.
+위에서 한 방식을 참고해서 나머지 테스트 케이스들을 만들게되면 최종적으로 우리 전체앱의 `reducers`가 정의된 `teslaRangeApp.js` 파일과 이를 테스트하는 `teslaRangeApp.spec.js`를 정의하게 된다.
 
->
 최종코드는 다음에서 확인 할 수 있다.
-[teslaRangeApp.js](https://gist.github.com/gyver98/2f8c3a8e7652de29c090818f6b7999ea#file-final-teslarangeapp-js)
-[teslaRangeApp.spec.js](https://gist.github.com/gyver98/f18ce2f9d04cf2b762f5ec4c2d0f9418#file-final-teslarangeapp-spec-js)
+* [teslaRangeApp.js](https://gist.github.com/gyver98/2f8c3a8e7652de29c090818f6b7999ea#file-final-teslarangeapp-js)
+* [teslaRangeApp.spec.js](https://gist.github.com/gyver98/f18ce2f9d04cf2b762f5ec4c2d0f9418#file-final-teslarangeapp-spec-js)
 
 코드를 완성 후 테스트를 했을때 7개의 테스트 케이스가 성공해야 한다.
 
 ![enter image description here](https://lh3.googleusercontent.com/HHs8ASsrwlD7_4m2EUSAe5OdL-P5G1jmUufJjiqNzCdpkhJWkj4B4w2hzwv4WlTYtbHln5Y-1Q=s944 "test case.png")
 
 ## 9. The views: smart and dumb components
-이미  ## 5. Divide The App Into Containers and Components 에서 언급했듯이 우리의 애플리케이션은 프리젠테이션 전용 목적의 `Presentational` 컴포넌트 (dumb component) 와 `Redux`와 커뮤니케이션 하면서 `Actions`를 담당하는 상위 Wrapper 컴포넌트인 `Container` 컴포넌트 (smart component)를 만들것이다.
+이미  5. Divide The App Into Containers and Components 에서 언급했듯이 우리의 애플리케이션은 프리젠테이션 전용 목적의 `Presentational` 컴포넌트 (dumb component) 와 `Redux`와 커뮤니케이션 하면서 `Actions`를 담당하는 상위 Wrapper 컴포넌트인 `Container` 컴포넌트 (smart component)를 만들것이다.
 
 smart component는 action을 담당하는데, 만일 하위에 있는 dumb component에서 어떤 action이 필요한 경우
 smart component에서는 props를 통해 함수를 전달하게되고, dumb component는 이를 콜백으로 처리하게 된다.
@@ -535,27 +534,28 @@ smart component에서는 props를 통해 함수를 전달하게되고, dumb comp
 여기서는 각각의 dumb 컴포넌트들을 감싸는 상위 wrapper로서 container 컴포넌트를 생성하도록 한다.
 
 ### 9.1 The view layer binding
-store를 view에 연결하기위해서 Redux는 약간의 도움이 필요하다. 두 가지를 하나로 묶을 뭔가가 필요한데 react를 사용하는 앱에서는 이것이 바로 `react-redux`이다. 기술적으로, 컨테이너 컴포넌트는 store.subscribe()를 사용하여 Redux state 트리의 일부를 읽고 프리젠테이션 컴포넌트에 그 상태를 렌더링 할 수 있도록 props로 제공하는 React 컴포넌트일뿐이다. 따라서 우리는 직접 수작업으로 container 컴포넌트를 작성할 수도 있지만 이것은 Redux 공식 문서에 의하자면 권장되지 않는다. 왜냐하면 `react-redux`는 수작업으로 수행하기 어려운 많은 성능 최적화를 수행하기 때문이다. 이러한 이유로 우리는 직접 container 컴포넌트를 작성하는 대신에 react-redux에서 제공되는 connect() 함수를 이용하여 작성하도록 한다.
+`store`를 `view`에 연결하기위해서 `Redux`는 약간의 도움이 필요하다. 두 가지를 하나로 묶을 뭔가가 필요한데 react를 사용하는 앱에서는 이것이 바로 `react-redux`이다. 기술적으로, 컨테이너 컴포넌트는 `store.subscribe()`를 사용하여 `Redux state` 트리의 일부를 읽고 프리젠테이션 컴포넌트에 그 상태를 렌더링 할 수 있도록 `props`로 제공하는 `React` 컴포넌트일뿐이다. 따라서 우리는 직접 수작업으로 container 컴포넌트를 작성할 수도 있지만 이것은 `Redux` 공식 문서에 의하자면 권장되지 않는다. 왜냐하면 `react-redux`는 수작업으로 수행하기 어려운 많은 성능 최적화를 수행하기 때문이다. 이러한 이유로 우리는 직접 container 컴포넌트를 작성하는 대신에 `react-redux`에서 제공되는 `connect()` 함수를 이용하여 작성하도록 한다.
 
-> 먼저 필요한 패키지들을 설치하자.
-npm install --save redux
-npm install --save react-redux
+먼저 필요한 패키지들을 설치하자.
+* npm install --save redux
+* npm install --save react-redux
 
 
 ### 9.2 TeslarCar Container
-`connect()`를 사용하려면 `mapStateToProps`라는 특별한 함수를 정의해야한다. 이 함수는 현재의 Redux store 상태를 프리젠테이션 컴포넌트에 전달할 prop으로 변환하는 방법을 알려준다. TeslarCar 컨테이너는 현재 store에 저장된 wheelsize를 가져와 TeslarCar 컴포넌트에서 이를 렌더링 할 수 있도록 props로 전달한다. 이 props는 state가 갱신될때마다 업데이트 되어질것이다.
+`connect()`를 사용하려면 `mapStateToProps`라는 특별한 함수를 정의해야한다. 이 함수는 현재의 `Redux store` 상태를 프리젠테이션 컴포넌트에 전달할 `props`로 변환하는 방법을 알려준다. `TeslarCar` 컨테이너는 현재 `store`에 저장된 wheelsize를 가져와 TeslarCar 컴포넌트에서 이를 렌더링 할 수 있도록 `props`로 전달한다. 이 props는 state가 갱신될때마다 업데이트 되어질것이다.
 
 
  ![enter image description here](https://lh3.googleusercontent.com/F8H8wq4y-i-sOv3EaR2_Mdlh1vh9aiMs1UeEJ_fjm9LtaEziv8Wdp57F0uN3G8hHM8fzG2LOAQ=s944 "teslacar_cont.png")
 
-mapStateToProps 함수를 정의한 후, 아래와 같이 connect() 함수를 정의했다.
+`mapStateToProps` 함수를 정의한 후, 아래와 같이 `connect()` 함수를 정의했다.
 
 ```
 const TeslaCarContainer = connect(mapStateToProps, null)(TeslaCar)
 ```
 
-connect()는 두번째 인자로 store의 dispatch 메소드를 첫번째 인자로 받는 mapDispatchToProps를 넘길 수 있는데 TeslaCar 컴포넌트에서는 액션이 필요하지 않으므로 null을 넘기도록 했다.
+`connect()`는 두번째 인자로 `store`의 `dispatch` 메소드를 첫번째 인자로 받는 `mapDispatchToProps`를 넘길 수 있는데 TeslaCar 컴포넌트에서는 액션이 필요하지 않으므로 null을 넘기도록 했다.
 
+> 
 connect()()에서 보여지는 또 하나의 괄호는 이상하게 보일 수도 있다. 이러한 형태는 사실 두 개의 함수 호출을 의미하는데, 첫번째 connect()는 또 다른 함수를 리턴하고 두 번째 함수에서는 React 컴포넌트를 전달해주어야 한다.
 여기서는 TeslaCar 컴포넌트가 전달되고 있다. 이러한 패턴은 currying 또는  partial application이라 불리우며 functional programing의 한 형태이다.
 
@@ -565,7 +565,7 @@ connect()()에서 보여지는 또 하나의 괄호는 이상하게 보일 수�
 
 ### 9.3 TeslaStats Container
 
-TeslaStats 컨테이너도 TeslaCar 컨테이너와 마찬가지로 mapStatToProps함수만 정의하여 connect()에 전달하도록 한다. 
+TeslaStats 컨테이너도 TeslaCar 컨테이너와 마찬가지로 `mapStatToProps`함수만 정의하여 `connect()`에 전달하도록 한다. 
 
 ![enter image description here](https://lh3.googleusercontent.com/5ITlHwJtUuFpbOJDWV31Xj47t6ozVEln2Ac5yQ6OWJcx4ICcFw1iaN1RaWDAJJEDnxxIX98Uhw=s944 "tesla-carstats-cont.png")
 
@@ -575,15 +575,15 @@ TeslaStats 컨테이너도 TeslaCar 컨테이너와 마찬가지로 mapStatToPro
 
 ### 9.4 TeslaSpeedCounter Container
 
-TeslaSpeedCounter 컨테이너에서는 TeslarSpeedCounter 컴포넌트에서 발생하는 사용자 액션을 처리할 수 있도록 mapDispatchToProps 함수를 추가적으로 정의하도록 한다.
+TeslaSpeedCounter 컨테이너에서는 TeslarSpeedCounter 컴포넌트에서 발생하는 사용자 액션을 처리할 수 있도록 `mapDispatchToProps` 함수를 추가적으로 정의하도록 한다.
+
+_![enter image description here](https://lh3.googleusercontent.com/y6yxY-K0hrjYHzPvmGS8esNBFVjPyPl4DUG-JIAbVL9wb60NUDZ1g_K8hMEAaj243ptIC0kPUg=s1050 "tesla-counter-cont.png")_
 
 /src/containers/TeslaSpeedCounterContainer.js를 생성하고 코드를 작성하자.
- 
-_![enter image description here](https://lh3.googleusercontent.com/y6yxY-K0hrjYHzPvmGS8esNBFVjPyPl4DUG-JIAbVL9wb60NUDZ1g_K8hMEAaj243ptIC0kPUg=s1050 "tesla-counter-cont.png")_
 
 * TeslaSpeedCounterContainer의 코드는 [여기서](https://gist.github.com/gyver98/f1758643b7a9f3a5bcae546abda5861d#file-teslaspeedcountercontainer-js) 확인 할 수 있다.
 
-### 9.4 TeslaTempCounter Container
+### 9.5 TeslaTempCounter Container
 TeslaTempCounter 컨테이너는 전달되는 state와 action creators를 제외하고 TeslaSpeedCounter 와 거의 동일하다.
 
 ![](https://github.com/gyver98/gyver98.github.io/blob/master/images/TempCounterContainer.png?raw=true  "TeslaTempCounterContainer.jpg")
@@ -592,23 +592,30 @@ TeslaTempCounter 컨테이너는 전달되는 state와 action creators를 제외
 
 * TeslaTempCounterContainer의 코드는 [여기서](https://gist.github.com/gyver98/0986225c521d3213875a9849bf1e9d80#file-teslatempcountercontainer-js) 확인 할 수 있다.
 
-### 9.5 TeslaClimateContainer and TeslaWheelsContainer
-나머지 두 개의 컨테이너도 각각 대응되는 state와 dispatch되는 action creators만 다를뿐 전체적인 구조는 이미 작성한 컨테이너들과 동일하다.
+### 9.6 TeslaClimateContainer
+
+![](https://github.com/gyver98/gyver98.github.io/blob/master/images/TeslaClimateCont.png?raw=true)
 
 다음의 파일을 생성하고 코드를 완성하자.
-
 /src/containers/TeslaClimateContainer.js
-/src/containers/TeslaWheelsContainer.js
 
 * TeslaClimateContainer의 코드는 [여기서](https://gist.github.com/gyver98/bd677915a8b4ea68589497311c77eaee#file-teslaclimatecontainer-js) 확인 할 수 있다.
 
+
+### 9.7 TeslaWheelsContainer
+
+![](https://github.com/gyver98/gyver98.github.io/blob/master/images/TeslaWheelsCont.png?raw=true)
+
+다음의 파일을 생성하고 코드를 완성하자.
+/src/containers/TeslaWheelsContainer.js
+
 * TeslaWheelsContainer의 코드는 [여기서](https://gist.github.com/gyver98/2bc410b7c7aa07ac4def49702ba21738#file-teslawheelscontainer-js) 확인 할 수 있다.
 
-이로서 part 1 에서 생성했던 각각의 프리젠테이션 컴포넌트들에 대응하는 컨테이너 컴포넌트들을 react-redux의 connect()를 통해 만들어보았다.
+이로서 part 1 에서 생성했던 각각의 프리젠테이션 컴포넌트들에 대응하는 컨테이너 컴포넌트들을 `react-redux`의 `connect()`를 통해 만들어보았다.
 
 ## 10. Provider
 
-마지막으로 지금까지 만들었던 모든 것들을 한데 모아 우리의 앱이 작동하도록 만들어보자.
+이제 지금까지 만들었던 모든 것들을 한데 모아 우리의 앱이 작동하도록 만들어보자.
 지금까지 우리는 `action` 오브젝트를 정의했고, `action` 오브젝트를 만들어주는 `action creators`를 생성했다. 그리고 `action`이 발생하면 실제 처리하고 새로운 `state`를 리턴하는 `reducers`를 만들었다. 그 다음에 각각의 프리젠테이션 컴포넌트를 `Redux store`에 연결해주는 컨테이너 컴포넌트를 작성하였다.
 
 이제 모든 컨테이너 컴포넌트에서 `store`에 접근 할 수 있는 방법이 필요한데, `Provider`가 바로 그 역할을 수행한다.
@@ -648,7 +655,6 @@ src/components/TeslarCounter/TeslarCounter.js
 src/components/TeslarNotice/TeslarNotice.js
 src/components/TeslarStats/TeslarStats.js
 src/components/TeslarWheels/TeslarWheels.js
-...
 ```
 
 따라서 이러한 컴포넌트 path를 각각의 컨테이너에서 반영해줘야 한다.
@@ -665,10 +671,10 @@ import TeslaCar from '../components/TeslaCar/TeslaCar';
 하지만 아직 몇 가지 할 일이 남아있다. 
 1. 먼저 part 1에서 작성했던 /containers/TeslaBattery.css 의 모든 내용을 카피해서 App.css에 추가하도록 한다.
 
-* App.css 코드는 [여기서](https://gist.github.com/gyver98/46b3929798503d057bf23e64a72c2011#file-app-js) 확인 할 수 있다.
+ - App.css 코드는 [여기서](https://gist.github.com/gyver98/46b3929798503d057bf23e64a72c2011#file-app-js) 확인 할 수 있다.
 
 2. 다음으로 /components/TeslaCounter/TeslaCounter.js를 열고 onClick 이벤트 핸들러를 다음과 같이 수정한다.
-왜냐하면 part 2에서는 더 이상 TeslaBatter.js 에서 이벤트 핸들링을 하지 않기 때문이다.
+왜냐하면 part 2에서는 더 이상 TeslaBattery.js 에서 이벤트 핸들링을 하지 않기 때문이다.
 
 ```
 onClick={(e) => props.increment(e, props.initValues.title)}
@@ -685,7 +691,7 @@ onClick={(e) => {
 
 ```
 
-다음으로 ES6 Object destructuring으로 좀 더 간단한 syntax를 구현하도록 하자.
+다음으로 ES6 Object destructuring을 이용하여 props를 반복적으로 사용하지 않도록 해보자.
 
 ```
 const TeslaCounter = (props) => (
@@ -703,6 +709,26 @@ const TeslaCounter = ({ initValues, currentValue, increment, decrement }
 
 
 드디어 Redux 버전의 Tesla Battery Range Calculator 앱이 완성되었다!!
+
+## 12. One more thing : Redux Dev Tools
+
+Redux Dev Tool을 사용하면 Redux state tracking을 훨씬 쉽게 볼 수 있고 time travel debugging과 같은 멋진 기능도 활용할 수 있다.
+
+여기서는 Chrome 기준으로 살펴보겠다.
+1. Chrome extenstion [install](https://www.google.com.au/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0ahUKEwijoqLQxdzSAhUEspQKHaEDA0AQFggZMAA&url=https%3A%2F%2Fchrome.google.com%2Fwebstore%2Fdetail%2Fredux-devtools%2Flmhkpmbekcpmknklioeibfkpmmfibljd%3Fhl%3Den&usg=AFQjCNFg4ldS78uapjCGBaNjL9NvIwZGhg&sig2=YuyPlshxe2eVaKrx0ReXfQ&bvm=bv.149760088,d.dGo)
+
+2. Add for Redux store
+App.js 파일을 열고 creatStore 부분을 다음과 같이 수정한다.
+```
+const store = createStore(appReducer);
+-->
+const store = createStore(appReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+```
+
+3. 브라우저에서 확인
+
+
+최종 프로젝트 코드는 [여기서](https://github.com/gyver98/react-tesla-battery-range-calculator-tutorial/commits/master) 확인할 수 있다.
 
 
 
