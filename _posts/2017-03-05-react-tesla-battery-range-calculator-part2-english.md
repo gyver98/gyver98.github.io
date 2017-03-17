@@ -586,7 +586,7 @@ _![enter image description here](https://lh3.googleusercontent.com/y6yxY-K0hrjYH
 ### 9.4 TeslaTempCounter Container
 TeslaTempCounter 컨테이너는 전달되는 state와 action creators를 제외하고 TeslaSpeedCounter 와 거의 동일하다.
 
-![](https://github.com/gyver98/gyver98.github.io/blob/master/images/me.jpeg?raw=true  "me.jpg")
+![](https://github.com/gyver98/gyver98.github.io/blob/master/images/TempCounterContainer.png?raw=true  "TeslaTempCounterContainer.jpg")
 
 /src/containers/TeslaTempCounterContainer.js를 생성하고 코드를 작성하자.
 
