@@ -170,7 +170,7 @@ TeslaWheel Container :
 ## 7. Create Action Creators For Each Action
 
 >
-코딩을 시작하기에 앞서 part1에서 완성했던 코드베이스가 필요하므로 part1을 보지 않고 바로 part2를 진행하기를 원한다면 [여기서](https://github.com/gyver98/react-tesla-battery-range-calculator-tutorial) 코드를 클론하여 먼저 코드 베이스를 구축하도록 한다.
+코딩을 시작하기에 앞서 part1에서 완성했던 코드베이스가 필요하므로 part1을 보지 않고 바로 part2를 진행하기를 원한다면 [여기서](https://github.com/gyver98/part1-react-tesla-battery-range-calculator-tutorial) 코드를 클론하여 먼저 코드 베이스를 구축하도록 한다.
 
 npm start 후 애플리케이션이 제대로 동작하는지 확인하자.
 
@@ -256,6 +256,7 @@ export const updateStats = () => {
   }
 }
 ```
+* index.js 의 코드는 [여기서](https://gist.github.com/gyver98/9d088084834ec6a0f893c8576c7d9204#file-index-js) 확인 할 수 있다.
 
 action creator에 따라 defalut values가 필요하므로 우리는 이를 src 디렉토리 아래 constants/counterDefaultVal에 이 상수값을 정의한 후 import 하여 사용하도록 한다.
 
@@ -280,6 +281,9 @@ export const counterDefaultVal = {
 }
 ```
 
+* counterDefaultVal.js 의 코드는 [여기서](https://gist.github.com/gyver98/e560ca69057d40e0688000b94d7c0fd9#file-counterdefaultval-js) 확인 할 수 있다.
+
+
 ## 8. Create Reducers For Each Action
 Reducers는 Redux store에서 받아온 state와 action오브젝트를 받아서 Redux에 다시 저장될 새로운 state를 반환하는 함수이다. 여기서 주어진 state를 직접 수정하지 않는 것이 중요하다. Reducers는 순수 함수이어야만 하고 그래서 새로운 state를 리턴해야만 한다.
 
@@ -296,7 +300,7 @@ Reducers는 Redux store에서 받아온 state와 action오브젝트를 받아서
 
 여기 state를 변경하는 세 가지 방법이 있다:
 
-< ES5 >
+__ES5__
 
 ```
 // Example One
@@ -315,7 +319,7 @@ var newState = Object.assign({}, state, { foo: 123 });
 
 ES6에서 도입된 <span class="bg-dark-gray white">spread operator</span>는 state를 변경하지 않는 보다 간결한 방법을 제공한다.
 
-< ES6 (ES2015) >
+__ES6 (ES2015)__
 
 ```
 const newState = { ...state, foo: 123 };
@@ -337,7 +341,7 @@ Files with .test.js suffix
 Files with .spec.js suffix
 ```
 
-src/reducers 디렉토리리를 만들고 teslaRangeApp.spec.js 생성한뒤 테스트를 작성한다.
+src/reducers 디렉토리를 만들고 teslaRangeApp.spec.js 생성한뒤 테스트를 작성한다.
 
 ```
 describe('test reducer', () => {
@@ -517,10 +521,11 @@ _![enter image description here](https://lh3.googleusercontent.com/2OtGE5flaL5zZ
 위에서 한 방식을 참고해서 나머지 테스트 케이스들을 만들게되면 최종적으로 우리 전체앱의 reducers가 정의된 teslaRangeApp.js 파일과 이를 테스트하는 teslaRangeApp.spec.js를 정의하게 된다.
 
 최종코드는 다음에서 확인 할 수 있다.
+
 * [teslaRangeApp.js](https://gist.github.com/gyver98/2f8c3a8e7652de29c090818f6b7999ea#file-final-teslarangeapp-js)
 * [teslaRangeApp.spec.js](https://gist.github.com/gyver98/f18ce2f9d04cf2b762f5ec4c2d0f9418#file-final-teslarangeapp-spec-js)
 
-코드를 완성 후 테스트를 했을때 7개의 테스트 케이스가 성공해야 한다.
+코드를 완성 후 테스트를 했을때 총 7개의 테스트 케이스가 성공해야 한다.
 
 ![enter image description here](https://lh3.googleusercontent.com/HHs8ASsrwlD7_4m2EUSAe5OdL-P5G1jmUufJjiqNzCdpkhJWkj4B4w2hzwv4WlTYtbHln5Y-1Q=s944 "test case.png")
 
@@ -538,8 +543,8 @@ store를 view에 연결하기위해서 Redux는 약간의 도움이 필요하다
 
 먼저 필요한 패키지들을 설치하자.
 
-* npm install --save redux
-* npm install --save react-redux
+* __npm install --save redux__
+* __npm install --save react-redux__
 
 
 ### 9.2 TeslarCar Container
@@ -554,7 +559,7 @@ mapStateToProps 함수를 정의한 후, 아래와 같이 connect() 함수를 �
 const TeslaCarContainer = connect(mapStateToProps, null)(TeslaCar)
 ```
 
-connect()는 두번째 인자로 store의 dispatch 메소드를 첫번째 인자로 받는 mapDispatchToProps를 넘길 수 있는데 TeslaCar 컴포넌트에서는 액션이 필요하지 않으므로 null을 넘기도록 했다.
+connect()는 두번째 인자로 store의 dispatch 메소드를 첫번째 인자로 받는 <span class="bg-dark-gray white">mapDispatchToProps</span>를 넘길 수 있는데 TeslaCar 컴포넌트에서는 액션이 필요하지 않으므로 null을 넘기도록 했다.
 
 > 
 connect()()에서 보여지는 또 하나의 괄호는 이상하게 보일 수도 있다. 이러한 형태는 사실 두 개의 함수 호출을 의미하는데, 첫번째 connect()는 또 다른 함수를 리턴하고 두 번째 함수에서는 React 컴포넌트를 전달해주어야 한다.
@@ -568,7 +573,7 @@ connect()()에서 보여지는 또 하나의 괄호는 이상하게 보일 수�
 
 TeslaStats 컨테이너도 TeslaCar 컨테이너와 마찬가지로 mapStatToProps함수만 정의하여 connect()에 전달하도록 한다. 
 
-![enter image description here](https://lh3.googleusercontent.com/5ITlHwJtUuFpbOJDWV31Xj47t6ozVEln2Ac5yQ6OWJcx4ICcFw1iaN1RaWDAJJEDnxxIX98Uhw=s944 "tesla-carstats-cont.png")
+![enter image description here](https://github.com/gyver98/blog-images/blob/master/2017-03-05-react-tesla-battery-range-calculator-part2-korean/TeslaStatsContainer.png?raw=true)
 
 /src/containers/TeslaStatsContainer.js를 생성하고 코드를 작성하자.
 
@@ -587,7 +592,7 @@ _![enter image description here](https://lh3.googleusercontent.com/y6yxY-K0hrjYH
 ### 9.5 TeslaTempCounter Container
 TeslaTempCounter 컨테이너는 전달되는 state와 action creators를 제외하고 TeslaSpeedCounter 와 거의 동일하다.
 
-![](https://github.com/gyver98/gyver98.github.io/blob/master/images/TempCounterContainer.png?raw=true  "TeslaTempCounterContainer.jpg")
+_![](https://github.com/gyver98/blog-images/blob/master/2017-03-05-react-tesla-battery-range-calculator-part2-korean/TeslaTempCounterContainer.png?raw=true)_
 
 /src/containers/TeslaTempCounterContainer.js를 생성하고 코드를 작성하자.
 
@@ -595,7 +600,7 @@ TeslaTempCounter 컨테이너는 전달되는 state와 action creators를 제외
 
 ### 9.6 TeslaClimateContainer
 
-![](https://github.com/gyver98/gyver98.github.io/blob/master/images/TeslaClimateCont.png?raw=true)
+_![](https://github.com/gyver98/blog-images/blob/master/2017-03-05-react-tesla-battery-range-calculator-part2-korean/TeslaClimateContainer.png?raw=true)_
 
 다음의 파일을 생성하고 코드를 완성하자.
 /src/containers/TeslaClimateContainer.js
@@ -605,7 +610,7 @@ TeslaTempCounter 컨테이너는 전달되는 state와 action creators를 제외
 
 ### 9.7 TeslaWheelsContainer
 
-![](https://github.com/gyver98/gyver98.github.io/blob/master/images/TeslaWheelsCont.png?raw=true)
+_![](https://github.com/gyver98/blog-images/blob/master/2017-03-05-react-tesla-battery-range-calculator-part2-korean/TeslaWheelsContainer.png?raw=true)_
 
 다음의 파일을 생성하고 코드를 완성하자.
 /src/containers/TeslaWheelsContainer.js
@@ -623,9 +628,10 @@ TeslaTempCounter 컨테이너는 전달되는 state와 action creators를 제외
 Provider 컴포넌트는 전체 애플리케이션을 감싸면서 하위 컴포넌트들이 connect()를 통해서 store와 커뮤니케이션 할 수 있도록 한다.
 
 우리 앱의 최상위 컴포넌트인 App.js는 다음과 같다.
+
 * 코드는 [여기서](https://gist.github.com/gyver98/46b3929798503d057bf23e64a72c2011#file-app-js) 확인할 수 있다
 
-_![enter image description here](https://lh3.googleusercontent.com/w8PrZXcrCET9D4YAS74DOmF1I0nyCuwYqrfGSQCY0PmYOe56n8P1sq_U4QvVhr85Z6Pm1YW-fg=s1150 "provider.png")_
+_![enter image description here](https://github.com/gyver98/blog-images/blob/master/2017-03-05-react-tesla-battery-range-calculator-part2-korean/App%20layout.png?raw=true)_
 
 
 ## 11. How they all work together
@@ -641,7 +647,7 @@ _![enter image description here](https://lh3.googleusercontent.com/beUr8-FlmI4Ic
  
 * 먼저 part 1에서 작성했던 /containers/TeslaBattery.css 의 모든 내용을 카피해서 App.css에 추가하도록 한다.
 
-App.css 코드는 [여기서](https://gist.github.com/gyver98/46b3929798503d057bf23e64a72c2011#file-app-js) 확인 할 수 있다.
+App.css 코드는 [여기서](https://gist.github.com/gyver98/fb061ac3997b055bf4628dcfdd83cb51#file-app-css) 확인 할 수 있다.
 
 * 다음으로 /components/TeslaCounter/TeslaCounter.js를 열고 onClick 이벤트 핸들러를 다음과 같이 수정한다.
 왜냐하면 part 2에서는 더 이상 TeslaBattery.js 에서 이벤트 핸들링을 하지 않기 때문이다.
@@ -661,7 +667,7 @@ onClick={(e) => {
 ```
 
 
-* 다음으로 ES6 Object destructuring을 이용하여 props를 반복적으로 사용하지 않도록 해보자.
+* 다음으로 ES6 <span class="bg-dark-gray white">Object destructuring</span>을 이용하여 props를 반복적으로 사용하지 않도록 해보자.
 
 ```
 const TeslaCounter = (props) => (
@@ -686,9 +692,9 @@ const TeslaCounter = ({ initValues, currentValue, increment, decrement }
 
 여기서는 Chrome 기준으로 살펴보겠다.
 
-1. Chrome extenstion [install](https://www.google.com.au/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0ahUKEwijoqLQxdzSAhUEspQKHaEDA0AQFggZMAA&url=https%3A%2F%2Fchrome.google.com%2Fwebstore%2Fdetail%2Fredux-devtools%2Flmhkpmbekcpmknklioeibfkpmmfibljd%3Fhl%3Den&usg=AFQjCNFg4ldS78uapjCGBaNjL9NvIwZGhg&sig2=YuyPlshxe2eVaKrx0ReXfQ&bvm=bv.149760088,d.dGo)
+* Chrome extenstion [install](https://www.google.com.au/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0ahUKEwijoqLQxdzSAhUEspQKHaEDA0AQFggZMAA&url=https%3A%2F%2Fchrome.google.com%2Fwebstore%2Fdetail%2Fredux-devtools%2Flmhkpmbekcpmknklioeibfkpmmfibljd%3Fhl%3Den&usg=AFQjCNFg4ldS78uapjCGBaNjL9NvIwZGhg&sig2=YuyPlshxe2eVaKrx0ReXfQ&bvm=bv.149760088,d.dGo)
 
-2. Add for Redux store
+* Add for Redux store
 
 App.js 파일을 열고 creatStore 부분을 다음과 같이 수정한다.
 
@@ -698,12 +704,12 @@ const store = createStore(appReducer);
 const store = createStore(appReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 ```
 
-3. 브라우저에서 확인
+* 브라우저에서 확인
 
 _![enter image description here](https://github.com/gyver98/gyver98.github.io/blob/master/images/redux%20dev%20tools.gif?raw=true)_
 
 >
-최종 프로젝트 코드는 [여기서](https://github.com/gyver98/react-tesla-battery-range-calculator-tutorial/commits/master) 확인할 수 있다.
+최종 프로젝트 코드는 [여기서](https://github.com/gyver98/redux-tesla-battery-range-calculator-tutorial) 확인할 수 있다.
 
 
 
