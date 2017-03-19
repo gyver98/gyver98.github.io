@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      Building Tesla's battery range calculator with React Part 2 (Redux version)
+title:      React로 Tesla's battery range calculator 만들기 파트 2 (Redux 버전)
 date:       2017-03-05 11:20:19
 summary:    Rebuilding Tesla's Battery Range Calculator with React/Redux 
 categories: blog development react
@@ -58,7 +58,7 @@ Redux 자체는 아주 심플하다. 우리가 지난 포스팅에서 만들었�
 ![enter image description here](https://lh3.googleusercontent.com/kF94wMUWGh2Xv7LxamrX-JlwBYdCCq0pKjZvzfKzUvt4Dpc58u_gX0C9zIAnuTyP52lSxXK0iA=s944 "state object.png")
 
 이 오브젝트는 setters가 없는 model과 같다.
-Redux에서 이 상태를 변경하기 위해서는 <span class="bg-dark-gray white">action</span>을 dispatch해야 한다. action은 무슨 일이 일어나는지를 묘사하는 일반 JavaScript 오브젝트이다. 여기 앞으로 우리 앱에서 구현할 몇 가지 예가 있다.
+Redux에서 이 상태를 변경하기 위해서는 <span class="bg-dark-gray white">action</span>을 dispatch해야 한다. 액션은 앱에서 발생한 일을 설명하는 일반 오브젝트이며 데이터를 변경하려는 의도를 설명하는 유일한 방법이다. 이는 Redux의 기본적인 디자인인 중 하나라고 할 수 있다. 여기 앞으로 우리 앱에서 구현할 몇 가지 예가 있다.
 
 
 ![enter image description here](https://lh3.googleusercontent.com/1zQwJBmCRp4X9YPAu4Mu0TlTNuSxUepDXMp8jIz2cA74xbRs7dTjJwmF4jEzbzeQTBl09YDzfQ=s944 "actions.png")
