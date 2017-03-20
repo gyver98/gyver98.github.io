@@ -150,7 +150,7 @@ As you can see, there is no __setState()__ method. Therefore, __passing an actio
 You write reducers as __pure functions__ to specify the concrete way the state tree is transformed by action.
 
 Reducers are pure functions that take a previous state and action and return a new state.
-Keep in mind that you must return a <span class="bg-dark-gray white">new state</span> object instead of changing the old state.
+Keep in mind that you must return a __new state__ object instead of changing the old state.
 
 "Given the same arguments, it should calculate the next state and return it. No surprises. No side effects. No API calls. No mutations. Just a calculation." - [Redux Docs](http://redux.js.org/docs/basics/Reducers.html)
 
