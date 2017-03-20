@@ -15,7 +15,8 @@ Check out the [part 1](https://gyver98.github.io/blog/development/react/2017/02/
 
 In this part, we will introduce <span class="bg-dark-gray white">Redux</span>, a state management solution, to see how we can transform our application into an application that manages the state of the app with Redux.
 
-This is the final image of our application in part 2.
+This is the final image of our application in part 2
+
 _![](https://github.com/gyver98/blog-images/blob/master/2017-03-05-react-tesla-battery-range-calculator-part2-korean/final%20app.png?raw=true)_
 
 > Check out the part 2 [live demo](http://redux-tesla-charge-calculator.surge.sh/)
