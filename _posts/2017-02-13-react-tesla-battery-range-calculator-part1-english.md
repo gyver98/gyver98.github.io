@@ -2,7 +2,7 @@
 layout:     post
 title:      Building Tesla's battery range calculator with React Part 1
 date:       2017-02-13 11:37:19
-summary:    Rebuilding Tesla's Battery Range Calculator with React 
+summary:    Rebuilding Tesla's Battery Range Calculator with React Part 1 
 categories: blog development react
 ---
 
@@ -19,7 +19,7 @@ This is the final GIF image of our application.
 
 > Check out the [live version](http://react-tesla-charge-calculator.surge.sh/) before we get started.
  
-> Check out the [source code](https://github.com/gyver98/react-tesla-battery-range-calculator-tutorial). 
+> Check out the [source code](https://github.com/gyver98/part1-react-tesla-battery-range-calculator-tutorial). 
  
 Now let's create an application step by step.
 
@@ -117,7 +117,7 @@ Unpack `assets.zip` and place all images in the `src/assets` directory and place
 react-tesla-range-calculator/src/asstets
 ``` 
 
-> Any time you feel like if you've missed something or unsure if you're doing right, you can refer to the [source code](https://github.com/gyver98/react-tesla-battery-range-calculator-tutorial) as a reference.
+> Any time you feel like if you've missed something or unsure if you're doing right, you can refer to the [source code](https://github.com/gyver98/part1-react-tesla-battery-range-calculator-tutorial) as a reference.
 
 ## 1.5 Data service
 The data you can get from Tesla site is hard-coded and very large, so I'll use Todd's new version of the data to make it easier to use. [link](https://github.com/toddmotto/angular-tesla-range-calculator/blob/master/src/app/tesla-battery/tesla-battery.service.ts)

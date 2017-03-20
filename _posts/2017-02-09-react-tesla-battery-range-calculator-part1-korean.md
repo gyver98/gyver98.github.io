@@ -2,7 +2,7 @@
 layout:     post
 title:      (한글버전) Building Tesla's battery range calculator with React Part 1
 date:       2017-02-09 11:37:19
-summary:    React로 Tesla's battery range calculator 구현하기 
+summary:    React로 Tesla's battery range calculator 구현하기 part 1
 categories: blog development react
 comments: true
 ---
@@ -18,7 +18,7 @@ comments: true
 
 > 라이브 버전은 [여기서](http://react-tesla-charge-calculator.surge.sh/) 확인할 수 있다.
  
-> 소스코드는 [여기서](https://github.com/gyver98/react-tesla-battery-range-calculator-tutorial) 확인 할 수 있다. 
+> 소스코드는 [여기서](https://github.com/gyver98/part1-react-tesla-battery-range-calculator-tutorial) 확인 할 수 있다. 
  
 이제 단계별로 애플리케이션을 만들어보자.
 
@@ -116,7 +116,7 @@ export default App;
 react-tesla-range-calculator/src/asstets
 ``` 
 
-> 스텝을 따라하다가 뭔가 놓친거 같거나 확실하지 않다면 언제든지 [소스코드](https://github.com/gyver98/react-tesla-battery-range-calculator-tutorial)를 참조하도록 하자. 
+> 스텝을 따라하다가 뭔가 놓친거 같거나 확실하지 않다면 언제든지 [소스코드](https://github.com/gyver98/part1-react-tesla-battery-range-calculator-tutorial)를 참조하도록 하자. 
 
 ## 1.4 Data service
 Tesla 사이트에서 얻을 수 있는 데이타는 하드 코드되 있고 아주 큰 데이타인데, 여기서는 이를 사용하기 쉽도록 Todd가 새롭게 만든 버전의 데이타를 사용하도록 하겠다. [link](https://github.com/toddmotto/angular-tesla-range-calculator/blob/master/src/app/tesla-battery/tesla-battery.service.ts)
