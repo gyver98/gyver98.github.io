@@ -13,6 +13,8 @@ categories: blog development react redux
 
 이번 파트에서는 상태관리 솔루션인 <span class="bg-dark-gray white">Redux</span>를 도입하여 어떻게 앱의 상태를 관리하는 애플리케이션으로 변환할 수 있는지 살펴보겠다.
 
+> 파트 2 라이브 버전은 [여기서](http://redux-tesla-charge-calculator.surge.sh/) 확인할 수 있다.
+
 Redux가 무었인지 알아보기전에 왜 Redux를 사용해야 하는지 어떤 문제를 해결하기 위해 필요한건지 먼저 알아보자.
 
 ## 1. 우리가 해결하고자 하는 문제는 무었인가
@@ -723,7 +725,7 @@ _![enter image description here](https://github.com/gyver98/gyver98.github.io/bl
 >
 최종 프로젝트 코드는 [여기서](https://github.com/gyver98/redux-tesla-battery-range-calculator-tutorial) 확인할 수 있다.
 
-
+> 파트 2 라이브 버전은 [여기서](http://redux-tesla-charge-calculator.surge.sh/) 확인할 수 있다.
 
 ## Resources
 * [Redux docs](http://redux.js.org/docs/introduction/) 
