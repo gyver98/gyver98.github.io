@@ -440,7 +440,7 @@ React는 컴포넌트 트리로 구성이 되는데 데이타와 상태를 갖�
 * __carstats (array)__ : 현재 선택된 조건 수치( speed, temperature, climate, wheel )에 따른 차 모델별 배터리 수치값 배열
 * __config (object)__: 현재 선택된 조건 (speed:55, temperature:20, climate:aricon on, wheel: 19) 
 
-![enter image description here](https://lh3.googleusercontent.com/LZ4rlA_E8f5_Qt-dKNtBICK-R7zcZdtlcuLFM74IiZzT5Zmh_BOJLDTxz1uzsGtgA7i58Nvfaw=s944 "state.jpg")
+![](https://github.com/gyver98/blog-images/blob/master/2017-02-13-react-tesla-battery-range-calculator-part1-english/state.jpg?raw=true)
 
 바로 이 상태가 우리 앱의 <span class="bg-dark-gray white">Single Source of Truth</span>가 된다.
 이제 이 상태값을 관리하고 하위 컴포넌트에 전달할 수 있도록 `TeslaBattery` 컨테이너를 constructor 함수를 추가하고 초기값을 설정한다. `TeslaCar` 컴포넌트는 `props`를 통해 wheelsize input을 받아들이고 Teslar car 이미지를 렌더링한다.
