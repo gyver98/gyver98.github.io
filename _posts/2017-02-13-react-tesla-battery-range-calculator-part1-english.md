@@ -200,7 +200,7 @@ const Header = () => (
 export default Header;
 ```
 
-> Here, the component is in the form of a function (`ES6 Arrow Function`). A component declared in this form is called a `functional component`. If there is no `state` and the` lifecycle` method is not needed, it is a good pattern to declare it as a function type. Functional components are suitable for `Presentational Component` because they have no state and they depend only on the `props` that is received from higher components.
+> Here, the component is in the form of a function (`ES6 Arrow Function`). A component declared in this form is called a `functional component`. If there is no `state` and the `lifecycle` method is not needed, it is a good pattern to declare it as a function type. Functional components are suitable for `Presentational Component` because they have no state and they depend only on the `props` that is received from higher components.
 
 ### 3.1 Header Component Style
 Create a `Header.css` file in the `src/components/Header` directory and type the following style:
@@ -452,7 +452,7 @@ If you look at the final app GIF image at the top of this article, the state val
 * __carstats (object array)__ : An array of battery numerical value objects ​​by car model according to the currently selected condition value (speed, temperature, climate, wheel)
 * __config (object)__: Currently selected conditions object (speed: 55, temperature: 20, climate: aricon on, wheel: 19)
 
-![enter image description here](https://lh3.googleusercontent.com/LZ4rlA_E8f5_Qt-dKNtBICK-R7zcZdtlcuLFM74IiZzT5Zmh_BOJLDTxz1uzsGtgA7i58Nvfaw=s944 "state.jpg")
+![](https://github.com/gyver98/blog-images/blob/master/2017-02-13-react-tesla-battery-range-calculator-part1-english/state.jpg?raw=true)
 
 That is the <span class="bg-dark-gray white">single source of truth</span> for our app.
 Now we will add the constructor method to the `TeslaBattery` container and set the initial value so that we can manage this state value and pass it to the subcomponent. The `TeslaCar` component accepts the `wheelsize` input through `props` and renders the Teslar car image and spins the wheels.
