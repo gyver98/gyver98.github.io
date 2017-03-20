@@ -536,8 +536,7 @@ _![enter image description here](https://lh3.googleusercontent.com/2OtGE5flaL5zZ
 
 최종코드는 다음에서 확인 할 수 있다.
 
-* [teslaRangeApp.js](https://gist.github.com/gyver98/2f8c3a8e7652de29c090818f6b7999ea#file-final-teslarangeapp-js)
-* [teslaRangeApp.spec.js](https://gist.github.com/gyver98/f18ce2f9d04cf2b762f5ec4c2d0f9418#file-final-teslarangeapp-spec-js)
+> [teslaRangeApp.js](https://gist.github.com/gyver98/2f8c3a8e7652de29c090818f6b7999ea#file-final-teslarangeapp-js)   [teslaRangeApp.spec.js](https://gist.github.com/gyver98/f18ce2f9d04cf2b762f5ec4c2d0f9418#file-final-teslarangeapp-spec-js)
 
 코드를 완성 후 테스트를 했을때 총 7개의 테스트 케이스가 성공해야 한다.
 
@@ -553,7 +552,11 @@ smart component에서는 props를 통해 함수를 전달하게되고, dumb comp
 여기서는 각각의 dumb 컴포넌트들을 감싸는 상위 wrapper로서 container 컴포넌트를 생성하도록 한다.
 
 ### 10.1 The view layer binding
-store를 view에 연결하기위해서 Redux는 약간의 도움이 필요하다. 두 가지를 하나로 묶을 뭔가가 필요한데 react를 사용하는 앱에서는 이것이 바로 <span class="bg-dark-gray white">react-redux</span>이다. 기술적으로, 컨테이너 컴포넌트는 store.subscribe()를 사용하여 Redux state 트리의 일부를 읽고 프리젠테이션 컴포넌트에 그 상태를 렌더링 할 수 있도록 props로 제공하는 React 컴포넌트일뿐이다. 따라서 우리는 직접 수작업으로 container 컴포넌트를 작성할 수도 있지만 이것은 Redux 공식 문서에 의하자면 권장되지 않는다. 왜냐하면 react-redux는 수작업으로 수행하기 어려운 많은 성능 최적화를 수행하기 때문이다. 이러한 이유로 우리는 직접 container 컴포넌트를 작성하는 대신에 react-redux에서 제공되는 <span class="bg-dark-gray white">connect()</span> 함수를 이용하여 작성하도록 한다.
+store를 view에 연결하기위해서 Redux는 약간의 도움이 필요하다. 두 가지를 하나로 묶을 뭔가가 필요한데 react를 사용하는 앱에서는 이것이 바로 <span class="bg-dark-gray white">react-redux</span>이다. 
+
+기술적으로, 컨테이너 컴포넌트는 store.subscribe()를 사용하여 Redux state 트리의 일부를 읽고 프리젠테이션 컴포넌트에 그 상태를 렌더링 할 수 있도록 props로 제공하는 React 컴포넌트일뿐이다. 따라서 우리는 직접 수작업으로 container 컴포넌트를 작성할 수도 있지만 이것은 Redux 공식 문서에 의하자면 권장되지 않는다. 왜냐하면 react-redux는 수작업으로 수행하기 어려운 많은 성능 최적화를 수행하기 때문이다. 
+
+이러한 이유로 우리는 직접 container 컴포넌트를 작성하는 대신에 react-redux에서 제공되는 <span class="bg-dark-gray white">connect()</span> 함수를 이용하여 작성하도록 한다.
 
 먼저 필요한 패키지들을 설치하자.
 
@@ -562,7 +565,9 @@ store를 view에 연결하기위해서 Redux는 약간의 도움이 필요하다
 
 
 ### 10.2 TeslarCar Container
-connect()를 사용하려면 <span class="bg-dark-gray white">mapStateToProps</span>라는 특별한 함수를 정의해야한다. 이 함수는 현재의 Redux store 상태를 프리젠테이션 컴포넌트에 전달할 props로 변환하는 방법을 알려준다. TeslarCar 컨테이너는 현재 store에 저장된 wheelsize를 가져와 TeslarCar 컴포넌트에서 이를 렌더링 할 수 있도록 props로 전달한다. 이 props는 state가 갱신될때마다 업데이트 되어질것이다.
+connect()를 사용하려면 <span class="bg-dark-gray white">mapStateToProps</span>라는 특별한 함수를 정의해야한다. 이 함수는 현재의 Redux store 상태를 프리젠테이션 컴포넌트에 전달할 props로 변환하는 방법을 알려준다. 
+
+TeslarCar 컨테이너는 현재 store에 저장된 wheelsize를 가져와 TeslarCar 컴포넌트에서 이를 렌더링 할 수 있도록 props로 전달한다. 이 props는 state가 갱신될때마다 업데이트 되어질것이다.
 
 
  ![enter image description here](https://lh3.googleusercontent.com/F8H8wq4y-i-sOv3EaR2_Mdlh1vh9aiMs1UeEJ_fjm9LtaEziv8Wdp57F0uN3G8hHM8fzG2LOAQ=s944 "teslacar_cont.png")
@@ -577,11 +582,12 @@ connect()는 두번째 인자로 store의 dispatch 메소드를 첫번째 인자
 
 > 
 connect()()에서 보여지는 또 하나의 괄호는 이상하게 보일 수도 있다. 이러한 형태는 사실 두 개의 함수 호출을 의미하는데, 첫번째 connect()는 또 다른 함수를 리턴하고 두 번째 함수에서는 React 컴포넌트를 전달해주어야 한다.
+
 여기서는 TeslaCar 컴포넌트가 전달되고 있다. 이러한 패턴은 currying 또는  partial application이라 불리우며 functional programing의 한 형태이다.
 
 /src/containers/TeslaCarContainer.js를 생성하고 코드를 작성하자.
 
-* TeslaCarContainer 의 코드는 [여기서](https://gist.github.com/gyver98/7fa2b19d0bf023200a196ff1ec26f5d5#file-teslarcarcontainer-js) 확인 할 수 있다.
+> TeslaCarContainer 의 코드는 [여기서](https://gist.github.com/gyver98/7fa2b19d0bf023200a196ff1ec26f5d5#file-teslarcarcontainer-js) 확인 할 수 있다.
 
 ### 10.3 TeslaStats Container
 
@@ -591,7 +597,7 @@ TeslaStats 컨테이너도 TeslaCar 컨테이너와 마찬가지로 mapStatToPro
 
 /src/containers/TeslaStatsContainer.js를 생성하고 코드를 작성하자.
 
-* TeslaStatsContainer의 코드는 [여기서](https://gist.github.com/gyver98/065b988b03b0c823f7d8373f2235ec1e#file-teslastatscontainer-js) 확인 할 수 있다.
+> TeslaStatsContainer의 코드는 [여기서](https://gist.github.com/gyver98/065b988b03b0c823f7d8373f2235ec1e#file-teslastatscontainer-js) 확인 할 수 있다.
 
 ### 10.4 TeslaSpeedCounter Container
 
@@ -601,7 +607,7 @@ _![enter image description here](https://lh3.googleusercontent.com/y6yxY-K0hrjYH
 
 /src/containers/TeslaSpeedCounterContainer.js를 생성하고 코드를 작성하자.
 
-* TeslaSpeedCounterContainer의 코드는 [여기서](https://gist.github.com/gyver98/f1758643b7a9f3a5bcae546abda5861d#file-teslaspeedcountercontainer-js) 확인 할 수 있다.
+> TeslaSpeedCounterContainer의 코드는 [여기서](https://gist.github.com/gyver98/f1758643b7a9f3a5bcae546abda5861d#file-teslaspeedcountercontainer-js) 확인 할 수 있다.
 
 ### 10.5 TeslaTempCounter Container
 TeslaTempCounter 컨테이너는 전달되는 state와 action creators를 제외하고 TeslaSpeedCounter 와 거의 동일하다.
@@ -610,7 +616,7 @@ _![](https://github.com/gyver98/blog-images/blob/master/2017-03-05-react-tesla-b
 
 /src/containers/TeslaTempCounterContainer.js를 생성하고 코드를 작성하자.
 
-* TeslaTempCounterContainer의 코드는 [여기서](https://gist.github.com/gyver98/0986225c521d3213875a9849bf1e9d80#file-teslatempcountercontainer-js) 확인 할 수 있다.
+> TeslaTempCounterContainer의 코드는 [여기서](https://gist.github.com/gyver98/0986225c521d3213875a9849bf1e9d80#file-teslatempcountercontainer-js) 확인 할 수 있다.
 
 ### 10.6 TeslaClimateContainer
 
@@ -619,7 +625,7 @@ _![](https://github.com/gyver98/blog-images/blob/master/2017-03-05-react-tesla-b
 다음의 파일을 생성하고 코드를 완성하자.
 /src/containers/TeslaClimateContainer.js
 
-* TeslaClimateContainer의 코드는 [여기서](https://gist.github.com/gyver98/bd677915a8b4ea68589497311c77eaee#file-teslaclimatecontainer-js) 확인 할 수 있다.
+> TeslaClimateContainer의 코드는 [여기서](https://gist.github.com/gyver98/bd677915a8b4ea68589497311c77eaee#file-teslaclimatecontainer-js) 확인 할 수 있다.
 
 
 ### 10.7 TeslaWheelsContainer
@@ -629,13 +635,14 @@ _![](https://github.com/gyver98/blog-images/blob/master/2017-03-05-react-tesla-b
 다음의 파일을 생성하고 코드를 완성하자.
 /src/containers/TeslaWheelsContainer.js
 
-* TeslaWheelsContainer의 코드는 [여기서](https://gist.github.com/gyver98/2bc410b7c7aa07ac4def49702ba21738#file-teslawheelscontainer-js) 확인 할 수 있다.
+> TeslaWheelsContainer의 코드는 [여기서](https://gist.github.com/gyver98/2bc410b7c7aa07ac4def49702ba21738#file-teslawheelscontainer-js) 확인 할 수 있다.
 
 이로서 part 1 에서 생성했던 각각의 프리젠테이션 컴포넌트들에 대응하는 컨테이너 컴포넌트들을 react-redux의 connect()를 통해 만들어보았다.
 
 ## 11. Provider
 
 이제 지금까지 만들었던 모든 것들을 한데 모아 우리의 앱이 작동하도록 만들어보자.
+
 지금까지 우리는 action 오브젝트를 정의했고, action 오브젝트를 만들어주는 action creators를 생성했다. 그리고 action이 발생하면 실제 처리하고 새로운 state를 리턴하는 reducers를 만들었다. 그 다음에 각각의 프리젠테이션 컴포넌트를 Redux store에 연결해주는 컨테이너 컴포넌트를 작성하였다.
 
 이제 모든 컨테이너 컴포넌트에서 store에 접근 할 수 있는 방법이 필요한데, <span class="bg-dark-gray white">Provider</span>가 바로 그 역할을 수행한다.
@@ -643,7 +650,7 @@ Provider 컴포넌트는 전체 애플리케이션을 감싸면서 하위 컴포
 
 우리 앱의 최상위 컴포넌트인 App.js는 다음과 같다.
 
-* 코드는 [여기서](https://gist.github.com/gyver98/46b3929798503d057bf23e64a72c2011#file-app-js) 확인할 수 있다
+> 코드는 [여기서](https://gist.github.com/gyver98/46b3929798503d057bf23e64a72c2011#file-app-js) 확인할 수 있다
 
 _![enter image description here](https://github.com/gyver98/blog-images/blob/master/2017-03-05-react-tesla-battery-range-calculator-part2-korean/App%20layout.png?raw=true)_
 
@@ -661,7 +668,7 @@ _![enter image description here](https://lh3.googleusercontent.com/beUr8-FlmI4Ic
  
 * 먼저 part 1에서 작성했던 /containers/TeslaBattery.css 의 모든 내용을 카피해서 App.css에 추가하도록 한다.
 
-App.css 코드는 [여기서](https://gist.github.com/gyver98/fb061ac3997b055bf4628dcfdd83cb51#file-app-css) 확인 할 수 있다.
+> App.css 코드는 [여기서](https://gist.github.com/gyver98/fb061ac3997b055bf4628dcfdd83cb51#file-app-css) 확인 할 수 있다.
 
 * 다음으로 /components/TeslaCounter/TeslaCounter.js를 열고 onClick 이벤트 핸들러를 다음과 같이 수정한다.
 왜냐하면 part 2에서는 더 이상 TeslaBattery.js 에서 이벤트 핸들링을 하지 않기 때문이다.
@@ -695,7 +702,7 @@ const TeslaCounter = ({ initValues, currentValue, increment, decrement }
 ```
 
 
-* TeslaCounter.js 코드는 [여기서](https://gist.github.com/gyver98/5c7f4755023643a84dc7514209f22997#file-teslacounter-js) 확인 할 수 있다.
+> TeslaCounter.js 코드는 [여기서](https://gist.github.com/gyver98/5c7f4755023643a84dc7514209f22997#file-teslacounter-js) 확인 할 수 있다.
 
 
 드디어 Redux 버전의 Tesla Battery Range Calculator 앱이 완성되었다!!
