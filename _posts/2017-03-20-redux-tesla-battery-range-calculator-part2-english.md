@@ -15,6 +15,9 @@ Check out the [part 1](https://gyver98.github.io/blog/development/react/2017/02/
 
 In this part, we will introduce <span class="bg-dark-gray white">Redux</span>, a state management solution, to see how we can transform our application into an application that manages the state of the app with Redux.
 
+This is the final GIF image of our application.
+_![](https://github.com/gyver98/gyver98.github.io/blob/master/images/redux%20dev%20tools.gif?raw=true)_
+
 > Check out the part 2 [live demo](http://redux-tesla-charge-calculator.surge.sh/)
 
 Before we taking a look into what Redux is, let's see why we need to use Redux to solve problems.
