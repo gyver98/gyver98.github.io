@@ -452,7 +452,7 @@ If you look at the final app GIF image at the top of this article, the state val
 * __carstats (object array)__ : An array of battery numerical value objects ​​by car model according to the currently selected condition value (speed, temperature, climate, wheel)
 * __config (object)__: Currently selected conditions object (speed: 55, temperature: 20, climate: aricon on, wheel: 19)
 
-![](https://github.com/gyver98/blog-images/blob/master/2017-02-13-react-tesla-battery-range-calculator-part1-english/state.jpg?raw=true)
+__![](https://github.com/gyver98/blog-images/blob/master/2017-02-13-react-tesla-battery-range-calculator-part1-english/state.jpg?raw=true)__
 
 That is the <span class="bg-dark-gray white">single source of truth</span> for our app.
 Now we will add the constructor method to the `TeslaBattery` container and set the initial value so that we can manage this state value and pass it to the subcomponent. The `TeslaCar` component accepts the `wheelsize` input through `props` and renders the Teslar car image and spins the wheels.
@@ -507,7 +507,7 @@ A function that receives data as input and returns a view.
 If you save files, you can see that the rendered Tesla car and wheel animation work well on the updated screen.
 You can also see that `props` is passed well in the component tree.
 
-![enter image description here](https://lh3.googleusercontent.com/6PBG4kbLiVk1QfkXo8pYnfYW33_7yH_ULxq_8uBvxYFloDxacD8WPXLYlduOa0AT-cG9_8qTqQ=s944 "teslacar props.jpg")
+__![](https://github.com/gyver98/blog-images/blob/master/2017-02-13-react-tesla-battery-range-calculator-part1-english/teslacar%20props.jpg?raw=true)__
 
 > Some functions are called "pure" in the sense that they always return the same output value if they have the same input value without changing the input value. (`Pure function`) One important React strict rule here is that all React components should behave like pure functions with respect to props. `props` must be read-only. 
 
