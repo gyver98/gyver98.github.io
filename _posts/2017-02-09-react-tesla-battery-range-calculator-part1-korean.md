@@ -136,6 +136,7 @@ Tesla 사이트에서 얻을 수 있는 데이타는 하드 코드되 있고 아
 
 
 이 포스트에서 만들어볼 얘플리케이션의 레이아웃은 다음과 같다.
+
 __![layout](https://github.com/gyver98/blog-images/blob/master/2017-02-13-react-tesla-battery-range-calculator-part1-english/layout.jpg?raw=true)__
 
 UI를 컴포넌트 트리로 나타내보면 다음과 같다.
