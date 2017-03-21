@@ -2,7 +2,7 @@
 layout:     post
 title:      (한글버전) Building Tesla's battery range calculator with React Part 1
 date:       2017-02-09 11:37:19
-summary:    React로 Tesla's battery range calculator 구현하기 
+summary:    React로 Tesla's battery range calculator 구현하기 part 1
 categories: blog development react
 comments: true
 ---
@@ -18,7 +18,7 @@ comments: true
 
 > 라이브 버전은 [여기서](http://react-tesla-charge-calculator.surge.sh/) 확인할 수 있다.
  
-> 소스코드는 [여기서](https://github.com/gyver98/react-tesla-battery-range-calculator-tutorial) 확인 할 수 있다. 
+> 소스코드는 [여기서](https://github.com/gyver98/part1-react-tesla-battery-range-calculator-tutorial) 확인 할 수 있다. 
  
 이제 단계별로 애플리케이션을 만들어보자.
 
@@ -116,7 +116,7 @@ export default App;
 react-tesla-range-calculator/src/asstets
 ``` 
 
-> 스텝을 따라하다가 뭔가 놓친거 같거나 확실하지 않다면 언제든지 [소스코드](https://github.com/gyver98/react-tesla-battery-range-calculator-tutorial)를 참조하도록 하자. 
+> 스텝을 따라하다가 뭔가 놓친거 같거나 확실하지 않다면 언제든지 [소스코드](https://github.com/gyver98/part1-react-tesla-battery-range-calculator-tutorial)를 참조하도록 하자. 
 
 ## 1.4 Data service
 Tesla 사이트에서 얻을 수 있는 데이타는 하드 코드되 있고 아주 큰 데이타인데, 여기서는 이를 사용하기 쉽도록 Todd가 새롭게 만든 버전의 데이타를 사용하도록 하겠다. [link](https://github.com/toddmotto/angular-tesla-range-calculator/blob/master/src/app/tesla-battery/tesla-battery.service.ts)
@@ -440,7 +440,7 @@ React는 컴포넌트 트리로 구성이 되는데 데이타와 상태를 갖�
 * __carstats (array)__ : 현재 선택된 조건 수치( speed, temperature, climate, wheel )에 따른 차 모델별 배터리 수치값 배열
 * __config (object)__: 현재 선택된 조건 (speed:55, temperature:20, climate:aricon on, wheel: 19) 
 
-![enter image description here](https://lh3.googleusercontent.com/LZ4rlA_E8f5_Qt-dKNtBICK-R7zcZdtlcuLFM74IiZzT5Zmh_BOJLDTxz1uzsGtgA7i58Nvfaw=s944 "state.jpg")
+![](https://github.com/gyver98/blog-images/blob/master/2017-02-13-react-tesla-battery-range-calculator-part1-english/state.jpg?raw=true)
 
 바로 이 상태가 우리 앱의 <span class="bg-dark-gray white">Single Source of Truth</span>가 된다.
 이제 이 상태값을 관리하고 하위 컴포넌트에 전달할 수 있도록 `TeslaBattery` 컨테이너를 constructor 함수를 추가하고 초기값을 설정한다. `TeslaCar` 컴포넌트는 `props`를 통해 wheelsize input을 받아들이고 Teslar car 이미지를 렌더링한다.

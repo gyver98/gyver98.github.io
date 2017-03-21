@@ -2,7 +2,7 @@
 layout:     post
 title:      Building Tesla's battery range calculator with React Part 1
 date:       2017-02-13 11:37:19
-summary:    Rebuilding Tesla's Battery Range Calculator with React 
+summary:    Rebuilding Tesla's Battery Range Calculator with React Part 1 
 categories: blog development react
 ---
 
@@ -19,7 +19,7 @@ This is the final GIF image of our application.
 
 > Check out the [live version](http://react-tesla-charge-calculator.surge.sh/) before we get started.
  
-> Check out the [source code](https://github.com/gyver98/react-tesla-battery-range-calculator-tutorial). 
+> Check out the [source code](https://github.com/gyver98/part1-react-tesla-battery-range-calculator-tutorial). 
  
 Now let's create an application step by step.
 
@@ -117,7 +117,7 @@ Unpack `assets.zip` and place all images in the `src/assets` directory and place
 react-tesla-range-calculator/src/asstets
 ``` 
 
-> Any time you feel like if you've missed something or unsure if you're doing right, you can refer to the [source code](https://github.com/gyver98/react-tesla-battery-range-calculator-tutorial) as a reference.
+> Any time you feel like if you've missed something or unsure if you're doing right, you can refer to the [source code](https://github.com/gyver98/part1-react-tesla-battery-range-calculator-tutorial) as a reference.
 
 ## 1.5 Data service
 The data you can get from Tesla site is hard-coded and very large, so I'll use Todd's new version of the data to make it easier to use. [link](https://github.com/toddmotto/angular-tesla-range-calculator/blob/master/src/app/tesla-battery/tesla-battery.service.ts)
@@ -200,7 +200,7 @@ const Header = () => (
 export default Header;
 ```
 
-> Here, the component is in the form of a function (`ES6 Arrow Function`). A component declared in this form is called a `functional component`. If there is no `state` and the` lifecycle` method is not needed, it is a good pattern to declare it as a function type. Functional components are suitable for `Presentational Component` because they have no state and they depend only on the `props` that is received from higher components.
+> Here, the component is in the form of a function (`ES6 Arrow Function`). A component declared in this form is called a `functional component`. If there is no `state` and the `lifecycle` method is not needed, it is a good pattern to declare it as a function type. Functional components are suitable for `Presentational Component` because they have no state and they depend only on the `props` that is received from higher components.
 
 ### 3.1 Header Component Style
 Create a `Header.css` file in the `src/components/Header` directory and type the following style:
@@ -452,7 +452,7 @@ If you look at the final app GIF image at the top of this article, the state val
 * __carstats (object array)__ : An array of battery numerical value objects ​​by car model according to the currently selected condition value (speed, temperature, climate, wheel)
 * __config (object)__: Currently selected conditions object (speed: 55, temperature: 20, climate: aricon on, wheel: 19)
 
-![enter image description here](https://lh3.googleusercontent.com/LZ4rlA_E8f5_Qt-dKNtBICK-R7zcZdtlcuLFM74IiZzT5Zmh_BOJLDTxz1uzsGtgA7i58Nvfaw=s944 "state.jpg")
+__![](https://github.com/gyver98/blog-images/blob/master/2017-02-13-react-tesla-battery-range-calculator-part1-english/state.jpg?raw=true)__
 
 That is the <span class="bg-dark-gray white">single source of truth</span> for our app.
 Now we will add the constructor method to the `TeslaBattery` container and set the initial value so that we can manage this state value and pass it to the subcomponent. The `TeslaCar` component accepts the `wheelsize` input through `props` and renders the Teslar car image and spins the wheels.
@@ -507,7 +507,7 @@ A function that receives data as input and returns a view.
 If you save files, you can see that the rendered Tesla car and wheel animation work well on the updated screen.
 You can also see that `props` is passed well in the component tree.
 
-![enter image description here](https://lh3.googleusercontent.com/6PBG4kbLiVk1QfkXo8pYnfYW33_7yH_ULxq_8uBvxYFloDxacD8WPXLYlduOa0AT-cG9_8qTqQ=s944 "teslacar props.jpg")
+__![](https://github.com/gyver98/blog-images/blob/master/2017-02-13-react-tesla-battery-range-calculator-part1-english/teslacar%20props.jpg?raw=true)__
 
 > Some functions are called "pure" in the sense that they always return the same output value if they have the same input value without changing the input value. (`Pure function`) One important React strict rule here is that all React components should behave like pure functions with respect to props. `props` must be read-only. 
 
