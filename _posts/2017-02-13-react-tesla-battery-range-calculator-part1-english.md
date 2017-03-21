@@ -134,7 +134,7 @@ For this reason, it is a good idea to decompose the UI into component units befo
 > See [Thinking in React](https://facebook.github.io/react/docs/thinking-in-react.html) for an approach to looking at an application as a combination of components.
 
 The layout of this application is shown below.
-![layout](https://lh3.googleusercontent.com/JS_S82Te-_vx4OhM71m8Qn6qV5d7d6tFeCULfKBsGHTnqZFPx1s39LvTm29X8PoZCH6UGcumSA=s944 "layout.jpg")
+__![layout](https://github.com/gyver98/blog-images/blob/master/2017-02-13-react-tesla-battery-range-calculator-part1-english/layout.jpg?raw=true)__
 
 The UI is represented by a component tree as follows.
 
