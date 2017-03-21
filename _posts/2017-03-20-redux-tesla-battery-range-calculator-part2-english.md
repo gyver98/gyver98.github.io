@@ -237,7 +237,7 @@ After the __npm start__, let's make sure the application works.
 Now that you have created an action list, it's time to create <span class="bg-dark-gray white">action creators</span>.
 
 Action creator is a function that literally creates an action object. 
-In Redux, action crators simply return an action object and pass the argument value if necessary.
+In Redux, action creators simply return an action object and pass the argument value if necessary.
 
 __changeWheel action creator sample :__
 
@@ -783,7 +783,7 @@ The <span class="bg-dark-gray white">Redux Dev Tool</span> makes it much easier 
 
 We'll install it on Chrome here.
 
-* Chrome extenstion [install](https://www.google.com.au/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0ahUKEwijoqLQxdzSAhUEspQKHaEDA0AQFggZMAA&url=https%3A%2F%2Fchrome.google.com%2Fwebstore%2Fdetail%2Fredux-devtools%2Flmhkpmbekcpmknklioeibfkpmmfibljd%3Fhl%3Den&usg=AFQjCNFg4ldS78uapjCGBaNjL9NvIwZGhg&sig2=YuyPlshxe2eVaKrx0ReXfQ&bvm=bv.149760088,d.dGo)
+* Chrome extension [install](https://www.google.com.au/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0ahUKEwijoqLQxdzSAhUEspQKHaEDA0AQFggZMAA&url=https%3A%2F%2Fchrome.google.com%2Fwebstore%2Fdetail%2Fredux-devtools%2Flmhkpmbekcpmknklioeibfkpmmfibljd%3Fhl%3Den&usg=AFQjCNFg4ldS78uapjCGBaNjL9NvIwZGhg&sig2=YuyPlshxe2eVaKrx0ReXfQ&bvm=bv.149760088,d.dGo)
 
 * Add for Redux store
 

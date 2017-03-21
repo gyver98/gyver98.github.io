@@ -188,7 +188,7 @@ __npm start__ 후 애플리케이션이 제대로 동작하는지 확인하자.
 
 ## 8. Create Action Creators For Each Action
 
-이제 action 리스트를 만들었으니 <span class="bg-dark-gray white">action creators</span>를 만들 차례이다. action creators는 말 그대로 action을 만들어주는 함수이다. Redux에서 action crators는 단지 action 오브젝트를 리턴하고 필요하면 인자값을 전달해준다.
+이제 action 리스트를 만들었으니 <span class="bg-dark-gray white">action creators</span>를 만들 차례이다. action creators는 말 그대로 action을 만들어주는 함수이다. Redux에서 action creators는 단지 action 오브젝트를 리턴하고 필요하면 인자값을 전달해준다.
 
 ```
 const changeWheel = (value) => {
@@ -717,7 +717,7 @@ const TeslaCounter = ({ initValues, currentValue, increment, decrement }
 
 여기서는 Chrome 기준으로 살펴보겠다.
 
-* Chrome extenstion [install](https://www.google.com.au/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0ahUKEwijoqLQxdzSAhUEspQKHaEDA0AQFggZMAA&url=https%3A%2F%2Fchrome.google.com%2Fwebstore%2Fdetail%2Fredux-devtools%2Flmhkpmbekcpmknklioeibfkpmmfibljd%3Fhl%3Den&usg=AFQjCNFg4ldS78uapjCGBaNjL9NvIwZGhg&sig2=YuyPlshxe2eVaKrx0ReXfQ&bvm=bv.149760088,d.dGo)
+* Chrome extension [install](https://www.google.com.au/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0ahUKEwijoqLQxdzSAhUEspQKHaEDA0AQFggZMAA&url=https%3A%2F%2Fchrome.google.com%2Fwebstore%2Fdetail%2Fredux-devtools%2Flmhkpmbekcpmknklioeibfkpmmfibljd%3Fhl%3Den&usg=AFQjCNFg4ldS78uapjCGBaNjL9NvIwZGhg&sig2=YuyPlshxe2eVaKrx0ReXfQ&bvm=bv.149760088,d.dGo)
 
 * Add for Redux store
 
