@@ -160,7 +160,7 @@ This is a useful pattern that can be used when developing an application with Re
 It is easier to reuse by dividing components into two categories.
 
 ```
-* Container Component (statful component):
+* Container Component (stateful component):
  - Are concerned with how things work.
  - In general, except for some wrapping divs, they do not have their own DOM markup and have no style.
  - Provide data and actions to presentational or other container components.

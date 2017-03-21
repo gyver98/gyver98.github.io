@@ -160,13 +160,13 @@ UI를 컴포넌트 트리로 나타내보면 다음과 같다.
 이는 React로 애플리케이션을 개발할때 사용할 수 있는 유용한 패턴으로 컴포넌트들을 다음의 두 가지 범주로 나누게 되면 더 쉽게 재사용성을 높일 수 있게 된다.
 
 ```
-* Container Component (statful component)
+* Container Component (stateful component)
  - 어떻게 동작하는지에 관심이있다.
  - 일반적으로 일부 랩핑 div를 제외하고는 자체 DOM 마크업이 없으며 스타일을 갖지 않는다.
  - 프리젠테이션 또는 다른 컨테이너에 데이터와 동작을 제공한다.
  - 애플리케이션의 상태를 가지며 데이터 소스 역할을 한다.
 
-* Presentational Component (statless component)
+* Presentational Component (stateless component)
  - 어떻게 보이는지에 관심이있다.
  - 일반적으로 자체 DOM 마크업과 스타일을 가지고 있다.
  - Props를 통해 데이타와 콜백 함수를 받는다.
