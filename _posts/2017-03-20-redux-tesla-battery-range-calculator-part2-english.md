@@ -431,9 +431,9 @@ After create the test, run the <span class="bg-dark-gray white">npm test</span> 
  
 ![enter image description here](https://lh3.googleusercontent.com/gxuCGjMSqDK92QZeBN1Pfg0tS4ErO49MISJwasZFoKq3pAHSTrrox1uQfyfUL9gT-Amz_1i0KA=s1100 "npm-test.jpg")
 
-To make the first test successful, we need to create __teslaRangeApp.js__ in the same reducers directory and write __inital state and reducer__ functions.
+To make the first test successful, we need to create __teslaRangeApp.js__ in the same reducers directory and write __initial state and reducer__ functions.
 
-__sre/reducers/teslaRangeApp.js__
+__src/reducers/teslaRangeApp.js__
 
 ```
 const initialState = {
@@ -466,7 +466,7 @@ export default appReducer;
 
 Next, import teslaRangeApp.js from teslaRangeApp.spec.js and set initialState.
 
-__sre/reducers/teslaRangeApp.spec.js__
+__src/reducers/teslaRangeApp.spec.js__
 
 ```
 import appReducer from './teslaRangeApp';

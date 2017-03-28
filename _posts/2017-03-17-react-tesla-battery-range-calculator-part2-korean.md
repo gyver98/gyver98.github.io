@@ -371,9 +371,9 @@ describe('test reducer', () => {
  
 ![enter image description here](https://lh3.googleusercontent.com/gxuCGjMSqDK92QZeBN1Pfg0tS4ErO49MISJwasZFoKq3pAHSTrrox1uQfyfUL9gT-Amz_1i0KA=s1100 "npm-test.jpg")
 
-첫번째 테스트를 성공시키기 위해 같은 reducers 디렉토리 안에 teslaRangeApp.js를 생성하고 inital state와 reducer 함수를 작성해야 한다.
+첫번째 테스트를 성공시키기 위해 같은 reducers 디렉토리 안에 teslaRangeApp.js를 생성하고 initial state와 reducer 함수를 작성해야 한다.
 
-__sre/reducers/teslaRangeApp.js__
+__src/reducers/teslaRangeApp.js__
 
 ```
 const initialState = {
@@ -405,7 +405,7 @@ export default appReducer;
 ```
 그 다음에  teslaRangeApp.spec.js에서 teslaRangeApp을 import 하고 initialState를 설정하자.
 
-__sre/reducers/teslaRangeApp.spec.js__
+__src/reducers/teslaRangeApp.spec.js__
 
 ```
 import appReducer from './teslaRangeApp';
