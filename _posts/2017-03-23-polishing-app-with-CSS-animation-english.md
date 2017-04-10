@@ -354,3 +354,4 @@ You should have a fully working Tesla range calculator with animation:
 
 ![](https://github.com/gyver98/blog-images/blob/master/2017-03-23-polishing-app-with-CSS-animation-english/control%20animation.gif?raw=true)
 
+* Check out [full source code](https://github.com/gyver98/part3-animation-tesla-battery-range-calculator-tutorial)
